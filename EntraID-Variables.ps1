@@ -22,7 +22,7 @@
 # by your scripts to authenticate against Microsoft Graph.
 
 $TenantId            = "8e349918-0edd-445d-91a0-40745f2547e3"   # Entra ID Tenant ID (GUID)
-$TenantDomain        = "certificationswredmond.onmicrosoft.com"                 # Primary *.onmicrosoft.com domain
+$TenantDomain        = "xxxxx.onmicrosoft.com"                 # Primary *.onmicrosoft.com domain
 $TenantCustomDomain  = "contoso.com"                             # Vanity / verified custom domain
 
 # App Registration — used for app-only (client credentials) auth

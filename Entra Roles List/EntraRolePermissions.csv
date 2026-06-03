@@ -1,0 +1,2038 @@
+RoleDisplayName,Permission,RoleType
+Agent ID Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Agent ID Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Agent ID Administrator,microsoft.directory/agentUsers/assignLicense,Built-in
+Agent ID Administrator,microsoft.directory/agentUsers/basic/update,Built-in
+Agent ID Administrator,microsoft.directory/agentUsers/create,Built-in
+Agent ID Administrator,microsoft.directory/agentUsers/delete,Built-in
+Agent ID Administrator,microsoft.directory/agentUsers/disable,Built-in
+Agent ID Administrator,microsoft.directory/agentUsers/enable,Built-in
+Agent ID Administrator,microsoft.directory/agentUsers/invalidateAllRefreshTokens,Built-in
+Agent ID Administrator,microsoft.directory/agentUsers/lifeCycleInfo/read,Built-in
+Agent ID Administrator,microsoft.directory/agentUsers/lifeCycleInfo/update,Built-in
+Agent ID Administrator,microsoft.directory/agentUsers/manager/update,Built-in
+Agent ID Administrator,microsoft.directory/agentUsers/photo/update,Built-in
+Agent ID Administrator,microsoft.directory/agentUsers/reprocessLicenseAssignment,Built-in
+Agent ID Administrator,microsoft.directory/agentUsers/restore,Built-in
+Agent ID Administrator,microsoft.directory/agentUsers/revokeSignInSessions,Built-in
+Agent ID Administrator,microsoft.directory/agentUsers/sponsors/update,Built-in
+Agent ID Administrator,microsoft.directory/agentUsers/usageLocation/update,Built-in
+Agent ID Administrator,microsoft.directory/agentUsers/userPrincipalName/update,Built-in
+Agent ID Administrator,microsoft.directory/auditLogs/allProperties/read,Built-in
+Agent ID Administrator,microsoft.directory/externalUserProfiles/standard/read,Built-in
+Agent ID Administrator,microsoft.directory/groups.unified/createAsOwner,Built-in
+Agent ID Administrator,microsoft.directory/groups/hiddenMembers/read,Built-in
+Agent ID Administrator,microsoft.directory/organization/standard/read,Built-in
+Agent ID Administrator,microsoft.directory/policies/standard/read,Built-in
+Agent ID Administrator,microsoft.directory/signInReports/allProperties/read,Built-in
+Agent ID Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Agent ID Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Agent ID Developer,microsoft.directory/servicePrincipals/standard/read,Built-in
+Agent Registry Administrator,microsoft.agentRegistry/allEntities/allProperties/allTasks,Built-in
+AI Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+AI Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+AI Administrator,microsoft.directory/agentUsers/assignLicense,Built-in
+AI Administrator,microsoft.directory/agentUsers/basic/update,Built-in
+AI Administrator,microsoft.directory/agentUsers/create,Built-in
+AI Administrator,microsoft.directory/agentUsers/delete,Built-in
+AI Administrator,microsoft.directory/agentUsers/disable,Built-in
+AI Administrator,microsoft.directory/agentUsers/enable,Built-in
+AI Administrator,microsoft.directory/agentUsers/invalidateAllRefreshTokens,Built-in
+AI Administrator,microsoft.directory/agentUsers/lifeCycleInfo/read,Built-in
+AI Administrator,microsoft.directory/agentUsers/lifeCycleInfo/update,Built-in
+AI Administrator,microsoft.directory/agentUsers/manager/update,Built-in
+AI Administrator,microsoft.directory/agentUsers/photo/update,Built-in
+AI Administrator,microsoft.directory/agentUsers/reprocessLicenseAssignment,Built-in
+AI Administrator,microsoft.directory/agentUsers/restore,Built-in
+AI Administrator,microsoft.directory/agentUsers/revokeSignInSessions,Built-in
+AI Administrator,microsoft.directory/agentUsers/sponsors/update,Built-in
+AI Administrator,microsoft.directory/agentUsers/usageLocation/update,Built-in
+AI Administrator,microsoft.directory/agentUsers/userPrincipalName/update,Built-in
+AI Administrator,microsoft.directory/entitlementManagement/allProperties/read,Built-in
+AI Administrator,microsoft.directory/subscribedSkus/standard/read,Built-in
+AI Administrator,microsoft.directory/users/allProperties/read,Built-in
+AI Administrator,microsoft.office365.copilot/allEntities/allProperties/allTasks,Built-in
+AI Administrator,microsoft.office365.messageCenter/messages/read,Built-in
+AI Administrator,microsoft.office365.network/performance/allProperties/read,Built-in
+AI Administrator,microsoft.office365.search/content/manage,Built-in
+AI Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+AI Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+AI Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+AI Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+AI Reader,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+AI Reader,microsoft.directory/administrativeUnits/members/read,Built-in
+AI Reader,microsoft.directory/administrativeUnits/standard/read,Built-in
+AI Reader,microsoft.directory/agentUsers/lifeCycleInfo/read,Built-in
+AI Reader,microsoft.directory/applicationPolicies/standard/read,Built-in
+AI Reader,microsoft.directory/applications/owners/read,Built-in
+AI Reader,microsoft.directory/applications/policies/read,Built-in
+AI Reader,microsoft.directory/applications/standard/read,Built-in
+AI Reader,microsoft.directory/contacts/memberOf/read,Built-in
+AI Reader,microsoft.directory/contacts/standard/read,Built-in
+AI Reader,microsoft.directory/contracts/standard/read,Built-in
+AI Reader,microsoft.directory/domains/standard/read,Built-in
+AI Reader,microsoft.directory/entitlementManagement/allProperties/read,Built-in
+AI Reader,microsoft.directory/groups/appRoleAssignments/read,Built-in
+AI Reader,microsoft.directory/groups/memberOf/read,Built-in
+AI Reader,microsoft.directory/groups/members/read,Built-in
+AI Reader,microsoft.directory/groups/owners/read,Built-in
+AI Reader,microsoft.directory/groups/settings/read,Built-in
+AI Reader,microsoft.directory/groups/standard/read,Built-in
+AI Reader,microsoft.directory/groupSettings/standard/read,Built-in
+AI Reader,microsoft.directory/groupSettingTemplates/standard/read,Built-in
+AI Reader,microsoft.directory/oAuth2PermissionGrants/standard/read,Built-in
+AI Reader,microsoft.directory/organization/standard/read,Built-in
+AI Reader,microsoft.directory/organization/trustedCAsForPasswordlessAuth/read,Built-in
+AI Reader,microsoft.directory/roleAssignments/standard/read,Built-in
+AI Reader,microsoft.directory/roleDefinitions/standard/read,Built-in
+AI Reader,microsoft.directory/servicePrincipals/appRoleAssignedTo/read,Built-in
+AI Reader,microsoft.directory/servicePrincipals/appRoleAssignments/read,Built-in
+AI Reader,microsoft.directory/servicePrincipals/memberOf/read,Built-in
+AI Reader,microsoft.directory/servicePrincipals/oAuth2PermissionGrants/read,Built-in
+AI Reader,microsoft.directory/servicePrincipals/ownedObjects/read,Built-in
+AI Reader,microsoft.directory/servicePrincipals/owners/read,Built-in
+AI Reader,microsoft.directory/servicePrincipals/policies/read,Built-in
+AI Reader,microsoft.directory/servicePrincipals/standard/read,Built-in
+AI Reader,microsoft.directory/subscribedSkus/standard/read,Built-in
+AI Reader,microsoft.directory/users/allProperties/read,Built-in
+AI Reader,microsoft.office365.copilot/allEntities/allProperties/read,Built-in
+AI Reader,microsoft.office365.messageCenter/messages/read,Built-in
+AI Reader,microsoft.office365.network/performance/allProperties/read,Built-in
+AI Reader,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+AI Reader,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+AI Reader,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Application Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Application Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Application Administrator,microsoft.directory/adminConsentRequestPolicy/allProperties/allTasks,Built-in
+Application Administrator,microsoft.directory/appConsent/appConsentRequests/allProperties/read,Built-in
+Application Administrator,microsoft.directory/applicationPolicies/basic/update,Built-in
+Application Administrator,microsoft.directory/applicationPolicies/create,Built-in
+Application Administrator,microsoft.directory/applicationPolicies/delete,Built-in
+Application Administrator,microsoft.directory/applicationPolicies/owners/read,Built-in
+Application Administrator,microsoft.directory/applicationPolicies/owners/update,Built-in
+Application Administrator,microsoft.directory/applicationPolicies/policyAppliedTo/read,Built-in
+Application Administrator,microsoft.directory/applicationPolicies/standard/read,Built-in
+Application Administrator,microsoft.directory/applications/applicationProxy/read,Built-in
+Application Administrator,microsoft.directory/applications/applicationProxy/update,Built-in
+Application Administrator,microsoft.directory/applications/applicationProxyAuthentication/update,Built-in
+Application Administrator,microsoft.directory/applications/applicationProxySslCertificate/update,Built-in
+Application Administrator,microsoft.directory/applications/applicationProxyUrlSettings/update,Built-in
+Application Administrator,microsoft.directory/applications/appRoles/update,Built-in
+Application Administrator,microsoft.directory/applications/audience/update,Built-in
+Application Administrator,microsoft.directory/applications/authentication/update,Built-in
+Application Administrator,microsoft.directory/applications/basic/update,Built-in
+Application Administrator,microsoft.directory/applications/create,Built-in
+Application Administrator,microsoft.directory/applications/credentials/update,Built-in
+Application Administrator,microsoft.directory/applications/delete,Built-in
+Application Administrator,microsoft.directory/applications/disablement/update,Built-in
+Application Administrator,microsoft.directory/applications/extensionProperties/update,Built-in
+Application Administrator,microsoft.directory/applications/notes/update,Built-in
+Application Administrator,microsoft.directory/applications/owners/update,Built-in
+Application Administrator,microsoft.directory/applications/permissions/update,Built-in
+Application Administrator,microsoft.directory/applications/policies/update,Built-in
+Application Administrator,microsoft.directory/applications/synchronization/standard/read,Built-in
+Application Administrator,microsoft.directory/applications/tag/update,Built-in
+Application Administrator,microsoft.directory/applications/verification/update,Built-in
+Application Administrator,microsoft.directory/applicationTemplates/instantiate,Built-in
+Application Administrator,microsoft.directory/auditLogs/allProperties/read,Built-in
+Application Administrator,microsoft.directory/connectorGroups/allProperties/read,Built-in
+Application Administrator,microsoft.directory/connectorGroups/allProperties/update,Built-in
+Application Administrator,microsoft.directory/connectorGroups/create,Built-in
+Application Administrator,microsoft.directory/connectorGroups/delete,Built-in
+Application Administrator,microsoft.directory/connectors/allProperties/read,Built-in
+Application Administrator,microsoft.directory/connectors/create,Built-in
+Application Administrator,microsoft.directory/customAuthenticationExtensions/allProperties/allTasks,Built-in
+Application Administrator,microsoft.directory/deletedItems.applications/delete,Built-in
+Application Administrator,microsoft.directory/deletedItems.applications/restore,Built-in
+Application Administrator,microsoft.directory/oAuth2PermissionGrants/allProperties/allTasks,Built-in
+Application Administrator,microsoft.directory/provisioningLogs/allProperties/read,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/appRoleAssignedTo/update,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/audience/update,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/authentication/update,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/basic/update,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/create,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/credentials/update,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/delete,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/disable,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/enable,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/getPasswordSingleSignOnCredentials,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/managePasswordSingleSignOnCredentials,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/managePermissionGrantsForAll.microsoft-application-admin,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/notes/update,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/owners/update,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/permissions/update,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/policies/update,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToExternalSystem/credentials/manage,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToExternalSystem/jobs/manage,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToExternalSystem/schema/manage,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/synchronization/standard/read,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/synchronizationCredentials/manage,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/synchronizationJobs/manage,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/synchronizationSchema/manage,Built-in
+Application Administrator,microsoft.directory/servicePrincipals/tag/update,Built-in
+Application Administrator,microsoft.directory/signInReports/allProperties/read,Built-in
+Application Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Application Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Application Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Application Developer,microsoft.directory/applications/createAsOwner,Built-in
+Application Developer,microsoft.directory/oAuth2PermissionGrants/createAsOwner,Built-in
+Application Developer,microsoft.directory/servicePrincipals/createAsOwner,Built-in
+Attack Payload Author,microsoft.office365.protectionCenter/attackSimulator/payload/allProperties/allTasks,Built-in
+Attack Payload Author,microsoft.office365.protectionCenter/attackSimulator/reports/allProperties/read,Built-in
+Attack Simulation Administrator,microsoft.office365.protectionCenter/attackSimulator/payload/allProperties/allTasks,Built-in
+Attack Simulation Administrator,microsoft.office365.protectionCenter/attackSimulator/reports/allProperties/read,Built-in
+Attack Simulation Administrator,microsoft.office365.protectionCenter/attackSimulator/simulation/allProperties/allTasks,Built-in
+Attribute Assignment Administrator,microsoft.directory/attributeSets/allProperties/read,Built-in
+Attribute Assignment Administrator,microsoft.directory/azureManagedIdentities/customSecurityAttributes/read,Built-in
+Attribute Assignment Administrator,microsoft.directory/azureManagedIdentities/customSecurityAttributes/update,Built-in
+Attribute Assignment Administrator,microsoft.directory/customSecurityAttributeDefinitions/allProperties/read,Built-in
+Attribute Assignment Administrator,microsoft.directory/devices/customSecurityAttributes/read,Built-in
+Attribute Assignment Administrator,microsoft.directory/devices/customSecurityAttributes/update,Built-in
+Attribute Assignment Administrator,microsoft.directory/servicePrincipals/customSecurityAttributes/read,Built-in
+Attribute Assignment Administrator,microsoft.directory/servicePrincipals/customSecurityAttributes/update,Built-in
+Attribute Assignment Administrator,microsoft.directory/users/customSecurityAttributes/read,Built-in
+Attribute Assignment Administrator,microsoft.directory/users/customSecurityAttributes/update,Built-in
+Attribute Assignment Reader,microsoft.directory/attributeSets/allProperties/read,Built-in
+Attribute Assignment Reader,microsoft.directory/azureManagedIdentities/customSecurityAttributes/read,Built-in
+Attribute Assignment Reader,microsoft.directory/customSecurityAttributeDefinitions/allProperties/read,Built-in
+Attribute Assignment Reader,microsoft.directory/devices/customSecurityAttributes/read,Built-in
+Attribute Assignment Reader,microsoft.directory/servicePrincipals/customSecurityAttributes/read,Built-in
+Attribute Assignment Reader,microsoft.directory/users/customSecurityAttributes/read,Built-in
+Attribute Definition Administrator,microsoft.directory/attributeSets/allProperties/allTasks,Built-in
+Attribute Definition Administrator,microsoft.directory/customSecurityAttributeDefinitions/allProperties/allTasks,Built-in
+Attribute Definition Reader,microsoft.directory/attributeSets/allProperties/read,Built-in
+Attribute Definition Reader,microsoft.directory/customSecurityAttributeDefinitions/allProperties/read,Built-in
+Attribute Log Administrator,microsoft.azure.customSecurityAttributeDiagnosticSettings/allEntities/allProperties/allTasks,Built-in
+Attribute Log Administrator,microsoft.directory/customSecurityAttributeAuditLogs/allProperties/read,Built-in
+Attribute Log Reader,microsoft.directory/customSecurityAttributeAuditLogs/allProperties/read,Built-in
+Attribute Provisioning Administrator,microsoft.directory/servicePrincipals/synchronization.customSecurityAttributes/schema/read,Built-in
+Attribute Provisioning Administrator,microsoft.directory/servicePrincipals/synchronization.customSecurityAttributes/schema/update,Built-in
+Attribute Provisioning Reader,microsoft.directory/servicePrincipals/synchronization.customSecurityAttributes/schema/read,Built-in
+Authentication Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Authentication Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Authentication Administrator,microsoft.directory/deletedItems.users/restore,Built-in
+Authentication Administrator,microsoft.directory/users/authenticationMethods/basic/update,Built-in
+Authentication Administrator,microsoft.directory/users/authenticationMethods/create,Built-in
+Authentication Administrator,microsoft.directory/users/authenticationMethods/delete,Built-in
+Authentication Administrator,microsoft.directory/users/authenticationMethods/standard/restrictedRead,Built-in
+Authentication Administrator,microsoft.directory/users/basic/update,Built-in
+Authentication Administrator,microsoft.directory/users/delete,Built-in
+Authentication Administrator,microsoft.directory/users/disable,Built-in
+Authentication Administrator,microsoft.directory/users/enable,Built-in
+Authentication Administrator,microsoft.directory/users/invalidateAllRefreshTokens,Built-in
+Authentication Administrator,microsoft.directory/users/manager/update,Built-in
+Authentication Administrator,microsoft.directory/users/password/update,Built-in
+Authentication Administrator,microsoft.directory/users/restore,Built-in
+Authentication Administrator,microsoft.directory/users/userPrincipalName/update,Built-in
+Authentication Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Authentication Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Authentication Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Authentication Extensibility Administrator,microsoft.directory/customAuthenticationExtensions/allProperties/allTasks,Built-in
+Authentication Extensibility Password Administrator,microsoft.directory/onPasswordSubmitCustomAuthenticationExtension/allProperties/allTasks,Built-in
+Authentication Policy Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Authentication Policy Administrator,microsoft.directory/organization/strongAuthentication/allTasks,Built-in
+Authentication Policy Administrator,microsoft.directory/userCredentialPolicies/basic/update,Built-in
+Authentication Policy Administrator,microsoft.directory/userCredentialPolicies/create,Built-in
+Authentication Policy Administrator,microsoft.directory/userCredentialPolicies/delete,Built-in
+Authentication Policy Administrator,microsoft.directory/userCredentialPolicies/owners/read,Built-in
+Authentication Policy Administrator,microsoft.directory/userCredentialPolicies/owners/update,Built-in
+Authentication Policy Administrator,microsoft.directory/userCredentialPolicies/policyAppliedTo/read,Built-in
+Authentication Policy Administrator,microsoft.directory/userCredentialPolicies/standard/read,Built-in
+Authentication Policy Administrator,microsoft.directory/userCredentialPolicies/tenantDefault/update,Built-in
+Authentication Policy Administrator,microsoft.directory/verifiableCredentials/configuration/allProperties/read,Built-in
+Authentication Policy Administrator,microsoft.directory/verifiableCredentials/configuration/allProperties/update,Built-in
+Authentication Policy Administrator,microsoft.directory/verifiableCredentials/configuration/contracts/allProperties/read,Built-in
+Authentication Policy Administrator,microsoft.directory/verifiableCredentials/configuration/contracts/allProperties/update,Built-in
+Authentication Policy Administrator,microsoft.directory/verifiableCredentials/configuration/contracts/cards/allProperties/read,Built-in
+Authentication Policy Administrator,microsoft.directory/verifiableCredentials/configuration/contracts/cards/revoke,Built-in
+Authentication Policy Administrator,microsoft.directory/verifiableCredentials/configuration/contracts/create,Built-in
+Authentication Policy Administrator,microsoft.directory/verifiableCredentials/configuration/create,Built-in
+Authentication Policy Administrator,microsoft.directory/verifiableCredentials/configuration/delete,Built-in
+Azure AD Joined Device Local Administrator,microsoft.directory/groupSettings/standard/read,Built-in
+Azure AD Joined Device Local Administrator,microsoft.directory/groupSettingTemplates/standard/read,Built-in
+Azure DevOps Administrator,microsoft.azure.devOps/allEntities/allTasks,Built-in
+Azure Information Protection Administrator,microsoft.azure.informationProtection/allEntities/allTasks,Built-in
+Azure Information Protection Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Azure Information Protection Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Azure Information Protection Administrator,microsoft.directory/authorizationPolicy/standard/read,Built-in
+Azure Information Protection Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Azure Information Protection Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Azure Information Protection Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+B2C IEF Keyset Administrator,microsoft.directory/b2cTrustFrameworkKeySet/allProperties/allTasks,Built-in
+B2C IEF Policy Administrator,microsoft.directory/b2cTrustFrameworkPolicy/allProperties/allTasks,Built-in
+Billing Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Billing Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Billing Administrator,microsoft.commerce.billing/allEntities/allProperties/allTasks,Built-in
+Billing Administrator,microsoft.directory/organization/basic/update,Built-in
+Billing Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Billing Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Billing Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Cloud App Security Administrator,microsoft.directory/cloudAppSecurity/allProperties/allTasks,Built-in
+Cloud App Security Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Cloud Application Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Cloud Application Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Cloud Application Administrator,microsoft.directory/adminConsentRequestPolicy/allProperties/allTasks,Built-in
+Cloud Application Administrator,microsoft.directory/appConsent/appConsentRequests/allProperties/read,Built-in
+Cloud Application Administrator,microsoft.directory/applicationPolicies/basic/update,Built-in
+Cloud Application Administrator,microsoft.directory/applicationPolicies/create,Built-in
+Cloud Application Administrator,microsoft.directory/applicationPolicies/delete,Built-in
+Cloud Application Administrator,microsoft.directory/applicationPolicies/owners/read,Built-in
+Cloud Application Administrator,microsoft.directory/applicationPolicies/owners/update,Built-in
+Cloud Application Administrator,microsoft.directory/applicationPolicies/policyAppliedTo/read,Built-in
+Cloud Application Administrator,microsoft.directory/applicationPolicies/standard/read,Built-in
+Cloud Application Administrator,microsoft.directory/applications/appRoles/update,Built-in
+Cloud Application Administrator,microsoft.directory/applications/audience/update,Built-in
+Cloud Application Administrator,microsoft.directory/applications/authentication/update,Built-in
+Cloud Application Administrator,microsoft.directory/applications/basic/update,Built-in
+Cloud Application Administrator,microsoft.directory/applications/create,Built-in
+Cloud Application Administrator,microsoft.directory/applications/credentials/update,Built-in
+Cloud Application Administrator,microsoft.directory/applications/delete,Built-in
+Cloud Application Administrator,microsoft.directory/applications/disablement/update,Built-in
+Cloud Application Administrator,microsoft.directory/applications/extensionProperties/update,Built-in
+Cloud Application Administrator,microsoft.directory/applications/notes/update,Built-in
+Cloud Application Administrator,microsoft.directory/applications/owners/update,Built-in
+Cloud Application Administrator,microsoft.directory/applications/permissions/update,Built-in
+Cloud Application Administrator,microsoft.directory/applications/policies/update,Built-in
+Cloud Application Administrator,microsoft.directory/applications/synchronization/standard/read,Built-in
+Cloud Application Administrator,microsoft.directory/applications/tag/update,Built-in
+Cloud Application Administrator,microsoft.directory/applications/verification/update,Built-in
+Cloud Application Administrator,microsoft.directory/applicationTemplates/instantiate,Built-in
+Cloud Application Administrator,microsoft.directory/auditLogs/allProperties/read,Built-in
+Cloud Application Administrator,microsoft.directory/deletedItems.applications/delete,Built-in
+Cloud Application Administrator,microsoft.directory/deletedItems.applications/restore,Built-in
+Cloud Application Administrator,microsoft.directory/oAuth2PermissionGrants/allProperties/allTasks,Built-in
+Cloud Application Administrator,microsoft.directory/provisioningLogs/allProperties/read,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/appRoleAssignedTo/update,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/audience/update,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/authentication/update,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/basic/update,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/create,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/credentials/update,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/delete,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/disable,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/enable,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/getPasswordSingleSignOnCredentials,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/managePasswordSingleSignOnCredentials,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/managePermissionGrantsForAll.microsoft-application-admin,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/notes/update,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/owners/update,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/permissions/update,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/policies/update,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToExternalSystem/credentials/manage,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToExternalSystem/jobs/manage,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToExternalSystem/schema/manage,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/synchronization/standard/read,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/synchronizationCredentials/manage,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/synchronizationJobs/manage,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/synchronizationSchema/manage,Built-in
+Cloud Application Administrator,microsoft.directory/servicePrincipals/tag/update,Built-in
+Cloud Application Administrator,microsoft.directory/signInReports/allProperties/read,Built-in
+Cloud Application Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Cloud Application Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Cloud Application Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Cloud Device Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Cloud Device Administrator,microsoft.directory/auditLogs/allProperties/read,Built-in
+Cloud Device Administrator,microsoft.directory/authorizationPolicy/standard/read,Built-in
+Cloud Device Administrator,microsoft.directory/bitlockerKeys/key/read,Built-in
+Cloud Device Administrator,microsoft.directory/deletedItems.devices/delete,Built-in
+Cloud Device Administrator,microsoft.directory/deletedItems.devices/restore,Built-in
+Cloud Device Administrator,microsoft.directory/deviceLocalCredentials/password/read,Built-in
+Cloud Device Administrator,microsoft.directory/deviceManagementPolicies/basic/update,Built-in
+Cloud Device Administrator,microsoft.directory/deviceManagementPolicies/standard/read,Built-in
+Cloud Device Administrator,microsoft.directory/deviceRegistrationPolicy/basic/update,Built-in
+Cloud Device Administrator,microsoft.directory/deviceRegistrationPolicy/standard/read,Built-in
+Cloud Device Administrator,microsoft.directory/devices/delete,Built-in
+Cloud Device Administrator,microsoft.directory/devices/disable,Built-in
+Cloud Device Administrator,microsoft.directory/devices/enable,Built-in
+Cloud Device Administrator,microsoft.directory/devices/permissions/update,Built-in
+Cloud Device Administrator,microsoft.directory/deviceTemplates/owners/read,Built-in
+Cloud Device Administrator,microsoft.directory/deviceTemplates/owners/update,Built-in
+Cloud Device Administrator,microsoft.directory/signInReports/allProperties/read,Built-in
+Cloud Device Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Compliance Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Compliance Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Compliance Administrator,microsoft.directory/entitlementManagement/allProperties/read,Built-in
+Compliance Administrator,microsoft.office365.complianceManager/allEntities/allTasks,Built-in
+Compliance Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Compliance Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Compliance Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Compliance Data Administrator,microsoft.azure.informationProtection/allEntities/allTasks,Built-in
+Compliance Data Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Compliance Data Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Compliance Data Administrator,microsoft.directory/authorizationPolicy/standard/read,Built-in
+Compliance Data Administrator,microsoft.directory/cloudAppSecurity/allProperties/allTasks,Built-in
+Compliance Data Administrator,microsoft.office365.complianceManager/allEntities/allTasks,Built-in
+Compliance Data Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Compliance Data Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Compliance Data Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Conditional Access Administrator,microsoft.directory/conditionalAccessPolicies/basic/update,Built-in
+Conditional Access Administrator,microsoft.directory/conditionalAccessPolicies/create,Built-in
+Conditional Access Administrator,microsoft.directory/conditionalAccessPolicies/delete,Built-in
+Conditional Access Administrator,microsoft.directory/conditionalAccessPolicies/owners/read,Built-in
+Conditional Access Administrator,microsoft.directory/conditionalAccessPolicies/owners/update,Built-in
+Conditional Access Administrator,microsoft.directory/conditionalAccessPolicies/policyAppliedTo/read,Built-in
+Conditional Access Administrator,microsoft.directory/conditionalAccessPolicies/standard/read,Built-in
+Conditional Access Administrator,microsoft.directory/conditionalAccessPolicies/tenantDefault/update,Built-in
+Conditional Access Administrator,microsoft.directory/namedLocations/basic/update,Built-in
+Conditional Access Administrator,microsoft.directory/namedLocations/create,Built-in
+Conditional Access Administrator,microsoft.directory/namedLocations/delete,Built-in
+Conditional Access Administrator,microsoft.directory/namedLocations/standard/read,Built-in
+Conditional Access Administrator,microsoft.directory/resourceNamespaces/resourceActions/authenticationContext/update,Built-in
+Customer Delegated Admin Relationship Administrator,microsoft.commerce.tenantRelationships/customerDelegatedAdminPrivileges/allProperties/allTasks,Built-in
+Customer Delegated Admin Relationship Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Customer LockBox Access Approver,microsoft.office365.lockbox/allEntities/allTasks,Built-in
+Customer LockBox Access Approver,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Desktop Analytics Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Desktop Analytics Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Desktop Analytics Administrator,microsoft.directory/authorizationPolicy/standard/read,Built-in
+Desktop Analytics Administrator,microsoft.office365.desktopAnalytics/allEntities/allTasks,Built-in
+Device Managers,microsoft.directory/devices/basic/update,Built-in
+Device Managers,microsoft.directory/devices/extensionAttributeSet1/update,Built-in
+Device Managers,microsoft.directory/devices/extensionAttributeSet2/update,Built-in
+Device Managers,microsoft.directory/devices/extensionAttributeSet3/update,Built-in
+Device Managers,microsoft.directory/devices/memberOf/read,Built-in
+Device Managers,microsoft.directory/devices/registeredOwners/read,Built-in
+Device Managers,microsoft.directory/devices/registeredOwners/update,Built-in
+Device Managers,microsoft.directory/devices/registeredUsers/read,Built-in
+Device Managers,microsoft.directory/devices/registeredUsers/update,Built-in
+Device Managers,microsoft.directory/devices/standard/read,Built-in
+Directory Readers,microsoft.directory/administrativeUnits/members/read,Built-in
+Directory Readers,microsoft.directory/administrativeUnits/standard/read,Built-in
+Directory Readers,microsoft.directory/applicationPolicies/standard/read,Built-in
+Directory Readers,microsoft.directory/applications/owners/read,Built-in
+Directory Readers,microsoft.directory/applications/policies/read,Built-in
+Directory Readers,microsoft.directory/applications/standard/read,Built-in
+Directory Readers,microsoft.directory/contacts/memberOf/read,Built-in
+Directory Readers,microsoft.directory/contacts/standard/read,Built-in
+Directory Readers,microsoft.directory/contracts/standard/read,Built-in
+Directory Readers,microsoft.directory/devices/memberOf/read,Built-in
+Directory Readers,microsoft.directory/devices/registeredOwners/read,Built-in
+Directory Readers,microsoft.directory/devices/registeredUsers/read,Built-in
+Directory Readers,microsoft.directory/devices/standard/read,Built-in
+Directory Readers,microsoft.directory/directoryRoles/eligibleMembers/read,Built-in
+Directory Readers,microsoft.directory/directoryRoles/members/read,Built-in
+Directory Readers,microsoft.directory/directoryRoles/standard/read,Built-in
+Directory Readers,microsoft.directory/domains/standard/read,Built-in
+Directory Readers,microsoft.directory/groups/appRoleAssignments/read,Built-in
+Directory Readers,microsoft.directory/groups/memberOf/read,Built-in
+Directory Readers,microsoft.directory/groups/members/read,Built-in
+Directory Readers,microsoft.directory/groups/owners/read,Built-in
+Directory Readers,microsoft.directory/groups/settings/read,Built-in
+Directory Readers,microsoft.directory/groups/standard/read,Built-in
+Directory Readers,microsoft.directory/groupSettings/standard/read,Built-in
+Directory Readers,microsoft.directory/groupSettingTemplates/standard/read,Built-in
+Directory Readers,microsoft.directory/oAuth2PermissionGrants/standard/read,Built-in
+Directory Readers,microsoft.directory/organization/standard/read,Built-in
+Directory Readers,microsoft.directory/organization/trustedCAsForPasswordlessAuth/read,Built-in
+Directory Readers,microsoft.directory/roleAssignments/standard/read,Built-in
+Directory Readers,microsoft.directory/roleDefinitions/standard/read,Built-in
+Directory Readers,microsoft.directory/servicePrincipals/appRoleAssignedTo/read,Built-in
+Directory Readers,microsoft.directory/servicePrincipals/appRoleAssignments/read,Built-in
+Directory Readers,microsoft.directory/servicePrincipals/memberOf/read,Built-in
+Directory Readers,microsoft.directory/servicePrincipals/oAuth2PermissionGrants/read,Built-in
+Directory Readers,microsoft.directory/servicePrincipals/ownedObjects/read,Built-in
+Directory Readers,microsoft.directory/servicePrincipals/owners/read,Built-in
+Directory Readers,microsoft.directory/servicePrincipals/policies/read,Built-in
+Directory Readers,microsoft.directory/servicePrincipals/standard/read,Built-in
+Directory Readers,microsoft.directory/subscribedSkus/standard/read,Built-in
+Directory Readers,microsoft.directory/users/appRoleAssignments/read,Built-in
+Directory Readers,microsoft.directory/users/deviceForResourceAccount/read,Built-in
+Directory Readers,microsoft.directory/users/directReports/read,Built-in
+Directory Readers,microsoft.directory/users/invitedBy/read,Built-in
+Directory Readers,microsoft.directory/users/licenseDetails/read,Built-in
+Directory Readers,microsoft.directory/users/manager/read,Built-in
+Directory Readers,microsoft.directory/users/memberOf/read,Built-in
+Directory Readers,microsoft.directory/users/oAuth2PermissionGrants/read,Built-in
+Directory Readers,microsoft.directory/users/ownedDevices/read,Built-in
+Directory Readers,microsoft.directory/users/ownedObjects/read,Built-in
+Directory Readers,microsoft.directory/users/photo/read,Built-in
+Directory Readers,microsoft.directory/users/registeredDevices/read,Built-in
+Directory Readers,microsoft.directory/users/scopedRoleMemberOf/read,Built-in
+Directory Readers,microsoft.directory/users/sponsorOf/read,Built-in
+Directory Readers,microsoft.directory/users/sponsors/read,Built-in
+Directory Readers,microsoft.directory/users/standard/read,Built-in
+Directory Synchronization Accounts,microsoft.directory/onPremisesSynchronization/standard/read,Built-in
+Directory Writers,microsoft.directory/applications/extensionProperties/update,Built-in
+Directory Writers,microsoft.directory/contacts/create,Built-in
+Directory Writers,microsoft.directory/groups/assignedLabels/update,Built-in
+Directory Writers,microsoft.directory/groups/assignLicense,Built-in
+Directory Writers,microsoft.directory/groups/basic/update,Built-in
+Directory Writers,microsoft.directory/groups/classification/update,Built-in
+Directory Writers,microsoft.directory/groups/create,Built-in
+Directory Writers,microsoft.directory/groups/dynamicMembershipRule/update,Built-in
+Directory Writers,microsoft.directory/groups/groupType/update,Built-in
+Directory Writers,microsoft.directory/groups/members/update,Built-in
+Directory Writers,microsoft.directory/groups/onPremWriteBack/update,Built-in
+Directory Writers,microsoft.directory/groups/owners/update,Built-in
+Directory Writers,microsoft.directory/groups/reprocessLicenseAssignment,Built-in
+Directory Writers,microsoft.directory/groups/settings/update,Built-in
+Directory Writers,microsoft.directory/groups/visibility/update,Built-in
+Directory Writers,microsoft.directory/groupSettings/basic/update,Built-in
+Directory Writers,microsoft.directory/groupSettings/create,Built-in
+Directory Writers,microsoft.directory/groupSettings/delete,Built-in
+Directory Writers,microsoft.directory/oAuth2PermissionGrants/basic/update,Built-in
+Directory Writers,microsoft.directory/oAuth2PermissionGrants/create,Built-in
+Directory Writers,microsoft.directory/servicePrincipals/appRoleAssignedTo/update,Built-in
+Directory Writers,microsoft.directory/servicePrincipals/synchronization.cloudTenantToCloudTenant/credentials/manage,Built-in
+Directory Writers,microsoft.directory/servicePrincipals/synchronization.cloudTenantToCloudTenant/jobs/manage,Built-in
+Directory Writers,microsoft.directory/servicePrincipals/synchronization.cloudTenantToCloudTenant/schema/manage,Built-in
+Directory Writers,microsoft.directory/servicePrincipals/synchronization.cloudTenantToExternalSystem/credentials/manage,Built-in
+Directory Writers,microsoft.directory/servicePrincipals/synchronization.cloudTenantToExternalSystem/jobs/manage,Built-in
+Directory Writers,microsoft.directory/servicePrincipals/synchronization.cloudTenantToExternalSystem/schema/manage,Built-in
+Directory Writers,microsoft.directory/servicePrincipals/synchronizationCredentials/manage,Built-in
+Directory Writers,microsoft.directory/servicePrincipals/synchronizationJobs/manage,Built-in
+Directory Writers,microsoft.directory/servicePrincipals/synchronizationSchema/manage,Built-in
+Directory Writers,microsoft.directory/users/assignLicense,Built-in
+Directory Writers,microsoft.directory/users/basic/update,Built-in
+Directory Writers,microsoft.directory/users/create,Built-in
+Directory Writers,microsoft.directory/users/disable,Built-in
+Directory Writers,microsoft.directory/users/enable,Built-in
+Directory Writers,microsoft.directory/users/invalidateAllRefreshTokens,Built-in
+Directory Writers,microsoft.directory/users/inviteGuest,Built-in
+Directory Writers,microsoft.directory/users/manager/update,Built-in
+Directory Writers,microsoft.directory/users/photo/update,Built-in
+Directory Writers,microsoft.directory/users/reprocessLicenseAssignment,Built-in
+Directory Writers,microsoft.directory/users/sponsors/update,Built-in
+Directory Writers,microsoft.directory/users/userPrincipalName/update,Built-in
+Domain Name Administrator,microsoft.directory/domains/allProperties/allTasks,Built-in
+Domain Name Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Domain Name Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Dragon Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Dragon Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Dragon Administrator,microsoft.healthPlatform/allEntities/allProperties/allTasks,Built-in
+Dragon Administrator,microsoft.office365.network/performance/allProperties/read,Built-in
+Dragon Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Dragon Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Dragon Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+Dragon Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Dynamics 365 Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Dynamics 365 Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Dynamics 365 Administrator,microsoft.dynamics365/allEntities/allTasks,Built-in
+Dynamics 365 Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Dynamics 365 Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Dynamics 365 Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Dynamics 365 Business Central Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Dynamics 365 Business Central Administrator,microsoft.directory/domains/standard/read,Built-in
+Dynamics 365 Business Central Administrator,microsoft.directory/organization/standard/read,Built-in
+Dynamics 365 Business Central Administrator,microsoft.directory/subscribedSkus/standard/read,Built-in
+Dynamics 365 Business Central Administrator,microsoft.directory/users/standard/read,Built-in
+Dynamics 365 Business Central Administrator,microsoft.dynamics365.businessCentral/allEntities/allProperties/allTasks,Built-in
+Dynamics 365 Business Central Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Dynamics 365 Business Central Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Edge Administrator,microsoft.edge/allEntities/allProperties/allTasks,Built-in
+Edge Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Edge Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Entra Backup Administrator,microsoft.directory/backup/preview/cancel,Built-in
+Entra Backup Administrator,microsoft.directory/backup/preview/create,Built-in
+Entra Backup Administrator,microsoft.directory/backup/recovery/cancel,Built-in
+Entra Backup Administrator,microsoft.directory/backup/recovery/create,Built-in
+Entra Backup Administrator,microsoft.directory/backup/standard/read,Built-in
+Entra Backup Reader,microsoft.directory/backup/preview/cancel,Built-in
+Entra Backup Reader,microsoft.directory/backup/preview/create,Built-in
+Entra Backup Reader,microsoft.directory/backup/standard/read,Built-in
+Exchange Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Exchange Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Exchange Administrator,microsoft.backup/exchangeProtectionPolicies/allProperties/allTasks,Built-in
+Exchange Administrator,microsoft.backup/exchangeRestoreSessions/allProperties/allTasks,Built-in
+Exchange Administrator,microsoft.backup/restorePoints/userMailboxes/allProperties/allTasks,Built-in
+Exchange Administrator,microsoft.backup/userMailboxProtectionUnits/allProperties/allTasks,Built-in
+Exchange Administrator,microsoft.backup/userMailboxRestoreArtifacts/allProperties/allTasks,Built-in
+Exchange Administrator,microsoft.directory/contacts/allProperties/read,Built-in
+Exchange Administrator,microsoft.directory/contacts/memberOf/read,Built-in
+Exchange Administrator,microsoft.directory/contacts/standard/read,Built-in
+Exchange Administrator,microsoft.directory/groups.unified/assignedLabels/update,Built-in
+Exchange Administrator,microsoft.directory/groups.unified/basic/update,Built-in
+Exchange Administrator,microsoft.directory/groups.unified/create,Built-in
+Exchange Administrator,microsoft.directory/groups.unified/delete,Built-in
+Exchange Administrator,microsoft.directory/groups.unified/members/update,Built-in
+Exchange Administrator,microsoft.directory/groups.unified/owners/update,Built-in
+Exchange Administrator,microsoft.directory/groups.unified/restore,Built-in
+Exchange Administrator,microsoft.directory/groups/hiddenMembers/read,Built-in
+Exchange Administrator,microsoft.directory/onPremisesSynchronization/standard/read,Built-in
+Exchange Administrator,microsoft.office365.exchange/allEntities/basic/allTasks,Built-in
+Exchange Administrator,microsoft.office365.network/performance/allProperties/read,Built-in
+Exchange Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Exchange Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Exchange Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+Exchange Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Exchange Backup Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Exchange Backup Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Exchange Backup Administrator,microsoft.backup/exchangeProtectionPolicies/allProperties/allTasks,Built-in
+Exchange Backup Administrator,microsoft.backup/exchangeRestoreSessions/allProperties/allTasks,Built-in
+Exchange Backup Administrator,microsoft.backup/restorePoints/userMailboxes/allProperties/allTasks,Built-in
+Exchange Backup Administrator,microsoft.backup/userMailboxProtectionUnits/allProperties/allTasks,Built-in
+Exchange Backup Administrator,microsoft.backup/userMailboxRestoreArtifacts/allProperties/allTasks,Built-in
+Exchange Backup Administrator,microsoft.office365.network/performance/allProperties/read,Built-in
+Exchange Backup Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Exchange Backup Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Exchange Backup Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+Exchange Backup Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Exchange Recipient Administrator,microsoft.office365.exchange/migration/allProperties/allTasks,Built-in
+Exchange Recipient Administrator,microsoft.office365.exchange/recipients/allProperties/allTasks,Built-in
+Extended Directory User Administrator,microsoft.directory/externalUserProfiles/basic/update,Built-in
+Extended Directory User Administrator,microsoft.directory/externalUserProfiles/delete,Built-in
+Extended Directory User Administrator,microsoft.directory/externalUserProfiles/standard/read,Built-in
+Extended Directory User Administrator,microsoft.directory/pendingExternalUserProfiles/basic/update,Built-in
+Extended Directory User Administrator,microsoft.directory/pendingExternalUserProfiles/create,Built-in
+Extended Directory User Administrator,microsoft.directory/pendingExternalUserProfiles/delete,Built-in
+Extended Directory User Administrator,microsoft.directory/pendingExternalUserProfiles/standard/read,Built-in
+External ID User Flow Administrator,microsoft.directory/b2cUserFlow/allProperties/allTasks,Built-in
+External ID User Flow Attribute Administrator,microsoft.directory/b2cUserAttribute/allProperties/allTasks,Built-in
+External Identity Provider Administrator,microsoft.directory/domains/federation/update,Built-in
+External Identity Provider Administrator,microsoft.directory/identityProviders/allProperties/allTasks,Built-in
+Fabric Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Fabric Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Fabric Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Fabric Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Fabric Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Fabric Administrator,microsoft.powerApps.powerBI/allEntities/allTasks,Built-in
+Global Administrator,microsoft.agentRegistry/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.azure.advancedThreatProtection/allEntities/allTasks,Built-in
+Global Administrator,microsoft.azure.informationProtection/allEntities/allTasks,Built-in
+Global Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Global Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Global Administrator,microsoft.backup/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.cloudPC/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.commerce.billing/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.commerce.billing/purchases/standard/read,Built-in
+Global Administrator,microsoft.commerce.tenantRelationships/customerDelegatedAdminPrivileges/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/accessReviews/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/accessReviews/definitions/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/adminConsentRequestPolicy/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/administrativeUnits/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/appConsent/appConsentRequests/allProperties/read,Built-in
+Global Administrator,microsoft.directory/applications/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/applications/disablement/update,Built-in
+Global Administrator,microsoft.directory/applications/synchronization/standard/read,Built-in
+Global Administrator,microsoft.directory/applicationTemplates/instantiate,Built-in
+Global Administrator,microsoft.directory/auditLogs/allProperties/read,Built-in
+Global Administrator,microsoft.directory/authorizationPolicy/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/backup/preview/cancel,Built-in
+Global Administrator,microsoft.directory/backup/preview/create,Built-in
+Global Administrator,microsoft.directory/backup/recovery/cancel,Built-in
+Global Administrator,microsoft.directory/backup/recovery/create,Built-in
+Global Administrator,microsoft.directory/backup/standard/read,Built-in
+Global Administrator,microsoft.directory/bitlockerKeys/key/read,Built-in
+Global Administrator,microsoft.directory/bulkJobs/basic/update,Built-in
+Global Administrator,microsoft.directory/bulkJobs/create,Built-in
+Global Administrator,microsoft.directory/bulkJobs/standard/read,Built-in
+Global Administrator,microsoft.directory/cloudAppSecurity/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/conditionalAccessPolicies/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/connectorGroups/allProperties/read,Built-in
+Global Administrator,microsoft.directory/connectorGroups/allProperties/update,Built-in
+Global Administrator,microsoft.directory/connectorGroups/create,Built-in
+Global Administrator,microsoft.directory/connectorGroups/delete,Built-in
+Global Administrator,microsoft.directory/connectors/allProperties/read,Built-in
+Global Administrator,microsoft.directory/connectors/create,Built-in
+Global Administrator,microsoft.directory/contacts/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/contracts/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/allowedCloudEndpoints/update,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/basic/update,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/default/b2bCollaboration/update,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/default/b2bDirectConnect/update,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/default/crossCloudMeetings/update,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/default/standard/read,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/default/tenantRestrictions/update,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/partners/b2bCollaboration/update,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/partners/b2bDirectConnect/update,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/partners/create,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/partners/crossCloudMeetings/update,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/partners/delete,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/partners/identitySynchronization/basic/update,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/partners/identitySynchronization/create,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/partners/identitySynchronization/standard/read,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/partners/standard/read,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/partners/templates/multiTenantOrganizationIdentitySynchronization/basic/update,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/partners/templates/multiTenantOrganizationIdentitySynchronization/resetToDefaultSettings,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/partners/templates/multiTenantOrganizationIdentitySynchronization/standard/read,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/partners/templates/multiTenantOrganizationPartnerConfiguration/basic/update,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/partners/templates/multiTenantOrganizationPartnerConfiguration/resetToDefaultSettings,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/partners/templates/multiTenantOrganizationPartnerConfiguration/standard/read,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/partners/tenantRestrictions/update,Built-in
+Global Administrator,microsoft.directory/crossTenantAccessPolicy/standard/read,Built-in
+Global Administrator,microsoft.directory/customAuthenticationExtensions/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/deletedItems/delete,Built-in
+Global Administrator,microsoft.directory/deletedItems/restore,Built-in
+Global Administrator,microsoft.directory/deviceLocalCredentials/password/read,Built-in
+Global Administrator,microsoft.directory/deviceManagementPolicies/basic/update,Built-in
+Global Administrator,microsoft.directory/deviceManagementPolicies/standard/read,Built-in
+Global Administrator,microsoft.directory/deviceRegistrationPolicy/basic/update,Built-in
+Global Administrator,microsoft.directory/deviceRegistrationPolicy/standard/read,Built-in
+Global Administrator,microsoft.directory/devices/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/devices/permissions/update,Built-in
+Global Administrator,microsoft.directory/deviceTemplates/owners/read,Built-in
+Global Administrator,microsoft.directory/deviceTemplates/owners/update,Built-in
+Global Administrator,microsoft.directory/directoryRoles/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/directoryRoleTemplates/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/domains/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/domains/federationConfiguration/basic/update,Built-in
+Global Administrator,microsoft.directory/domains/federationConfiguration/create,Built-in
+Global Administrator,microsoft.directory/domains/federationConfiguration/delete,Built-in
+Global Administrator,microsoft.directory/domains/federationConfiguration/standard/read,Built-in
+Global Administrator,microsoft.directory/entitlementManagement/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/externalUserProfiles/basic/update,Built-in
+Global Administrator,microsoft.directory/externalUserProfiles/delete,Built-in
+Global Administrator,microsoft.directory/externalUserProfiles/standard/read,Built-in
+Global Administrator,microsoft.directory/groups/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/groupsAssignableToRoles/allProperties/update,Built-in
+Global Administrator,microsoft.directory/groupsAssignableToRoles/assignLicense,Built-in
+Global Administrator,microsoft.directory/groupsAssignableToRoles/create,Built-in
+Global Administrator,microsoft.directory/groupsAssignableToRoles/delete,Built-in
+Global Administrator,microsoft.directory/groupsAssignableToRoles/reprocessLicenseAssignment,Built-in
+Global Administrator,microsoft.directory/groupsAssignableToRoles/restore,Built-in
+Global Administrator,microsoft.directory/groupSettings/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/groupSettingTemplates/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/hybridAuthenticationPolicy/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/identityProtection/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/lifecycleWorkflows/workflows/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/loginOrganizationBranding/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/multiTenantOrganization/basic/update,Built-in
+Global Administrator,microsoft.directory/multiTenantOrganization/create,Built-in
+Global Administrator,microsoft.directory/multiTenantOrganization/joinRequest/organizationDetails/update,Built-in
+Global Administrator,microsoft.directory/multiTenantOrganization/joinRequest/standard/read,Built-in
+Global Administrator,microsoft.directory/multiTenantOrganization/standard/read,Built-in
+Global Administrator,microsoft.directory/multiTenantOrganization/tenants/create,Built-in
+Global Administrator,microsoft.directory/multiTenantOrganization/tenants/delete,Built-in
+Global Administrator,microsoft.directory/multiTenantOrganization/tenants/organizationDetails/read,Built-in
+Global Administrator,microsoft.directory/multiTenantOrganization/tenants/organizationDetails/update,Built-in
+Global Administrator,microsoft.directory/multiTenantOrganization/tenants/standard/read,Built-in
+Global Administrator,microsoft.directory/namedLocations/basic/update,Built-in
+Global Administrator,microsoft.directory/namedLocations/create,Built-in
+Global Administrator,microsoft.directory/namedLocations/delete,Built-in
+Global Administrator,microsoft.directory/namedLocations/standard/read,Built-in
+Global Administrator,microsoft.directory/oAuth2PermissionGrants/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/onPremisesSynchronization/basic/update,Built-in
+Global Administrator,microsoft.directory/onPremisesSynchronization/standard/read,Built-in
+Global Administrator,microsoft.directory/organization/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/passwordHashSync/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/pendingExternalUserProfiles/basic/update,Built-in
+Global Administrator,microsoft.directory/pendingExternalUserProfiles/create,Built-in
+Global Administrator,microsoft.directory/pendingExternalUserProfiles/delete,Built-in
+Global Administrator,microsoft.directory/pendingExternalUserProfiles/standard/read,Built-in
+Global Administrator,microsoft.directory/permissionGrantPolicies/basic/update,Built-in
+Global Administrator,microsoft.directory/permissionGrantPolicies/create,Built-in
+Global Administrator,microsoft.directory/permissionGrantPolicies/delete,Built-in
+Global Administrator,microsoft.directory/permissionGrantPolicies/standard/read,Built-in
+Global Administrator,microsoft.directory/policies/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/privilegedIdentityManagement/allProperties/read,Built-in
+Global Administrator,microsoft.directory/provisioningLogs/allProperties/read,Built-in
+Global Administrator,microsoft.directory/resourceNamespaces/resourceActions/authenticationContext/update,Built-in
+Global Administrator,microsoft.directory/roleAssignments/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/roleDefinitions/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/scopedRoleMemberships/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/serviceAction/activateService,Built-in
+Global Administrator,microsoft.directory/serviceAction/disableDirectoryFeature,Built-in
+Global Administrator,microsoft.directory/serviceAction/enableDirectoryFeature,Built-in
+Global Administrator,microsoft.directory/serviceAction/getAvailableExtentionProperties,Built-in
+Global Administrator,microsoft.directory/servicePrincipalCreationPolicies/basic/update,Built-in
+Global Administrator,microsoft.directory/servicePrincipalCreationPolicies/create,Built-in
+Global Administrator,microsoft.directory/servicePrincipalCreationPolicies/delete,Built-in
+Global Administrator,microsoft.directory/servicePrincipalCreationPolicies/standard/read,Built-in
+Global Administrator,microsoft.directory/servicePrincipals/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/servicePrincipals/managePermissionGrantsForAll.microsoft-company-admin,Built-in
+Global Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToCloudTenant/credentials/manage,Built-in
+Global Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToCloudTenant/jobs/manage,Built-in
+Global Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToCloudTenant/schema/manage,Built-in
+Global Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToExternalSystem/credentials/manage,Built-in
+Global Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToExternalSystem/jobs/manage,Built-in
+Global Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToExternalSystem/schema/manage,Built-in
+Global Administrator,microsoft.directory/servicePrincipals/synchronization/standard/read,Built-in
+Global Administrator,microsoft.directory/signInReports/allProperties/read,Built-in
+Global Administrator,microsoft.directory/subscribedSkus/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/tenantManagement/tenants/create,Built-in
+Global Administrator,microsoft.directory/users/allProperties/allTasks,Built-in
+Global Administrator,microsoft.directory/users/authenticationMethods/basic/update,Built-in
+Global Administrator,microsoft.directory/users/authenticationMethods/create,Built-in
+Global Administrator,microsoft.directory/users/authenticationMethods/delete,Built-in
+Global Administrator,microsoft.directory/users/authenticationMethods/standard/read,Built-in
+Global Administrator,microsoft.directory/users/convertExternalToInternalMemberUser,Built-in
+Global Administrator,microsoft.directory/verifiableCredentials/configuration/allProperties/read,Built-in
+Global Administrator,microsoft.directory/verifiableCredentials/configuration/allProperties/update,Built-in
+Global Administrator,microsoft.directory/verifiableCredentials/configuration/contracts/allProperties/read,Built-in
+Global Administrator,microsoft.directory/verifiableCredentials/configuration/contracts/allProperties/update,Built-in
+Global Administrator,microsoft.directory/verifiableCredentials/configuration/contracts/cards/allProperties/read,Built-in
+Global Administrator,microsoft.directory/verifiableCredentials/configuration/contracts/cards/revoke,Built-in
+Global Administrator,microsoft.directory/verifiableCredentials/configuration/contracts/create,Built-in
+Global Administrator,microsoft.directory/verifiableCredentials/configuration/create,Built-in
+Global Administrator,microsoft.directory/verifiableCredentials/configuration/delete,Built-in
+Global Administrator,microsoft.dynamics365/allEntities/allTasks,Built-in
+Global Administrator,microsoft.edge/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.flow/allEntities/allTasks,Built-in
+Global Administrator,microsoft.graph.dataConnect/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.hardware.support/shippingAddress/allProperties/allTasks,Built-in
+Global Administrator,microsoft.hardware.support/shippingStatus/allProperties/read,Built-in
+Global Administrator,microsoft.hardware.support/warrantyClaims/allProperties/allTasks,Built-in
+Global Administrator,microsoft.healthPlatform/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.insights/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.intune/allEntities/allTasks,Built-in
+Global Administrator,microsoft.microsoft365.organizationalData/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.networkAccess/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.networkAccess/trafficLogs/standard/read,Built-in
+Global Administrator,microsoft.office365.complianceManager/allEntities/allTasks,Built-in
+Global Administrator,microsoft.office365.copilot/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.office365.desktopAnalytics/allEntities/allTasks,Built-in
+Global Administrator,microsoft.office365.exchange/allEntities/basic/allTasks,Built-in
+Global Administrator,microsoft.office365.fileStorageContainers/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.office365.knowledge/contentUnderstanding/allProperties/allTasks,Built-in
+Global Administrator,microsoft.office365.knowledge/contentUnderstanding/analytics/allProperties/read,Built-in
+Global Administrator,microsoft.office365.knowledge/knowledgeNetwork/allProperties/allTasks,Built-in
+Global Administrator,microsoft.office365.knowledge/knowledgeNetwork/topicVisibility/allProperties/allTasks,Built-in
+Global Administrator,microsoft.office365.knowledge/learningSources/allProperties/allTasks,Built-in
+Global Administrator,microsoft.office365.lockbox/allEntities/allTasks,Built-in
+Global Administrator,microsoft.office365.messageCenter/messages/read,Built-in
+Global Administrator,microsoft.office365.messageCenter/securityMessages/read,Built-in
+Global Administrator,microsoft.office365.migrations/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.office365.network/performance/allProperties/read,Built-in
+Global Administrator,microsoft.office365.organizationalMessages/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.office365.protectionCenter/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.office365.search/content/manage,Built-in
+Global Administrator,microsoft.office365.securityComplianceCenter/allEntities/allTasks,Built-in
+Global Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Global Administrator,microsoft.office365.sharePoint/allEntities/allTasks,Built-in
+Global Administrator,microsoft.office365.sharePointAdvancedManagement/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.office365.skypeForBusiness/allEntities/allTasks,Built-in
+Global Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Global Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+Global Administrator,microsoft.office365.userCommunication/allEntities/allTasks,Built-in
+Global Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Global Administrator,microsoft.office365.yammer/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.people/users/photo/read,Built-in
+Global Administrator,microsoft.people/users/photo/update,Built-in
+Global Administrator,microsoft.peopleAdmin/organization/allProperties/read,Built-in
+Global Administrator,microsoft.peopleAdmin/organization/allProperties/update,Built-in
+Global Administrator,microsoft.permissionsManagement/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.powerApps.powerBI/allEntities/allTasks,Built-in
+Global Administrator,microsoft.powerApps/allEntities/allTasks,Built-in
+Global Administrator,microsoft.teams/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.virtualVisits/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.viva.glint/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.viva.goals/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.viva.pulse/allEntities/allProperties/allTasks,Built-in
+Global Administrator,microsoft.windows.defenderAdvancedThreatProtection/allEntities/allTasks,Built-in
+Global Administrator,microsoft.windows.updatesDeployments/allEntities/allProperties/allTasks,Built-in
+Global Reader,microsoft.agentRegistry/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Global Reader,microsoft.backup/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.cloudPC/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.commerce.billing/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.commerce.billing/purchases/standard/read,Built-in
+Global Reader,microsoft.directory/accessReviews/allProperties/read,Built-in
+Global Reader,microsoft.directory/accessReviews/definitions/allProperties/read,Built-in
+Global Reader,microsoft.directory/adminConsentRequestPolicy/allProperties/read,Built-in
+Global Reader,microsoft.directory/administrativeUnits/allProperties/read,Built-in
+Global Reader,microsoft.directory/appConsent/appConsentRequests/allProperties/read,Built-in
+Global Reader,microsoft.directory/applications/allProperties/read,Built-in
+Global Reader,microsoft.directory/applications/synchronization/standard/read,Built-in
+Global Reader,microsoft.directory/auditLogs/allProperties/read,Built-in
+Global Reader,microsoft.directory/authorizationPolicy/standard/read,Built-in
+Global Reader,microsoft.directory/bitlockerKeys/key/read,Built-in
+Global Reader,microsoft.directory/bulkJobs/standard/read,Built-in
+Global Reader,microsoft.directory/cloudAppSecurity/allProperties/read,Built-in
+Global Reader,microsoft.directory/conditionalAccessPolicies/allProperties/read,Built-in
+Global Reader,microsoft.directory/connectorGroups/allProperties/read,Built-in
+Global Reader,microsoft.directory/connectors/allProperties/read,Built-in
+Global Reader,microsoft.directory/contacts/allProperties/read,Built-in
+Global Reader,microsoft.directory/crossTenantAccessPolicy/default/standard/read,Built-in
+Global Reader,microsoft.directory/crossTenantAccessPolicy/partners/identitySynchronization/standard/read,Built-in
+Global Reader,microsoft.directory/crossTenantAccessPolicy/partners/standard/read,Built-in
+Global Reader,microsoft.directory/crossTenantAccessPolicy/partners/templates/multiTenantOrganizationIdentitySynchronization/standard/read,Built-in
+Global Reader,microsoft.directory/crossTenantAccessPolicy/partners/templates/multiTenantOrganizationPartnerConfiguration/standard/read,Built-in
+Global Reader,microsoft.directory/crossTenantAccessPolicy/standard/read,Built-in
+Global Reader,microsoft.directory/customAuthenticationExtensions/allProperties/read,Built-in
+Global Reader,microsoft.directory/deviceLocalCredentials/standard/read,Built-in
+Global Reader,microsoft.directory/deviceManagementPolicies/standard/read,Built-in
+Global Reader,microsoft.directory/deviceRegistrationPolicy/standard/read,Built-in
+Global Reader,microsoft.directory/devices/allProperties/read,Built-in
+Global Reader,microsoft.directory/directoryRoles/allProperties/read,Built-in
+Global Reader,microsoft.directory/directoryRoleTemplates/allProperties/read,Built-in
+Global Reader,microsoft.directory/domains/allProperties/read,Built-in
+Global Reader,microsoft.directory/domains/federationConfiguration/standard/read,Built-in
+Global Reader,microsoft.directory/entitlementManagement/allProperties/read,Built-in
+Global Reader,microsoft.directory/externalUserProfiles/standard/read,Built-in
+Global Reader,microsoft.directory/groups/allProperties/read,Built-in
+Global Reader,microsoft.directory/groupSettings/allProperties/read,Built-in
+Global Reader,microsoft.directory/groupSettingTemplates/allProperties/read,Built-in
+Global Reader,microsoft.directory/identityProtection/allProperties/read,Built-in
+Global Reader,microsoft.directory/lifecycleWorkflows/workflows/allProperties/read,Built-in
+Global Reader,microsoft.directory/loginOrganizationBranding/allProperties/read,Built-in
+Global Reader,microsoft.directory/multiTenantOrganization/joinRequest/standard/read,Built-in
+Global Reader,microsoft.directory/multiTenantOrganization/standard/read,Built-in
+Global Reader,microsoft.directory/multiTenantOrganization/tenants/organizationDetails/read,Built-in
+Global Reader,microsoft.directory/multiTenantOrganization/tenants/standard/read,Built-in
+Global Reader,microsoft.directory/namedLocations/standard/read,Built-in
+Global Reader,microsoft.directory/oAuth2PermissionGrants/allProperties/read,Built-in
+Global Reader,microsoft.directory/onPremisesSynchronization/standard/read,Built-in
+Global Reader,microsoft.directory/organization/allProperties/read,Built-in
+Global Reader,microsoft.directory/pendingExternalUserProfiles/standard/read,Built-in
+Global Reader,microsoft.directory/permissionGrantPolicies/standard/read,Built-in
+Global Reader,microsoft.directory/policies/allProperties/read,Built-in
+Global Reader,microsoft.directory/privilegedIdentityManagement/allProperties/read,Built-in
+Global Reader,microsoft.directory/provisioningLogs/allProperties/read,Built-in
+Global Reader,microsoft.directory/roleAssignments/allProperties/read,Built-in
+Global Reader,microsoft.directory/roleDefinitions/allProperties/read,Built-in
+Global Reader,microsoft.directory/scopedRoleMemberships/allProperties/read,Built-in
+Global Reader,microsoft.directory/serviceAction/getAvailableExtentionProperties,Built-in
+Global Reader,microsoft.directory/servicePrincipalCreationPolicies/standard/read,Built-in
+Global Reader,microsoft.directory/servicePrincipals/allProperties/read,Built-in
+Global Reader,microsoft.directory/servicePrincipals/synchronization/standard/read,Built-in
+Global Reader,microsoft.directory/signInReports/allProperties/read,Built-in
+Global Reader,microsoft.directory/subscribedSkus/allProperties/read,Built-in
+Global Reader,microsoft.directory/users/allProperties/read,Built-in
+Global Reader,microsoft.directory/users/authenticationMethods/standard/restrictedRead,Built-in
+Global Reader,microsoft.directory/verifiableCredentials/configuration/allProperties/read,Built-in
+Global Reader,microsoft.directory/verifiableCredentials/configuration/contracts/allProperties/read,Built-in
+Global Reader,microsoft.directory/verifiableCredentials/configuration/contracts/cards/allProperties/read,Built-in
+Global Reader,microsoft.edge/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.graph.dataConnect/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.hardware.support/shippingAddress/allProperties/read,Built-in
+Global Reader,microsoft.hardware.support/shippingStatus/allProperties/read,Built-in
+Global Reader,microsoft.hardware.support/warrantyClaims/allProperties/read,Built-in
+Global Reader,microsoft.healthPlatform/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.insights/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.microsoft365.organizationalData/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.networkAccess/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.office365.copilot/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.office365.fileStorageContainers/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.office365.messageCenter/messages/read,Built-in
+Global Reader,microsoft.office365.messageCenter/securityMessages/read,Built-in
+Global Reader,microsoft.office365.network/performance/allProperties/read,Built-in
+Global Reader,microsoft.office365.organizationalMessages/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.office365.protectionCenter/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.office365.securityComplianceCenter/allEntities/read,Built-in
+Global Reader,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Global Reader,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Global Reader,microsoft.office365.yammer/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.permissionsManagement/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.teams/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.virtualVisits/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.viva.glint/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.viva.goals/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.viva.pulse/allEntities/allProperties/read,Built-in
+Global Reader,microsoft.windows.updatesDeployments/allEntities/allProperties/read,Built-in
+Global Secure Access Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Global Secure Access Administrator,microsoft.directory/applicationPolicies/standard/read,Built-in
+Global Secure Access Administrator,microsoft.directory/applications/applicationProxy/read,Built-in
+Global Secure Access Administrator,microsoft.directory/applications/owners/read,Built-in
+Global Secure Access Administrator,microsoft.directory/applications/policies/read,Built-in
+Global Secure Access Administrator,microsoft.directory/applications/standard/read,Built-in
+Global Secure Access Administrator,microsoft.directory/auditLogs/allProperties/read,Built-in
+Global Secure Access Administrator,microsoft.directory/conditionalAccessPolicies/standard/read,Built-in
+Global Secure Access Administrator,microsoft.directory/connectorGroups/allProperties/read,Built-in
+Global Secure Access Administrator,microsoft.directory/connectors/allProperties/read,Built-in
+Global Secure Access Administrator,microsoft.directory/crossTenantAccessPolicy/default/standard/read,Built-in
+Global Secure Access Administrator,microsoft.directory/crossTenantAccessPolicy/partners/standard/read,Built-in
+Global Secure Access Administrator,microsoft.directory/crossTenantAccessPolicy/standard/read,Built-in
+Global Secure Access Administrator,microsoft.directory/namedLocations/standard/read,Built-in
+Global Secure Access Administrator,microsoft.directory/signInReports/allProperties/read,Built-in
+Global Secure Access Administrator,microsoft.networkAccess/allEntities/allProperties/allTasks,Built-in
+Global Secure Access Administrator,microsoft.office365.messageCenter/messages/read,Built-in
+Global Secure Access Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Global Secure Access Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Global Secure Access Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Global Secure Access Log Reader,microsoft.networkAccess/trafficLogs/standard/read,Built-in
+Groups Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Groups Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Groups Administrator,microsoft.directory/bulkJobs.groups/basic/update,Built-in
+Groups Administrator,microsoft.directory/bulkJobs.groups/create,Built-in
+Groups Administrator,microsoft.directory/bulkJobs.groups/standard/read,Built-in
+Groups Administrator,microsoft.directory/deletedItems.groups/delete,Built-in
+Groups Administrator,microsoft.directory/deletedItems.groups/restore,Built-in
+Groups Administrator,microsoft.directory/groups/assignedLabels/update,Built-in
+Groups Administrator,microsoft.directory/groups/assignLicense,Built-in
+Groups Administrator,microsoft.directory/groups/basic/update,Built-in
+Groups Administrator,microsoft.directory/groups/classification/update,Built-in
+Groups Administrator,microsoft.directory/groups/create,Built-in
+Groups Administrator,microsoft.directory/groups/delete,Built-in
+Groups Administrator,microsoft.directory/groups/dynamicMembershipRule/update,Built-in
+Groups Administrator,microsoft.directory/groups/groupType/update,Built-in
+Groups Administrator,microsoft.directory/groups/hiddenMembers/read,Built-in
+Groups Administrator,microsoft.directory/groups/members/update,Built-in
+Groups Administrator,microsoft.directory/groups/onPremWriteBack/update,Built-in
+Groups Administrator,microsoft.directory/groups/owners/update,Built-in
+Groups Administrator,microsoft.directory/groups/reprocessLicenseAssignment,Built-in
+Groups Administrator,microsoft.directory/groups/restore,Built-in
+Groups Administrator,microsoft.directory/groups/settings/update,Built-in
+Groups Administrator,microsoft.directory/groups/visibility/update,Built-in
+Groups Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Groups Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Groups Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Guest Inviter,microsoft.directory/users/appRoleAssignments/read,Built-in
+Guest Inviter,microsoft.directory/users/deviceForResourceAccount/read,Built-in
+Guest Inviter,microsoft.directory/users/directReports/read,Built-in
+Guest Inviter,microsoft.directory/users/invitedBy/read,Built-in
+Guest Inviter,microsoft.directory/users/inviteGuest,Built-in
+Guest Inviter,microsoft.directory/users/licenseDetails/read,Built-in
+Guest Inviter,microsoft.directory/users/manager/read,Built-in
+Guest Inviter,microsoft.directory/users/memberOf/read,Built-in
+Guest Inviter,microsoft.directory/users/oAuth2PermissionGrants/read,Built-in
+Guest Inviter,microsoft.directory/users/ownedDevices/read,Built-in
+Guest Inviter,microsoft.directory/users/ownedObjects/read,Built-in
+Guest Inviter,microsoft.directory/users/photo/read,Built-in
+Guest Inviter,microsoft.directory/users/registeredDevices/read,Built-in
+Guest Inviter,microsoft.directory/users/scopedRoleMemberOf/read,Built-in
+Guest Inviter,microsoft.directory/users/sponsorOf/read,Built-in
+Guest Inviter,microsoft.directory/users/sponsors/read,Built-in
+Guest Inviter,microsoft.directory/users/standard/read,Built-in
+Guest User,microsoft.directory/applications/owners/limitedRead,Built-in
+Guest User,microsoft.directory/applications/policies/limitedRead,Built-in
+Guest User,microsoft.directory/applications/standard/limitedRead,Built-in
+Guest User,microsoft.directory/directoryRoleTemplates/allProperties/read,Built-in
+Guest User,microsoft.directory/domains/standard/read,Built-in
+Guest User,microsoft.directory/groups/appRoleAssignments/limitedRead,Built-in
+Guest User,microsoft.directory/groups/memberOf/limitedRead,Built-in
+Guest User,microsoft.directory/groups/members/limitedRead,Built-in
+Guest User,microsoft.directory/groups/owners/limitedRead,Built-in
+Guest User,microsoft.directory/groups/settings/limitedRead,Built-in
+Guest User,microsoft.directory/groups/standard/limitedRead,Built-in
+Guest User,microsoft.directory/multiTenantOrganization/standard/read,Built-in
+Guest User,microsoft.directory/multiTenantOrganization/tenants/standard/read,Built-in
+Guest User,microsoft.directory/organization/basicProfile/read,Built-in
+Guest User,microsoft.directory/servicePrincipals/appRoleAssignedTo/limitedRead,Built-in
+Guest User,microsoft.directory/servicePrincipals/appRoleAssignments/limitedRead,Built-in
+Guest User,microsoft.directory/servicePrincipals/memberOf/limitedRead,Built-in
+Guest User,microsoft.directory/servicePrincipals/oAuth2PermissionGrants/limitedRead,Built-in
+Guest User,microsoft.directory/servicePrincipals/ownedObjects/limitedRead,Built-in
+Guest User,microsoft.directory/servicePrincipals/owners/limitedRead,Built-in
+Guest User,microsoft.directory/servicePrincipals/policies/limitedRead,Built-in
+Guest User,microsoft.directory/servicePrincipals/standard/limitedRead,Built-in
+Guest User,microsoft.directory/users/appRoleAssignments/read,Built-in
+Guest User,microsoft.directory/users/authenticationMethods/basic/update,Built-in
+Guest User,microsoft.directory/users/authenticationMethods/create,Built-in
+Guest User,microsoft.directory/users/authenticationMethods/delete,Built-in
+Guest User,microsoft.directory/users/authenticationMethods/standard/read,Built-in
+Guest User,microsoft.directory/users/authenticationMethods/standard/restrictedRead,Built-in
+Guest User,microsoft.directory/users/deviceForResourceAccount/read,Built-in
+Guest User,microsoft.directory/users/directReports/read,Built-in
+Guest User,microsoft.directory/users/eligibleMemberOf/read,Built-in
+Guest User,microsoft.directory/users/guestBasicProfile/limitedRead,Built-in
+Guest User,microsoft.directory/users/invitedBy/read,Built-in
+Guest User,microsoft.directory/users/inviteGuest,Built-in
+Guest User,microsoft.directory/users/licenseDetails/read,Built-in
+Guest User,microsoft.directory/users/manager/read,Built-in
+Guest User,microsoft.directory/users/memberOf/read,Built-in
+Guest User,microsoft.directory/users/oAuth2PermissionGrants/read,Built-in
+Guest User,microsoft.directory/users/ownedDevices/read,Built-in
+Guest User,microsoft.directory/users/ownedObjects/read,Built-in
+Guest User,microsoft.directory/users/password/update,Built-in
+Guest User,microsoft.directory/users/pendingMemberOf/read,Built-in
+Guest User,microsoft.directory/users/photo/read,Built-in
+Guest User,microsoft.directory/users/registeredDevices/read,Built-in
+Guest User,microsoft.directory/users/scopedRoleMemberOf/read,Built-in
+Guest User,microsoft.directory/users/sponsorOf/read,Built-in
+Guest User,microsoft.directory/users/sponsors/read,Built-in
+Guest User,microsoft.directory/users/standard/read,Built-in
+Helpdesk Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Helpdesk Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Helpdesk Administrator,microsoft.directory/bitlockerKeys/key/read,Built-in
+Helpdesk Administrator,microsoft.directory/deviceLocalCredentials/standard/read,Built-in
+Helpdesk Administrator,microsoft.directory/users/invalidateAllRefreshTokens,Built-in
+Helpdesk Administrator,microsoft.directory/users/password/update,Built-in
+Helpdesk Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Helpdesk Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Helpdesk Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Hybrid Identity Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Hybrid Identity Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Hybrid Identity Administrator,microsoft.directory/applications/appRoles/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/applications/audience/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/applications/authentication/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/applications/basic/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/applications/create,Built-in
+Hybrid Identity Administrator,microsoft.directory/applications/delete,Built-in
+Hybrid Identity Administrator,microsoft.directory/applications/disablement/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/applications/notes/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/applications/owners/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/applications/permissions/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/applications/policies/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/applications/synchronization/standard/read,Built-in
+Hybrid Identity Administrator,microsoft.directory/applications/tag/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/applicationTemplates/instantiate,Built-in
+Hybrid Identity Administrator,microsoft.directory/auditLogs/allProperties/read,Built-in
+Hybrid Identity Administrator,microsoft.directory/cloudProvisioning/allProperties/allTasks,Built-in
+Hybrid Identity Administrator,microsoft.directory/deletedItems.applications/delete,Built-in
+Hybrid Identity Administrator,microsoft.directory/deletedItems.applications/restore,Built-in
+Hybrid Identity Administrator,microsoft.directory/domains/allProperties/read,Built-in
+Hybrid Identity Administrator,microsoft.directory/domains/federation/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/domains/federationConfiguration/basic/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/domains/federationConfiguration/create,Built-in
+Hybrid Identity Administrator,microsoft.directory/domains/federationConfiguration/delete,Built-in
+Hybrid Identity Administrator,microsoft.directory/domains/federationConfiguration/standard/read,Built-in
+Hybrid Identity Administrator,microsoft.directory/hybridAuthenticationPolicy/allProperties/allTasks,Built-in
+Hybrid Identity Administrator,microsoft.directory/onPremisesSynchronization/basic/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/onPremisesSynchronization/standard/read,Built-in
+Hybrid Identity Administrator,microsoft.directory/organization/dirSync/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/passwordHashSync/allProperties/allTasks,Built-in
+Hybrid Identity Administrator,microsoft.directory/provisioningLogs/allProperties/read,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/appRoleAssignedTo/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/audience/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/authentication/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/basic/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/create,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/delete,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/disable,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/enable,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/notes/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/owners/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/permissions/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/policies/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToCloudTenant/credentials/manage,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToCloudTenant/jobs/manage,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToCloudTenant/schema/manage,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToExternalSystem/credentials/manage,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToExternalSystem/jobs/manage,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/synchronization.cloudTenantToExternalSystem/schema/manage,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/synchronization/standard/read,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/synchronizationCredentials/manage,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/synchronizationJobs/manage,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/synchronizationSchema/manage,Built-in
+Hybrid Identity Administrator,microsoft.directory/servicePrincipals/tag/update,Built-in
+Hybrid Identity Administrator,microsoft.directory/signInReports/allProperties/read,Built-in
+Hybrid Identity Administrator,microsoft.directory/users/authorizationInfo/update,Built-in
+Hybrid Identity Administrator,microsoft.office365.messageCenter/messages/read,Built-in
+Hybrid Identity Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Hybrid Identity Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Hybrid Identity Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Identity Governance Administrator,microsoft.directory/accessReviews/allProperties/allTasks,Built-in
+Identity Governance Administrator,microsoft.directory/accessReviews/definitions.applications/allProperties/allTasks,Built-in
+Identity Governance Administrator,microsoft.directory/accessReviews/definitions.entitlementManagement/allProperties/allTasks,Built-in
+Identity Governance Administrator,microsoft.directory/accessReviews/definitions.groups/allProperties/read,Built-in
+Identity Governance Administrator,microsoft.directory/accessReviews/definitions.groups/allProperties/update,Built-in
+Identity Governance Administrator,microsoft.directory/accessReviews/definitions.groups/create,Built-in
+Identity Governance Administrator,microsoft.directory/accessReviews/definitions.groups/delete,Built-in
+Identity Governance Administrator,microsoft.directory/entitlementManagement/allProperties/allTasks,Built-in
+Identity Governance Administrator,microsoft.directory/groups/members/update,Built-in
+Identity Governance Administrator,microsoft.directory/servicePrincipals/appRoleAssignedTo/update,Built-in
+Insights Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Insights Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Insights Administrator,microsoft.insights/allEntities/allProperties/allTasks,Built-in
+Insights Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Insights Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Insights Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Insights Analyst,microsoft.insights/queries/allProperties/allTasks,Built-in
+Insights Analyst,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Insights Analyst,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Insights Business Leader,microsoft.insights/programs/allProperties/update,Built-in
+Insights Business Leader,microsoft.insights/reports/allProperties/read,Built-in
+Intune Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Intune Administrator,microsoft.cloudPC/allEntities/allProperties/allTasks,Built-in
+Intune Administrator,microsoft.directory/bitlockerKeys/key/read,Built-in
+Intune Administrator,microsoft.directory/contacts/basic/update,Built-in
+Intune Administrator,microsoft.directory/contacts/create,Built-in
+Intune Administrator,microsoft.directory/contacts/delete,Built-in
+Intune Administrator,microsoft.directory/deletedItems.devices/delete,Built-in
+Intune Administrator,microsoft.directory/deletedItems.devices/restore,Built-in
+Intune Administrator,microsoft.directory/deviceLocalCredentials/password/read,Built-in
+Intune Administrator,microsoft.directory/deviceManagementPolicies/standard/read,Built-in
+Intune Administrator,microsoft.directory/deviceRegistrationPolicy/standard/read,Built-in
+Intune Administrator,microsoft.directory/devices/basic/update,Built-in
+Intune Administrator,microsoft.directory/devices/create,Built-in
+Intune Administrator,microsoft.directory/devices/delete,Built-in
+Intune Administrator,microsoft.directory/devices/disable,Built-in
+Intune Administrator,microsoft.directory/devices/enable,Built-in
+Intune Administrator,microsoft.directory/devices/extensionAttributeSet1/update,Built-in
+Intune Administrator,microsoft.directory/devices/extensionAttributeSet2/update,Built-in
+Intune Administrator,microsoft.directory/devices/extensionAttributeSet3/update,Built-in
+Intune Administrator,microsoft.directory/devices/registeredOwners/update,Built-in
+Intune Administrator,microsoft.directory/devices/registeredUsers/update,Built-in
+Intune Administrator,microsoft.directory/groups.security/assignedLabels/update,Built-in
+Intune Administrator,microsoft.directory/groups.security/basic/update,Built-in
+Intune Administrator,microsoft.directory/groups.security/classification/update,Built-in
+Intune Administrator,microsoft.directory/groups.security/create,Built-in
+Intune Administrator,microsoft.directory/groups.security/delete,Built-in
+Intune Administrator,microsoft.directory/groups.security/dynamicMembershipRule/update,Built-in
+Intune Administrator,microsoft.directory/groups.security/members/update,Built-in
+Intune Administrator,microsoft.directory/groups.security/owners/update,Built-in
+Intune Administrator,microsoft.directory/groups.security/visibility/update,Built-in
+Intune Administrator,microsoft.directory/groups/hiddenMembers/read,Built-in
+Intune Administrator,microsoft.directory/users/basic/update,Built-in
+Intune Administrator,microsoft.directory/users/manager/update,Built-in
+Intune Administrator,microsoft.directory/users/photo/update,Built-in
+Intune Administrator,microsoft.intune/allEntities/allTasks,Built-in
+Intune Administrator,microsoft.office365.organizationalMessages/allEntities/allProperties/read,Built-in
+Intune Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Intune Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+IoT Device Administrator,microsoft.directory/certificateBasedDeviceAuthConfigurations/create,Built-in
+IoT Device Administrator,microsoft.directory/certificateBasedDeviceAuthConfigurations/credentials/update,Built-in
+IoT Device Administrator,microsoft.directory/certificateBasedDeviceAuthConfigurations/delete,Built-in
+IoT Device Administrator,microsoft.directory/certificateBasedDeviceAuthConfigurations/standard/read,Built-in
+IoT Device Administrator,microsoft.directory/deviceTemplates/create,Built-in
+IoT Device Administrator,microsoft.directory/deviceTemplates/createDeviceFromTemplate,Built-in
+IoT Device Administrator,microsoft.directory/deviceTemplates/delete,Built-in
+IoT Device Administrator,microsoft.directory/deviceTemplates/deviceInstances/read,Built-in
+IoT Device Administrator,microsoft.directory/deviceTemplates/owners/read,Built-in
+IoT Device Administrator,microsoft.directory/deviceTemplates/owners/update,Built-in
+Kaizala Administrator,microsoft.directory/authorizationPolicy/standard/read,Built-in
+Kaizala Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Kaizala Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Kaizala Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Knowledge Administrator,microsoft.directory/groups.security/basic/update,Built-in
+Knowledge Administrator,microsoft.directory/groups.security/create,Built-in
+Knowledge Administrator,microsoft.directory/groups.security/createAsOwner,Built-in
+Knowledge Administrator,microsoft.directory/groups.security/delete,Built-in
+Knowledge Administrator,microsoft.directory/groups.security/members/update,Built-in
+Knowledge Administrator,microsoft.directory/groups.security/owners/update,Built-in
+Knowledge Administrator,microsoft.office365.knowledge/contentUnderstanding/allProperties/allTasks,Built-in
+Knowledge Administrator,microsoft.office365.knowledge/knowledgeNetwork/allProperties/allTasks,Built-in
+Knowledge Administrator,microsoft.office365.knowledge/learningSources/allProperties/allTasks,Built-in
+Knowledge Administrator,microsoft.office365.protectionCenter/sensitivityLabels/allProperties/read,Built-in
+Knowledge Administrator,microsoft.office365.sharePoint/allEntities/allTasks,Built-in
+Knowledge Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Knowledge Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Knowledge Manager,microsoft.directory/groups.security/basic/update,Built-in
+Knowledge Manager,microsoft.directory/groups.security/create,Built-in
+Knowledge Manager,microsoft.directory/groups.security/createAsOwner,Built-in
+Knowledge Manager,microsoft.directory/groups.security/delete,Built-in
+Knowledge Manager,microsoft.directory/groups.security/members/update,Built-in
+Knowledge Manager,microsoft.directory/groups.security/owners/update,Built-in
+Knowledge Manager,microsoft.office365.knowledge/contentUnderstanding/analytics/allProperties/read,Built-in
+Knowledge Manager,microsoft.office365.knowledge/knowledgeNetwork/topicVisibility/allProperties/allTasks,Built-in
+Knowledge Manager,microsoft.office365.sharePoint/allEntities/allTasks,Built-in
+Knowledge Manager,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Knowledge Manager,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+License Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+License Administrator,microsoft.directory/authorizationPolicy/standard/read,Built-in
+License Administrator,microsoft.directory/groups/assignLicense,Built-in
+License Administrator,microsoft.directory/groups/reprocessLicenseAssignment,Built-in
+License Administrator,microsoft.directory/users/assignLicense,Built-in
+License Administrator,microsoft.directory/users/reprocessLicenseAssignment,Built-in
+License Administrator,microsoft.directory/users/usageLocation/update,Built-in
+License Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+License Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Lifecycle Workflows Administrator,microsoft.directory/lifecycleWorkflows/workflows/allProperties/allTasks,Built-in
+Lifecycle Workflows Administrator,microsoft.directory/organization/strongAuthentication/read,Built-in
+Lifecycle Workflows Administrator,microsoft.directory/users/lifeCycleInfo/read,Built-in
+Message Center Privacy Reader,microsoft.office365.messageCenter/messages/read,Built-in
+Message Center Privacy Reader,microsoft.office365.messageCenter/securityMessages/read,Built-in
+Message Center Privacy Reader,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Message Center Reader,microsoft.office365.messageCenter/messages/read,Built-in
+Message Center Reader,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Microsoft 365 Backup Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Microsoft 365 Backup Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Microsoft 365 Backup Administrator,microsoft.backup/allEntities/allProperties/allTasks,Built-in
+Microsoft 365 Backup Administrator,microsoft.office365.network/performance/allProperties/read,Built-in
+Microsoft 365 Backup Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Microsoft 365 Backup Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Microsoft 365 Backup Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+Microsoft 365 Backup Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Microsoft 365 Migration Administrator,microsoft.office365.migrations/allEntities/allProperties/allTasks,Built-in
+Microsoft 365 Migration Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Microsoft 365 Migration Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Microsoft Graph Data Connect Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Microsoft Graph Data Connect Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Microsoft Graph Data Connect Administrator,microsoft.graph.dataConnect/allEntities/allProperties/allTasks,Built-in
+Microsoft Graph Data Connect Administrator,microsoft.office365.messageCenter/messages/read,Built-in
+Microsoft Graph Data Connect Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Microsoft Graph Data Connect Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Microsoft Graph Data Connect Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Microsoft Hardware Warranty Administrator,microsoft.hardware.support/shippingAddress/allProperties/allTasks,Built-in
+Microsoft Hardware Warranty Administrator,microsoft.hardware.support/shippingStatus/allProperties/read,Built-in
+Microsoft Hardware Warranty Administrator,microsoft.hardware.support/warrantyClaims/allProperties/allTasks,Built-in
+Microsoft Hardware Warranty Administrator,microsoft.office365.messageCenter/messages/read,Built-in
+Microsoft Hardware Warranty Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Microsoft Hardware Warranty Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Microsoft Hardware Warranty Specialist,microsoft.hardware.support/shippingAddress/allProperties/read,Built-in
+Microsoft Hardware Warranty Specialist,microsoft.hardware.support/shippingStatus/allProperties/read,Built-in
+Microsoft Hardware Warranty Specialist,microsoft.hardware.support/warrantyClaims/allProperties/read,Built-in
+Microsoft Hardware Warranty Specialist,microsoft.hardware.support/warrantyClaims/createAsOwner,Built-in
+Microsoft Hardware Warranty Specialist,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Microsoft Hardware Warranty Specialist,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Network Administrator,microsoft.office365.network/locations/allProperties/allTasks,Built-in
+Network Administrator,microsoft.office365.network/performance/allProperties/read,Built-in
+Network Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Office Apps Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Office Apps Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Office Apps Administrator,microsoft.office365.messageCenter/messages/read,Built-in
+Office Apps Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Office Apps Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Office Apps Administrator,microsoft.office365.userCommunication/allEntities/allTasks,Built-in
+Office Apps Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+On Premises Directory Sync Account,microsoft.directory/onPremisesSynchronization/standard/read,Built-in
+Organizational Branding Administrator,microsoft.directory/loginOrganizationBranding/allProperties/allTasks,Built-in
+Organizational Data Source Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Organizational Data Source Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Organizational Data Source Administrator,microsoft.microsoft365.organizationalData/allEntities/allProperties/allTasks,Built-in
+Organizational Data Source Administrator,microsoft.office365.messageCenter/messages/read,Built-in
+Organizational Data Source Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Organizational Data Source Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Organizational Data Source Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Organizational Messages Approver,microsoft.office365.organizationalMessages/allEntities/allProperties/read,Built-in
+Organizational Messages Approver,microsoft.office365.organizationalMessages/allEntities/allProperties/update,Built-in
+Organizational Messages Approver,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Organizational Messages Writer,microsoft.office365.organizationalMessages/allEntities/allProperties/allTasks,Built-in
+Organizational Messages Writer,microsoft.office365.usageReports/allEntities/standard/read,Built-in
+Organizational Messages Writer,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Partner Tier1 Support,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Partner Tier1 Support,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Partner Tier1 Support,microsoft.directory/applications/appRoles/update,Built-in
+Partner Tier1 Support,microsoft.directory/applications/audience/update,Built-in
+Partner Tier1 Support,microsoft.directory/applications/authentication/update,Built-in
+Partner Tier1 Support,microsoft.directory/applications/basic/update,Built-in
+Partner Tier1 Support,microsoft.directory/applications/credentials/update,Built-in
+Partner Tier1 Support,microsoft.directory/applications/notes/update,Built-in
+Partner Tier1 Support,microsoft.directory/applications/owners/update,Built-in
+Partner Tier1 Support,microsoft.directory/applications/permissions/update,Built-in
+Partner Tier1 Support,microsoft.directory/applications/policies/update,Built-in
+Partner Tier1 Support,microsoft.directory/applications/tag/update,Built-in
+Partner Tier1 Support,microsoft.directory/contacts/basic/update,Built-in
+Partner Tier1 Support,microsoft.directory/contacts/create,Built-in
+Partner Tier1 Support,microsoft.directory/contacts/delete,Built-in
+Partner Tier1 Support,microsoft.directory/deletedItems.groups/restore,Built-in
+Partner Tier1 Support,microsoft.directory/deletedItems.users/restore,Built-in
+Partner Tier1 Support,microsoft.directory/groups.unified/assignedLabels/update,Built-in
+Partner Tier1 Support,microsoft.directory/groups/create,Built-in
+Partner Tier1 Support,microsoft.directory/groups/delete,Built-in
+Partner Tier1 Support,microsoft.directory/groups/members/update,Built-in
+Partner Tier1 Support,microsoft.directory/groups/owners/update,Built-in
+Partner Tier1 Support,microsoft.directory/groups/restore,Built-in
+Partner Tier1 Support,microsoft.directory/oAuth2PermissionGrants/allProperties/allTasks,Built-in
+Partner Tier1 Support,microsoft.directory/servicePrincipals/appRoleAssignedTo/update,Built-in
+Partner Tier1 Support,microsoft.directory/users/assignLicense,Built-in
+Partner Tier1 Support,microsoft.directory/users/basic/update,Built-in
+Partner Tier1 Support,microsoft.directory/users/create,Built-in
+Partner Tier1 Support,microsoft.directory/users/delete,Built-in
+Partner Tier1 Support,microsoft.directory/users/disable,Built-in
+Partner Tier1 Support,microsoft.directory/users/enable,Built-in
+Partner Tier1 Support,microsoft.directory/users/invalidateAllRefreshTokens,Built-in
+Partner Tier1 Support,microsoft.directory/users/manager/update,Built-in
+Partner Tier1 Support,microsoft.directory/users/password/update,Built-in
+Partner Tier1 Support,microsoft.directory/users/photo/update,Built-in
+Partner Tier1 Support,microsoft.directory/users/restore,Built-in
+Partner Tier1 Support,microsoft.directory/users/userPrincipalName/update,Built-in
+Partner Tier1 Support,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Partner Tier1 Support,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Partner Tier1 Support,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Partner Tier2 Support,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Partner Tier2 Support,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Partner Tier2 Support,microsoft.directory/applications/appRoles/update,Built-in
+Partner Tier2 Support,microsoft.directory/applications/audience/update,Built-in
+Partner Tier2 Support,microsoft.directory/applications/authentication/update,Built-in
+Partner Tier2 Support,microsoft.directory/applications/basic/update,Built-in
+Partner Tier2 Support,microsoft.directory/applications/credentials/update,Built-in
+Partner Tier2 Support,microsoft.directory/applications/notes/update,Built-in
+Partner Tier2 Support,microsoft.directory/applications/owners/update,Built-in
+Partner Tier2 Support,microsoft.directory/applications/permissions/update,Built-in
+Partner Tier2 Support,microsoft.directory/applications/policies/update,Built-in
+Partner Tier2 Support,microsoft.directory/applications/tag/update,Built-in
+Partner Tier2 Support,microsoft.directory/contacts/basic/update,Built-in
+Partner Tier2 Support,microsoft.directory/contacts/create,Built-in
+Partner Tier2 Support,microsoft.directory/contacts/delete,Built-in
+Partner Tier2 Support,microsoft.directory/deletedItems.groups/restore,Built-in
+Partner Tier2 Support,microsoft.directory/deletedItems.users/restore,Built-in
+Partner Tier2 Support,microsoft.directory/domains/allProperties/allTasks,Built-in
+Partner Tier2 Support,microsoft.directory/groups.unified/assignedLabels/update,Built-in
+Partner Tier2 Support,microsoft.directory/groups/create,Built-in
+Partner Tier2 Support,microsoft.directory/groups/delete,Built-in
+Partner Tier2 Support,microsoft.directory/groups/members/update,Built-in
+Partner Tier2 Support,microsoft.directory/groups/owners/update,Built-in
+Partner Tier2 Support,microsoft.directory/groups/restore,Built-in
+Partner Tier2 Support,microsoft.directory/oAuth2PermissionGrants/allProperties/allTasks,Built-in
+Partner Tier2 Support,microsoft.directory/organization/basic/update,Built-in
+Partner Tier2 Support,microsoft.directory/roleAssignments/allProperties/allTasks,Built-in
+Partner Tier2 Support,microsoft.directory/roleDefinitions/allProperties/allTasks,Built-in
+Partner Tier2 Support,microsoft.directory/scopedRoleMemberships/allProperties/allTasks,Built-in
+Partner Tier2 Support,microsoft.directory/servicePrincipals/appRoleAssignedTo/update,Built-in
+Partner Tier2 Support,microsoft.directory/subscribedSkus/standard/read,Built-in
+Partner Tier2 Support,microsoft.directory/users/assignLicense,Built-in
+Partner Tier2 Support,microsoft.directory/users/basic/update,Built-in
+Partner Tier2 Support,microsoft.directory/users/create,Built-in
+Partner Tier2 Support,microsoft.directory/users/delete,Built-in
+Partner Tier2 Support,microsoft.directory/users/disable,Built-in
+Partner Tier2 Support,microsoft.directory/users/enable,Built-in
+Partner Tier2 Support,microsoft.directory/users/invalidateAllRefreshTokens,Built-in
+Partner Tier2 Support,microsoft.directory/users/manager/update,Built-in
+Partner Tier2 Support,microsoft.directory/users/password/update,Built-in
+Partner Tier2 Support,microsoft.directory/users/photo/update,Built-in
+Partner Tier2 Support,microsoft.directory/users/restore,Built-in
+Partner Tier2 Support,microsoft.directory/users/userPrincipalName/update,Built-in
+Partner Tier2 Support,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Partner Tier2 Support,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Partner Tier2 Support,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Password Administrator,microsoft.directory/users/password/update,Built-in
+Password Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+People Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+People Administrator,microsoft.people/users/photo/read,Built-in
+People Administrator,microsoft.people/users/photo/update,Built-in
+People Administrator,microsoft.peopleAdmin/organization/allProperties/read,Built-in
+People Administrator,microsoft.peopleAdmin/organization/allProperties/update,Built-in
+Permissions Management Administrator,microsoft.permissionsManagement/allEntities/allProperties/allTasks,Built-in
+Places Administrator,microsoft.places/allEntities/allProperties/allTasks,Built-in
+Power Platform Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Power Platform Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Power Platform Administrator,microsoft.dynamics365/allEntities/allTasks,Built-in
+Power Platform Administrator,microsoft.flow/allEntities/allTasks,Built-in
+Power Platform Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Power Platform Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Power Platform Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Power Platform Administrator,microsoft.powerApps/allEntities/allTasks,Built-in
+Printer Administrator,microsoft.azure.print/allEntities/allProperties/allTasks,Built-in
+Printer Technician,microsoft.azure.print/connectors/allProperties/read,Built-in
+Printer Technician,microsoft.azure.print/printers/allProperties/read,Built-in
+Printer Technician,microsoft.azure.print/printers/basic/update,Built-in
+Printer Technician,microsoft.azure.print/printers/register,Built-in
+Printer Technician,microsoft.azure.print/printers/unregister,Built-in
+Privileged Authentication Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Privileged Authentication Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Privileged Authentication Administrator,microsoft.directory/deletedItems.users/restore,Built-in
+Privileged Authentication Administrator,microsoft.directory/users/authenticationMethods/basic/update,Built-in
+Privileged Authentication Administrator,microsoft.directory/users/authenticationMethods/create,Built-in
+Privileged Authentication Administrator,microsoft.directory/users/authenticationMethods/delete,Built-in
+Privileged Authentication Administrator,microsoft.directory/users/authenticationMethods/standard/read,Built-in
+Privileged Authentication Administrator,microsoft.directory/users/authorizationInfo/update,Built-in
+Privileged Authentication Administrator,microsoft.directory/users/basic/update,Built-in
+Privileged Authentication Administrator,microsoft.directory/users/delete,Built-in
+Privileged Authentication Administrator,microsoft.directory/users/disable,Built-in
+Privileged Authentication Administrator,microsoft.directory/users/enable,Built-in
+Privileged Authentication Administrator,microsoft.directory/users/invalidateAllRefreshTokens,Built-in
+Privileged Authentication Administrator,microsoft.directory/users/manager/update,Built-in
+Privileged Authentication Administrator,microsoft.directory/users/password/update,Built-in
+Privileged Authentication Administrator,microsoft.directory/users/restore,Built-in
+Privileged Authentication Administrator,microsoft.directory/users/userPrincipalName/update,Built-in
+Privileged Authentication Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Privileged Authentication Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Privileged Authentication Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Privileged Role Administrator,microsoft.directory/accessReviews/definitions.applications/allProperties/read,Built-in
+Privileged Role Administrator,microsoft.directory/accessReviews/definitions.directoryRoles/allProperties/allTasks,Built-in
+Privileged Role Administrator,microsoft.directory/accessReviews/definitions.groups/allProperties/read,Built-in
+Privileged Role Administrator,microsoft.directory/accessReviews/definitions.groupsAssignableToRoles/allProperties/update,Built-in
+Privileged Role Administrator,microsoft.directory/accessReviews/definitions.groupsAssignableToRoles/create,Built-in
+Privileged Role Administrator,microsoft.directory/accessReviews/definitions.groupsAssignableToRoles/delete,Built-in
+Privileged Role Administrator,microsoft.directory/administrativeUnits/allProperties/allTasks,Built-in
+Privileged Role Administrator,microsoft.directory/authorizationPolicy/allProperties/allTasks,Built-in
+Privileged Role Administrator,microsoft.directory/directoryRoles/allProperties/allTasks,Built-in
+Privileged Role Administrator,microsoft.directory/groupsAssignableToRoles/allProperties/update,Built-in
+Privileged Role Administrator,microsoft.directory/groupsAssignableToRoles/assignLicense,Built-in
+Privileged Role Administrator,microsoft.directory/groupsAssignableToRoles/create,Built-in
+Privileged Role Administrator,microsoft.directory/groupsAssignableToRoles/delete,Built-in
+Privileged Role Administrator,microsoft.directory/groupsAssignableToRoles/reprocessLicenseAssignment,Built-in
+Privileged Role Administrator,microsoft.directory/groupsAssignableToRoles/restore,Built-in
+Privileged Role Administrator,microsoft.directory/oAuth2PermissionGrants/allProperties/allTasks,Built-in
+Privileged Role Administrator,microsoft.directory/permissionGrantPolicies/allProperties/read,Built-in
+Privileged Role Administrator,microsoft.directory/permissionGrantPolicies/allProperties/update,Built-in
+Privileged Role Administrator,microsoft.directory/permissionGrantPolicies/create,Built-in
+Privileged Role Administrator,microsoft.directory/permissionGrantPolicies/delete,Built-in
+Privileged Role Administrator,microsoft.directory/privilegedIdentityManagement/allProperties/allTasks,Built-in
+Privileged Role Administrator,microsoft.directory/roleAssignments/allProperties/allTasks,Built-in
+Privileged Role Administrator,microsoft.directory/roleDefinitions/allProperties/allTasks,Built-in
+Privileged Role Administrator,microsoft.directory/scopedRoleMemberships/allProperties/allTasks,Built-in
+Privileged Role Administrator,microsoft.directory/servicePrincipals/appRoleAssignedTo/update,Built-in
+Privileged Role Administrator,microsoft.directory/servicePrincipals/managePermissionGrantsForAll.microsoft-company-admin,Built-in
+Privileged Role Administrator,microsoft.directory/servicePrincipals/permissions/update,Built-in
+Privileged Role Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Reports Reader,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Reports Reader,microsoft.directory/auditLogs/allProperties/read,Built-in
+Reports Reader,microsoft.directory/provisioningLogs/allProperties/read,Built-in
+Reports Reader,microsoft.directory/signInReports/allProperties/read,Built-in
+Reports Reader,microsoft.office365.network/performance/allProperties/read,Built-in
+Reports Reader,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+Reports Reader,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Restricted Guest User,microsoft.directory/applications/owners/limitedRead,Built-in
+Restricted Guest User,microsoft.directory/applications/policies/limitedRead,Built-in
+Restricted Guest User,microsoft.directory/applications/standard/limitedRead,Built-in
+Restricted Guest User,microsoft.directory/directoryRoleTemplates/allProperties/read,Built-in
+Restricted Guest User,microsoft.directory/domains/standard/read,Built-in
+Restricted Guest User,microsoft.directory/organization/basicProfile/read,Built-in
+Restricted Guest User,microsoft.directory/servicePrincipals/appRoleAssignedTo/limitedRead,Built-in
+Restricted Guest User,microsoft.directory/servicePrincipals/appRoleAssignments/limitedRead,Built-in
+Restricted Guest User,microsoft.directory/servicePrincipals/memberOf/limitedRead,Built-in
+Restricted Guest User,microsoft.directory/servicePrincipals/oAuth2PermissionGrants/limitedRead,Built-in
+Restricted Guest User,microsoft.directory/servicePrincipals/ownedObjects/limitedRead,Built-in
+Restricted Guest User,microsoft.directory/servicePrincipals/owners/limitedRead,Built-in
+Restricted Guest User,microsoft.directory/servicePrincipals/policies/limitedRead,Built-in
+Restricted Guest User,microsoft.directory/servicePrincipals/standard/limitedRead,Built-in
+Restricted Guest User,microsoft.directory/users/appRoleAssignments/read,Built-in
+Restricted Guest User,microsoft.directory/users/authenticationMethods/basic/update,Built-in
+Restricted Guest User,microsoft.directory/users/authenticationMethods/create,Built-in
+Restricted Guest User,microsoft.directory/users/authenticationMethods/delete,Built-in
+Restricted Guest User,microsoft.directory/users/authenticationMethods/standard/read,Built-in
+Restricted Guest User,microsoft.directory/users/authenticationMethods/standard/restrictedRead,Built-in
+Restricted Guest User,microsoft.directory/users/deviceForResourceAccount/read,Built-in
+Restricted Guest User,microsoft.directory/users/directReports/read,Built-in
+Restricted Guest User,microsoft.directory/users/eligibleMemberOf/read,Built-in
+Restricted Guest User,microsoft.directory/users/invitedBy/read,Built-in
+Restricted Guest User,microsoft.directory/users/licenseDetails/read,Built-in
+Restricted Guest User,microsoft.directory/users/manager/read,Built-in
+Restricted Guest User,microsoft.directory/users/memberOf/read,Built-in
+Restricted Guest User,microsoft.directory/users/oAuth2PermissionGrants/read,Built-in
+Restricted Guest User,microsoft.directory/users/ownedDevices/read,Built-in
+Restricted Guest User,microsoft.directory/users/ownedObjects/read,Built-in
+Restricted Guest User,microsoft.directory/users/password/update,Built-in
+Restricted Guest User,microsoft.directory/users/pendingMemberOf/read,Built-in
+Restricted Guest User,microsoft.directory/users/photo/read,Built-in
+Restricted Guest User,microsoft.directory/users/registeredDevices/read,Built-in
+Restricted Guest User,microsoft.directory/users/scopedRoleMemberOf/read,Built-in
+Restricted Guest User,microsoft.directory/users/sponsorOf/read,Built-in
+Restricted Guest User,microsoft.directory/users/sponsors/read,Built-in
+Restricted Guest User,microsoft.directory/users/standard/read,Built-in
+Search Administrator,microsoft.office365.messageCenter/messages/read,Built-in
+Search Administrator,microsoft.office365.search/content/manage,Built-in
+Search Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Search Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Search Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Search Editor,microsoft.office365.messageCenter/messages/read,Built-in
+Search Editor,microsoft.office365.search/content/manage,Built-in
+Search Editor,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Security Administrator,microsoft.agentRegistry/allEntities/allProperties/read,Built-in
+Security Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Security Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Security Administrator,microsoft.directory/applications/policies/update,Built-in
+Security Administrator,microsoft.directory/auditLogs/allProperties/read,Built-in
+Security Administrator,microsoft.directory/authorizationPolicy/standard/read,Built-in
+Security Administrator,microsoft.directory/bitlockerKeys/key/read,Built-in
+Security Administrator,microsoft.directory/bulkJobs/standard/read,Built-in
+Security Administrator,microsoft.directory/conditionalAccessPolicies/basic/update,Built-in
+Security Administrator,microsoft.directory/conditionalAccessPolicies/create,Built-in
+Security Administrator,microsoft.directory/conditionalAccessPolicies/delete,Built-in
+Security Administrator,microsoft.directory/conditionalAccessPolicies/owners/read,Built-in
+Security Administrator,microsoft.directory/conditionalAccessPolicies/owners/update,Built-in
+Security Administrator,microsoft.directory/conditionalAccessPolicies/policyAppliedTo/read,Built-in
+Security Administrator,microsoft.directory/conditionalAccessPolicies/standard/read,Built-in
+Security Administrator,microsoft.directory/conditionalAccessPolicies/tenantDefault/update,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/allowedCloudEndpoints/update,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/basic/update,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/default/b2bCollaboration/update,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/default/b2bDirectConnect/update,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/default/crossCloudMeetings/update,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/default/standard/read,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/default/tenantRestrictions/update,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/partners/b2bCollaboration/update,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/partners/b2bDirectConnect/update,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/partners/create,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/partners/crossCloudMeetings/update,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/partners/delete,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/partners/identitySynchronization/basic/update,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/partners/identitySynchronization/create,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/partners/identitySynchronization/standard/read,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/partners/standard/read,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/partners/templates/multiTenantOrganizationIdentitySynchronization/basic/update,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/partners/templates/multiTenantOrganizationIdentitySynchronization/resetToDefaultSettings,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/partners/templates/multiTenantOrganizationIdentitySynchronization/standard/read,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/partners/templates/multiTenantOrganizationPartnerConfiguration/basic/update,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/partners/templates/multiTenantOrganizationPartnerConfiguration/resetToDefaultSettings,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/partners/templates/multiTenantOrganizationPartnerConfiguration/standard/read,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/partners/tenantRestrictions/update,Built-in
+Security Administrator,microsoft.directory/crossTenantAccessPolicy/standard/read,Built-in
+Security Administrator,microsoft.directory/deviceLocalCredentials/standard/read,Built-in
+Security Administrator,microsoft.directory/domains/federation/update,Built-in
+Security Administrator,microsoft.directory/domains/federationConfiguration/basic/update,Built-in
+Security Administrator,microsoft.directory/domains/federationConfiguration/create,Built-in
+Security Administrator,microsoft.directory/domains/federationConfiguration/delete,Built-in
+Security Administrator,microsoft.directory/domains/federationConfiguration/standard/read,Built-in
+Security Administrator,microsoft.directory/entitlementManagement/allProperties/read,Built-in
+Security Administrator,microsoft.directory/identityProtection/allProperties/read,Built-in
+Security Administrator,microsoft.directory/identityProtection/allProperties/update,Built-in
+Security Administrator,microsoft.directory/multiTenantOrganization/basic/update,Built-in
+Security Administrator,microsoft.directory/multiTenantOrganization/create,Built-in
+Security Administrator,microsoft.directory/multiTenantOrganization/joinRequest/organizationDetails/update,Built-in
+Security Administrator,microsoft.directory/multiTenantOrganization/joinRequest/standard/read,Built-in
+Security Administrator,microsoft.directory/multiTenantOrganization/standard/read,Built-in
+Security Administrator,microsoft.directory/multiTenantOrganization/tenants/create,Built-in
+Security Administrator,microsoft.directory/multiTenantOrganization/tenants/delete,Built-in
+Security Administrator,microsoft.directory/multiTenantOrganization/tenants/organizationDetails/read,Built-in
+Security Administrator,microsoft.directory/multiTenantOrganization/tenants/organizationDetails/update,Built-in
+Security Administrator,microsoft.directory/multiTenantOrganization/tenants/standard/read,Built-in
+Security Administrator,microsoft.directory/namedLocations/basic/update,Built-in
+Security Administrator,microsoft.directory/namedLocations/create,Built-in
+Security Administrator,microsoft.directory/namedLocations/delete,Built-in
+Security Administrator,microsoft.directory/namedLocations/standard/read,Built-in
+Security Administrator,microsoft.directory/policies/basic/update,Built-in
+Security Administrator,microsoft.directory/policies/create,Built-in
+Security Administrator,microsoft.directory/policies/delete,Built-in
+Security Administrator,microsoft.directory/policies/owners/update,Built-in
+Security Administrator,microsoft.directory/policies/tenantDefault/update,Built-in
+Security Administrator,microsoft.directory/privilegedIdentityManagement/allProperties/read,Built-in
+Security Administrator,microsoft.directory/provisioningLogs/allProperties/read,Built-in
+Security Administrator,microsoft.directory/resourceNamespaces/resourceActions/authenticationContext/update,Built-in
+Security Administrator,microsoft.directory/servicePrincipals/policies/update,Built-in
+Security Administrator,microsoft.directory/signInReports/allProperties/read,Built-in
+Security Administrator,microsoft.networkAccess/allEntities/allProperties/allTasks,Built-in
+Security Administrator,microsoft.office365.protectionCenter/allEntities/basic/update,Built-in
+Security Administrator,microsoft.office365.protectionCenter/allEntities/standard/read,Built-in
+Security Administrator,microsoft.office365.protectionCenter/attackSimulator/payload/allProperties/allTasks,Built-in
+Security Administrator,microsoft.office365.protectionCenter/attackSimulator/reports/allProperties/read,Built-in
+Security Administrator,microsoft.office365.protectionCenter/attackSimulator/simulation/allProperties/allTasks,Built-in
+Security Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Security Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Security Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Security Operator,microsoft.azure.advancedThreatProtection/allEntities/allTasks,Built-in
+Security Operator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Security Operator,microsoft.directory/auditLogs/allProperties/read,Built-in
+Security Operator,microsoft.directory/authorizationPolicy/standard/read,Built-in
+Security Operator,microsoft.directory/bulkJobs/standard/read,Built-in
+Security Operator,microsoft.directory/cloudAppSecurity/allProperties/allTasks,Built-in
+Security Operator,microsoft.directory/identityProtection/allProperties/allTasks,Built-in
+Security Operator,microsoft.directory/privilegedIdentityManagement/allProperties/read,Built-in
+Security Operator,microsoft.directory/provisioningLogs/allProperties/read,Built-in
+Security Operator,microsoft.directory/signInReports/allProperties/read,Built-in
+Security Operator,microsoft.intune/allEntities/read,Built-in
+Security Operator,microsoft.office365.securityComplianceCenter/allEntities/allTasks,Built-in
+Security Operator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Security Operator,microsoft.windows.defenderAdvancedThreatProtection/allEntities/allTasks,Built-in
+Security Reader,microsoft.agentRegistry/allEntities/allProperties/read,Built-in
+Security Reader,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Security Reader,microsoft.directory/accessReviews/definitions/allProperties/read,Built-in
+Security Reader,microsoft.directory/auditLogs/allProperties/read,Built-in
+Security Reader,microsoft.directory/authorizationPolicy/standard/read,Built-in
+Security Reader,microsoft.directory/bitlockerKeys/key/read,Built-in
+Security Reader,microsoft.directory/bulkJobs/standard/read,Built-in
+Security Reader,microsoft.directory/conditionalAccessPolicies/owners/read,Built-in
+Security Reader,microsoft.directory/conditionalAccessPolicies/policyAppliedTo/read,Built-in
+Security Reader,microsoft.directory/conditionalAccessPolicies/standard/read,Built-in
+Security Reader,microsoft.directory/crossTenantAccessPolicy/partners/templates/multiTenantOrganizationIdentitySynchronization/standard/read,Built-in
+Security Reader,microsoft.directory/crossTenantAccessPolicy/partners/templates/multiTenantOrganizationPartnerConfiguration/standard/read,Built-in
+Security Reader,microsoft.directory/deviceLocalCredentials/standard/read,Built-in
+Security Reader,microsoft.directory/domains/federationConfiguration/standard/read,Built-in
+Security Reader,microsoft.directory/entitlementManagement/allProperties/read,Built-in
+Security Reader,microsoft.directory/identityProtection/allProperties/read,Built-in
+Security Reader,microsoft.directory/multiTenantOrganization/joinRequest/standard/read,Built-in
+Security Reader,microsoft.directory/multiTenantOrganization/standard/read,Built-in
+Security Reader,microsoft.directory/multiTenantOrganization/tenants/organizationDetails/read,Built-in
+Security Reader,microsoft.directory/multiTenantOrganization/tenants/standard/read,Built-in
+Security Reader,microsoft.directory/namedLocations/standard/read,Built-in
+Security Reader,microsoft.directory/policies/owners/read,Built-in
+Security Reader,microsoft.directory/policies/policyAppliedTo/read,Built-in
+Security Reader,microsoft.directory/policies/standard/read,Built-in
+Security Reader,microsoft.directory/privilegedIdentityManagement/allProperties/read,Built-in
+Security Reader,microsoft.directory/provisioningLogs/allProperties/read,Built-in
+Security Reader,microsoft.directory/signInReports/allProperties/read,Built-in
+Security Reader,microsoft.networkAccess/allEntities/allProperties/read,Built-in
+Security Reader,microsoft.office365.protectionCenter/allEntities/standard/read,Built-in
+Security Reader,microsoft.office365.protectionCenter/attackSimulator/payload/allProperties/read,Built-in
+Security Reader,microsoft.office365.protectionCenter/attackSimulator/reports/allProperties/read,Built-in
+Security Reader,microsoft.office365.protectionCenter/attackSimulator/simulation/allProperties/read,Built-in
+Security Reader,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Security Reader,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Service Support Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Service Support Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Service Support Administrator,microsoft.office365.network/performance/allProperties/read,Built-in
+Service Support Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Service Support Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Service Support Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+SharePoint Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+SharePoint Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+SharePoint Administrator,microsoft.backup/oneDriveForBusinessProtectionPolicies/allProperties/allTasks,Built-in
+SharePoint Administrator,microsoft.backup/oneDriveForBusinessRestoreSessions/allProperties/allTasks,Built-in
+SharePoint Administrator,microsoft.backup/restorePoints/sites/allProperties/allTasks,Built-in
+SharePoint Administrator,microsoft.backup/restorePoints/userDrives/allProperties/allTasks,Built-in
+SharePoint Administrator,microsoft.backup/sharePointProtectionPolicies/allProperties/allTasks,Built-in
+SharePoint Administrator,microsoft.backup/sharePointRestoreSessions/allProperties/allTasks,Built-in
+SharePoint Administrator,microsoft.backup/siteProtectionUnits/allProperties/allTasks,Built-in
+SharePoint Administrator,microsoft.backup/siteRestoreArtifacts/allProperties/allTasks,Built-in
+SharePoint Administrator,microsoft.backup/userDriveProtectionUnits/allProperties/allTasks,Built-in
+SharePoint Administrator,microsoft.backup/userDriveRestoreArtifacts/allProperties/allTasks,Built-in
+SharePoint Administrator,microsoft.directory/groups.unified/assignedLabels/update,Built-in
+SharePoint Administrator,microsoft.directory/groups.unified/basic/update,Built-in
+SharePoint Administrator,microsoft.directory/groups.unified/create,Built-in
+SharePoint Administrator,microsoft.directory/groups.unified/delete,Built-in
+SharePoint Administrator,microsoft.directory/groups.unified/members/update,Built-in
+SharePoint Administrator,microsoft.directory/groups.unified/owners/update,Built-in
+SharePoint Administrator,microsoft.directory/groups.unified/restore,Built-in
+SharePoint Administrator,microsoft.directory/groups/hiddenMembers/read,Built-in
+SharePoint Administrator,microsoft.office365.migrations/allEntities/allProperties/allTasks,Built-in
+SharePoint Administrator,microsoft.office365.network/performance/allProperties/read,Built-in
+SharePoint Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+SharePoint Administrator,microsoft.office365.sharePoint/allEntities/allTasks,Built-in
+SharePoint Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+SharePoint Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+SharePoint Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+SharePoint Advanced Management Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+SharePoint Advanced Management Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+SharePoint Advanced Management Administrator,microsoft.backup/oneDriveForBusinessProtectionPolicies/allProperties/allTasks,Built-in
+SharePoint Advanced Management Administrator,microsoft.backup/oneDriveForBusinessRestoreSessions/allProperties/allTasks,Built-in
+SharePoint Advanced Management Administrator,microsoft.backup/restorePoints/sites/allProperties/allTasks,Built-in
+SharePoint Advanced Management Administrator,microsoft.backup/restorePoints/userDrives/allProperties/allTasks,Built-in
+SharePoint Advanced Management Administrator,microsoft.backup/sharePointProtectionPolicies/allProperties/allTasks,Built-in
+SharePoint Advanced Management Administrator,microsoft.backup/sharePointRestoreSessions/allProperties/allTasks,Built-in
+SharePoint Advanced Management Administrator,microsoft.backup/siteProtectionUnits/allProperties/allTasks,Built-in
+SharePoint Advanced Management Administrator,microsoft.backup/siteRestoreArtifacts/allProperties/allTasks,Built-in
+SharePoint Advanced Management Administrator,microsoft.backup/userDriveProtectionUnits/allProperties/allTasks,Built-in
+SharePoint Advanced Management Administrator,microsoft.backup/userDriveRestoreArtifacts/allProperties/allTasks,Built-in
+SharePoint Advanced Management Administrator,microsoft.directory/groups.unified/assignedLabels/update,Built-in
+SharePoint Advanced Management Administrator,microsoft.directory/groups.unified/basic/update,Built-in
+SharePoint Advanced Management Administrator,microsoft.directory/groups.unified/create,Built-in
+SharePoint Advanced Management Administrator,microsoft.directory/groups.unified/delete,Built-in
+SharePoint Advanced Management Administrator,microsoft.directory/groups.unified/members/update,Built-in
+SharePoint Advanced Management Administrator,microsoft.directory/groups.unified/owners/update,Built-in
+SharePoint Advanced Management Administrator,microsoft.directory/groups.unified/restore,Built-in
+SharePoint Advanced Management Administrator,microsoft.directory/groups/hiddenMembers/read,Built-in
+SharePoint Advanced Management Administrator,microsoft.office365.migrations/allEntities/allProperties/allTasks,Built-in
+SharePoint Advanced Management Administrator,microsoft.office365.network/performance/allProperties/read,Built-in
+SharePoint Advanced Management Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+SharePoint Advanced Management Administrator,microsoft.office365.sharePoint/allEntities/allTasks,Built-in
+SharePoint Advanced Management Administrator,microsoft.office365.sharePointAdvancedManagement/allEntities/allProperties/allTasks,Built-in
+SharePoint Advanced Management Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+SharePoint Advanced Management Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+SharePoint Advanced Management Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+SharePoint Backup Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+SharePoint Backup Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+SharePoint Backup Administrator,microsoft.backup/oneDriveForBusinessProtectionPolicies/allProperties/allTasks,Built-in
+SharePoint Backup Administrator,microsoft.backup/oneDriveForBusinessRestoreSessions/allProperties/allTasks,Built-in
+SharePoint Backup Administrator,microsoft.backup/restorePoints/sites/allProperties/allTasks,Built-in
+SharePoint Backup Administrator,microsoft.backup/restorePoints/userDrives/allProperties/allTasks,Built-in
+SharePoint Backup Administrator,microsoft.backup/sharePointProtectionPolicies/allProperties/allTasks,Built-in
+SharePoint Backup Administrator,microsoft.backup/sharePointRestoreSessions/allProperties/allTasks,Built-in
+SharePoint Backup Administrator,microsoft.backup/siteProtectionUnits/allProperties/allTasks,Built-in
+SharePoint Backup Administrator,microsoft.backup/siteRestoreArtifacts/allProperties/allTasks,Built-in
+SharePoint Backup Administrator,microsoft.backup/userDriveProtectionUnits/allProperties/allTasks,Built-in
+SharePoint Backup Administrator,microsoft.backup/userDriveRestoreArtifacts/allProperties/allTasks,Built-in
+SharePoint Backup Administrator,microsoft.office365.network/performance/allProperties/read,Built-in
+SharePoint Backup Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+SharePoint Backup Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+SharePoint Backup Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+SharePoint Backup Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+SharePoint Embedded Administrator,microsoft.office365.fileStorageContainers/allEntities/allProperties/allTasks,Built-in
+SharePoint Embedded Administrator,microsoft.office365.network/performance/allProperties/read,Built-in
+SharePoint Embedded Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+SharePoint Embedded Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+SharePoint Embedded Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+SharePoint Embedded Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Skype for Business Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Skype for Business Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Skype for Business Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Skype for Business Administrator,microsoft.office365.skypeForBusiness/allEntities/allTasks,Built-in
+Skype for Business Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Skype for Business Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+Skype for Business Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Teams Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Teams Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Teams Administrator,microsoft.directory/authorizationPolicy/standard/read,Built-in
+Teams Administrator,microsoft.directory/crossTenantAccessPolicy/allowedCloudEndpoints/update,Built-in
+Teams Administrator,microsoft.directory/crossTenantAccessPolicy/default/crossCloudMeetings/update,Built-in
+Teams Administrator,microsoft.directory/crossTenantAccessPolicy/default/standard/read,Built-in
+Teams Administrator,microsoft.directory/crossTenantAccessPolicy/partners/create,Built-in
+Teams Administrator,microsoft.directory/crossTenantAccessPolicy/partners/crossCloudMeetings/update,Built-in
+Teams Administrator,microsoft.directory/crossTenantAccessPolicy/partners/standard/read,Built-in
+Teams Administrator,microsoft.directory/crossTenantAccessPolicy/standard/read,Built-in
+Teams Administrator,microsoft.directory/externalUserProfiles/basic/update,Built-in
+Teams Administrator,microsoft.directory/externalUserProfiles/delete,Built-in
+Teams Administrator,microsoft.directory/externalUserProfiles/standard/read,Built-in
+Teams Administrator,microsoft.directory/groups.unified/assignedLabels/update,Built-in
+Teams Administrator,microsoft.directory/groups.unified/basic/update,Built-in
+Teams Administrator,microsoft.directory/groups.unified/create,Built-in
+Teams Administrator,microsoft.directory/groups.unified/delete,Built-in
+Teams Administrator,microsoft.directory/groups.unified/members/update,Built-in
+Teams Administrator,microsoft.directory/groups.unified/owners/update,Built-in
+Teams Administrator,microsoft.directory/groups.unified/restore,Built-in
+Teams Administrator,microsoft.directory/groups/hiddenMembers/read,Built-in
+Teams Administrator,microsoft.directory/pendingExternalUserProfiles/basic/update,Built-in
+Teams Administrator,microsoft.directory/pendingExternalUserProfiles/create,Built-in
+Teams Administrator,microsoft.directory/pendingExternalUserProfiles/delete,Built-in
+Teams Administrator,microsoft.directory/pendingExternalUserProfiles/standard/read,Built-in
+Teams Administrator,microsoft.directory/permissionGrantPolicies/standard/read,Built-in
+Teams Administrator,microsoft.office365.network/performance/allProperties/read,Built-in
+Teams Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Teams Administrator,microsoft.office365.skypeForBusiness/allEntities/allTasks,Built-in
+Teams Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Teams Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+Teams Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Teams Administrator,microsoft.teams/allEntities/allProperties/allTasks,Built-in
+Teams Communications Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Teams Communications Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Teams Communications Administrator,microsoft.directory/authorizationPolicy/standard/read,Built-in
+Teams Communications Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Teams Communications Administrator,microsoft.office365.skypeForBusiness/allEntities/allTasks,Built-in
+Teams Communications Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Teams Communications Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+Teams Communications Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Teams Communications Administrator,microsoft.teams/callQuality/allProperties/read,Built-in
+Teams Communications Administrator,microsoft.teams/meetings/allProperties/allTasks,Built-in
+Teams Communications Administrator,microsoft.teams/voice/allProperties/allTasks,Built-in
+Teams Communications Support Engineer,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Teams Communications Support Engineer,microsoft.directory/authorizationPolicy/standard/read,Built-in
+Teams Communications Support Engineer,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Teams Communications Support Engineer,microsoft.office365.skypeForBusiness/allEntities/allTasks,Built-in
+Teams Communications Support Engineer,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Teams Communications Support Engineer,microsoft.teams/callQuality/allProperties/read,Built-in
+Teams Communications Support Specialist,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Teams Communications Support Specialist,microsoft.directory/authorizationPolicy/standard/read,Built-in
+Teams Communications Support Specialist,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Teams Communications Support Specialist,microsoft.office365.skypeForBusiness/allEntities/allTasks,Built-in
+Teams Communications Support Specialist,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Teams Communications Support Specialist,microsoft.teams/callQuality/standard/read,Built-in
+Teams Devices Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Teams Devices Administrator,microsoft.teams/devices/standard/read,Built-in
+Teams External Collaboration Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Teams External Collaboration Administrator,microsoft.directory/authorizationPolicy/standard/read,Built-in
+Teams External Collaboration Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Teams External Collaboration Administrator,microsoft.teams/policies/externalAccessPolicy/allTasks,Built-in
+Teams Reader,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Teams Reader,microsoft.teams/allEntities/allProperties/read,Built-in
+Teams Telephony Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Teams Telephony Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Teams Telephony Administrator,microsoft.directory/authorizationPolicy/standard/read,Built-in
+Teams Telephony Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Teams Telephony Administrator,microsoft.office365.skypeForBusiness/allEntities/allTasks,Built-in
+Teams Telephony Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Teams Telephony Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+Teams Telephony Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Teams Telephony Administrator,microsoft.teams/callQuality/allProperties/read,Built-in
+Teams Telephony Administrator,microsoft.teams/voice/allProperties/allTasks,Built-in
+Tenant Creator,microsoft.directory/tenantManagement/tenants/create,Built-in
+Tenant Governance Administrator,microsoft.directory/crossTenantAccessPolicy/basic/update,Built-in
+Tenant Governance Administrator,microsoft.directory/crossTenantAccessPolicy/default/standard/read,Built-in
+Tenant Governance Administrator,microsoft.directory/crossTenantAccessPolicy/partners/create,Built-in
+Tenant Governance Administrator,microsoft.directory/crossTenantAccessPolicy/partners/delete,Built-in
+Tenant Governance Administrator,microsoft.directory/crossTenantAccessPolicy/partners/standard/read,Built-in
+Tenant Governance Administrator,microsoft.directory/crossTenantAccessPolicy/standard/read,Built-in
+Usage Summary Reports Reader,microsoft.office365.network/performance/allProperties/read,Built-in
+Usage Summary Reports Reader,microsoft.office365.usageReports/allEntities/standard/read,Built-in
+Usage Summary Reports Reader,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+User,microsoft.directory/administrativeUnits/members/read,Built-in
+User,microsoft.directory/administrativeUnits/standard/read,Built-in
+User,microsoft.directory/applicationPolicies/createAsOwner,Built-in
+User,microsoft.directory/applicationPolicies/standard/read,Built-in
+User,microsoft.directory/applications/appRoles/update,Built-in
+User,microsoft.directory/applications/audience/update,Built-in
+User,microsoft.directory/applications/authentication/update,Built-in
+User,microsoft.directory/applications/basic/update,Built-in
+User,microsoft.directory/applications/createAsOwner,Built-in
+User,microsoft.directory/applications/credentials/update,Built-in
+User,microsoft.directory/applications/delete,Built-in
+User,microsoft.directory/applications/disablement/update,Built-in
+User,microsoft.directory/applications/extensionProperties/update,Built-in
+User,microsoft.directory/applications/notes/update,Built-in
+User,microsoft.directory/applications/owners/read,Built-in
+User,microsoft.directory/applications/owners/update,Built-in
+User,microsoft.directory/applications/permissions/update,Built-in
+User,microsoft.directory/applications/policies/read,Built-in
+User,microsoft.directory/applications/policies/update,Built-in
+User,microsoft.directory/applications/standard/read,Built-in
+User,microsoft.directory/applications/tag/update,Built-in
+User,microsoft.directory/applications/verification/update,Built-in
+User,microsoft.directory/auditLogs/allProperties/read,Built-in
+User,microsoft.directory/authorizationPolicy/standard/read,Built-in
+User,microsoft.directory/contacts/memberOf/read,Built-in
+User,microsoft.directory/contacts/standard/read,Built-in
+User,microsoft.directory/contracts/standard/read,Built-in
+User,microsoft.directory/deletedItems.applications/delete,Built-in
+User,microsoft.directory/deletedItems.applications/restore,Built-in
+User,microsoft.directory/deletedItems.groups/restore,Built-in
+User,microsoft.directory/devices/disable,Built-in
+User,microsoft.directory/devices/memberOf/read,Built-in
+User,microsoft.directory/devices/registeredOwners/read,Built-in
+User,microsoft.directory/devices/registeredUsers/read,Built-in
+User,microsoft.directory/devices/standard/read,Built-in
+User,microsoft.directory/directoryRoles/eligibleMembers/read,Built-in
+User,microsoft.directory/directoryRoles/members/read,Built-in
+User,microsoft.directory/directoryRoles/standard/read,Built-in
+User,microsoft.directory/directoryRoleTemplates/allProperties/read,Built-in
+User,microsoft.directory/domains/standard/read,Built-in
+User,microsoft.directory/groups/appRoleAssignments/read,Built-in
+User,microsoft.directory/groups/assignedLabels/update,Built-in
+User,microsoft.directory/groups/basic/update,Built-in
+User,microsoft.directory/groups/classification/update,Built-in
+User,microsoft.directory/groups/createAsOwner,Built-in
+User,microsoft.directory/groups/delete,Built-in
+User,microsoft.directory/groups/groupType/update,Built-in
+User,microsoft.directory/groups/memberOf/read,Built-in
+User,microsoft.directory/groups/members/read,Built-in
+User,microsoft.directory/groups/members/update,Built-in
+User,microsoft.directory/groups/owners/read,Built-in
+User,microsoft.directory/groups/owners/update,Built-in
+User,microsoft.directory/groups/restore,Built-in
+User,microsoft.directory/groups/settings/update,Built-in
+User,microsoft.directory/groups/standard/read,Built-in
+User,microsoft.directory/groups/visibility/update,Built-in
+User,microsoft.directory/groupsAssignableToRoles/allProperties/update,Built-in
+User,microsoft.directory/groupsAssignableToRoles/assignLicense,Built-in
+User,microsoft.directory/groupsAssignableToRoles/delete,Built-in
+User,microsoft.directory/groupsAssignableToRoles/reprocessLicenseAssignment,Built-in
+User,microsoft.directory/groupsAssignableToRoles/restore,Built-in
+User,microsoft.directory/multiTenantOrganization/standard/read,Built-in
+User,microsoft.directory/multiTenantOrganization/tenants/standard/read,Built-in
+User,microsoft.directory/oAuth2PermissionGrants/standard/read,Built-in
+User,microsoft.directory/organization/standard/read,Built-in
+User,microsoft.directory/policies/basic/update,Built-in
+User,microsoft.directory/policies/delete,Built-in
+User,microsoft.directory/policies/owners/read,Built-in
+User,microsoft.directory/policies/owners/update,Built-in
+User,microsoft.directory/policies/policyAppliedTo/read,Built-in
+User,microsoft.directory/policies/standard/read,Built-in
+User,microsoft.directory/provisioningLogs/allProperties/read,Built-in
+User,microsoft.directory/roleAssignments/standard/read,Built-in
+User,microsoft.directory/roleDefinitions/standard/read,Built-in
+User,microsoft.directory/servicePrincipals/appRoleAssignedTo/read,Built-in
+User,microsoft.directory/servicePrincipals/appRoleAssignedTo/update,Built-in
+User,microsoft.directory/servicePrincipals/appRoleAssignments/read,Built-in
+User,microsoft.directory/servicePrincipals/audience/update,Built-in
+User,microsoft.directory/servicePrincipals/authentication/read,Built-in
+User,microsoft.directory/servicePrincipals/authentication/update,Built-in
+User,microsoft.directory/servicePrincipals/basic/update,Built-in
+User,microsoft.directory/servicePrincipals/createAsOwner,Built-in
+User,microsoft.directory/servicePrincipals/credentials/update,Built-in
+User,microsoft.directory/servicePrincipals/delete,Built-in
+User,microsoft.directory/servicePrincipals/disable,Built-in
+User,microsoft.directory/servicePrincipals/enable,Built-in
+User,microsoft.directory/servicePrincipals/getPasswordSingleSignOnCredentials,Built-in
+User,microsoft.directory/servicePrincipals/managePasswordSingleSignOnCredentials,Built-in
+User,microsoft.directory/servicePrincipals/memberOf/read,Built-in
+User,microsoft.directory/servicePrincipals/notes/update,Built-in
+User,microsoft.directory/servicePrincipals/oAuth2PermissionGrants/read,Built-in
+User,microsoft.directory/servicePrincipals/ownedObjects/read,Built-in
+User,microsoft.directory/servicePrincipals/owners/read,Built-in
+User,microsoft.directory/servicePrincipals/owners/update,Built-in
+User,microsoft.directory/servicePrincipals/permissions/update,Built-in
+User,microsoft.directory/servicePrincipals/policies/read,Built-in
+User,microsoft.directory/servicePrincipals/policies/update,Built-in
+User,microsoft.directory/servicePrincipals/standard/read,Built-in
+User,microsoft.directory/servicePrincipals/tag/update,Built-in
+User,microsoft.directory/signInReports/allProperties/read,Built-in
+User,microsoft.directory/subscribedSkus/standard/read,Built-in
+User,microsoft.directory/tenantManagement/tenants/create,Built-in
+User,microsoft.directory/userInfos/address/read,Built-in
+User,microsoft.directory/userInfos/email/read,Built-in
+User,microsoft.directory/userInfos/openId/read,Built-in
+User,microsoft.directory/userInfos/phone/read,Built-in
+User,microsoft.directory/userInfos/profile/read,Built-in
+User,microsoft.directory/users/activateServicePlan,Built-in
+User,microsoft.directory/users/appRoleAssignments/read,Built-in
+User,microsoft.directory/users/authenticationMethods/basic/update,Built-in
+User,microsoft.directory/users/authenticationMethods/create,Built-in
+User,microsoft.directory/users/authenticationMethods/delete,Built-in
+User,microsoft.directory/users/authenticationMethods/standard/read,Built-in
+User,microsoft.directory/users/authenticationMethods/standard/restrictedRead,Built-in
+User,microsoft.directory/users/basicProfile/update,Built-in
+User,microsoft.directory/users/changePassword,Built-in
+User,microsoft.directory/users/deviceForResourceAccount/read,Built-in
+User,microsoft.directory/users/directReports/read,Built-in
+User,microsoft.directory/users/identities/update,Built-in
+User,microsoft.directory/users/invalidateAllRefreshTokens,Built-in
+User,microsoft.directory/users/inviteGuest,Built-in
+User,microsoft.directory/users/licenseDetails/read,Built-in
+User,microsoft.directory/users/manager/read,Built-in
+User,microsoft.directory/users/memberOf/read,Built-in
+User,microsoft.directory/users/mobile/update,Built-in
+User,microsoft.directory/users/oAuth2PermissionGrants/read,Built-in
+User,microsoft.directory/users/ownedDevices/read,Built-in
+User,microsoft.directory/users/ownedObjects/read,Built-in
+User,microsoft.directory/users/photo/read,Built-in
+User,microsoft.directory/users/registeredDevices/read,Built-in
+User,microsoft.directory/users/scopedRoleMemberOf/read,Built-in
+User,microsoft.directory/users/searchableDeviceKey/update,Built-in
+User,microsoft.directory/users/sponsorOf/read,Built-in
+User,microsoft.directory/users/sponsors/read,Built-in
+User,microsoft.directory/users/standard/read,Built-in
+User Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+User Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+User Administrator,microsoft.directory/accessReviews/definitions.applications/allProperties/allTasks,Built-in
+User Administrator,microsoft.directory/accessReviews/definitions.directoryRoles/allProperties/read,Built-in
+User Administrator,microsoft.directory/accessReviews/definitions.entitlementManagement/allProperties/allTasks,Built-in
+User Administrator,microsoft.directory/accessReviews/definitions.groups/allProperties/read,Built-in
+User Administrator,microsoft.directory/accessReviews/definitions.groups/allProperties/update,Built-in
+User Administrator,microsoft.directory/accessReviews/definitions.groups/create,Built-in
+User Administrator,microsoft.directory/accessReviews/definitions.groups/delete,Built-in
+User Administrator,microsoft.directory/contacts/basic/update,Built-in
+User Administrator,microsoft.directory/contacts/create,Built-in
+User Administrator,microsoft.directory/contacts/delete,Built-in
+User Administrator,microsoft.directory/deletedItems.groups/restore,Built-in
+User Administrator,microsoft.directory/deletedItems.users/restore,Built-in
+User Administrator,microsoft.directory/entitlementManagement/allProperties/allTasks,Built-in
+User Administrator,microsoft.directory/groups.unified/assignedLabels/update,Built-in
+User Administrator,microsoft.directory/groups/assignLicense,Built-in
+User Administrator,microsoft.directory/groups/basic/update,Built-in
+User Administrator,microsoft.directory/groups/classification/update,Built-in
+User Administrator,microsoft.directory/groups/create,Built-in
+User Administrator,microsoft.directory/groups/delete,Built-in
+User Administrator,microsoft.directory/groups/dynamicMembershipRule/update,Built-in
+User Administrator,microsoft.directory/groups/groupType/update,Built-in
+User Administrator,microsoft.directory/groups/hiddenMembers/read,Built-in
+User Administrator,microsoft.directory/groups/members/update,Built-in
+User Administrator,microsoft.directory/groups/onPremWriteBack/update,Built-in
+User Administrator,microsoft.directory/groups/owners/update,Built-in
+User Administrator,microsoft.directory/groups/reprocessLicenseAssignment,Built-in
+User Administrator,microsoft.directory/groups/restore,Built-in
+User Administrator,microsoft.directory/groups/settings/update,Built-in
+User Administrator,microsoft.directory/groups/visibility/update,Built-in
+User Administrator,microsoft.directory/oAuth2PermissionGrants/allProperties/allTasks,Built-in
+User Administrator,microsoft.directory/onPremisesSynchronization/standard/read,Built-in
+User Administrator,microsoft.directory/policies/standard/read,Built-in
+User Administrator,microsoft.directory/servicePrincipals/appRoleAssignedTo/update,Built-in
+User Administrator,microsoft.directory/users/assignLicense,Built-in
+User Administrator,microsoft.directory/users/basic/update,Built-in
+User Administrator,microsoft.directory/users/convertExternalToInternalMemberUser,Built-in
+User Administrator,microsoft.directory/users/create,Built-in
+User Administrator,microsoft.directory/users/delete,Built-in
+User Administrator,microsoft.directory/users/disable,Built-in
+User Administrator,microsoft.directory/users/enable,Built-in
+User Administrator,microsoft.directory/users/invalidateAllRefreshTokens,Built-in
+User Administrator,microsoft.directory/users/inviteGuest,Built-in
+User Administrator,microsoft.directory/users/lifeCycleInfo/read,Built-in
+User Administrator,microsoft.directory/users/manager/update,Built-in
+User Administrator,microsoft.directory/users/password/update,Built-in
+User Administrator,microsoft.directory/users/photo/update,Built-in
+User Administrator,microsoft.directory/users/reprocessLicenseAssignment,Built-in
+User Administrator,microsoft.directory/users/restore,Built-in
+User Administrator,microsoft.directory/users/sponsors/update,Built-in
+User Administrator,microsoft.directory/users/usageLocation/update,Built-in
+User Administrator,microsoft.directory/users/userPrincipalName/update,Built-in
+User Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+User Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+User Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+User Experience Success Manager,microsoft.commerce.billing/purchases/standard/read,Built-in
+User Experience Success Manager,microsoft.office365.messageCenter/messages/read,Built-in
+User Experience Success Manager,microsoft.office365.network/performance/allProperties/read,Built-in
+User Experience Success Manager,microsoft.office365.organizationalMessages/allEntities/allProperties/read,Built-in
+User Experience Success Manager,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+User Experience Success Manager,microsoft.office365.usageReports/allEntities/standard/read,Built-in
+User Experience Success Manager,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Virtual Visits Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Virtual Visits Administrator,microsoft.virtualVisits/allEntities/allProperties/allTasks,Built-in
+Viva Glint Tenant Administrator,microsoft.azure.serviceHealth/allEntities/allTasks,Built-in
+Viva Glint Tenant Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Viva Glint Tenant Administrator,microsoft.office365.messageCenter/messages/read,Built-in
+Viva Glint Tenant Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Viva Glint Tenant Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+Viva Glint Tenant Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Viva Glint Tenant Administrator,microsoft.viva.glint/allEntities/allProperties/allTasks,Built-in
+Viva Goals Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Viva Goals Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Viva Goals Administrator,microsoft.viva.goals/allEntities/allProperties/allTasks,Built-in
+Viva Pulse Administrator,microsoft.office365.messageCenter/messages/read,Built-in
+Viva Pulse Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Viva Pulse Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Viva Pulse Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+Viva Pulse Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Viva Pulse Administrator,microsoft.viva.pulse/allEntities/allProperties/allTasks,Built-in
+Windows 365 Administrator,microsoft.azure.supportTickets/allEntities/allTasks,Built-in
+Windows 365 Administrator,microsoft.cloudPC/allEntities/allProperties/allTasks,Built-in
+Windows 365 Administrator,microsoft.directory/deletedItems.devices/delete,Built-in
+Windows 365 Administrator,microsoft.directory/deletedItems.devices/restore,Built-in
+Windows 365 Administrator,microsoft.directory/deviceManagementPolicies/standard/read,Built-in
+Windows 365 Administrator,microsoft.directory/deviceRegistrationPolicy/standard/read,Built-in
+Windows 365 Administrator,microsoft.directory/devices/basic/update,Built-in
+Windows 365 Administrator,microsoft.directory/devices/create,Built-in
+Windows 365 Administrator,microsoft.directory/devices/delete,Built-in
+Windows 365 Administrator,microsoft.directory/devices/disable,Built-in
+Windows 365 Administrator,microsoft.directory/devices/enable,Built-in
+Windows 365 Administrator,microsoft.directory/devices/extensionAttributeSet1/update,Built-in
+Windows 365 Administrator,microsoft.directory/devices/extensionAttributeSet2/update,Built-in
+Windows 365 Administrator,microsoft.directory/devices/extensionAttributeSet3/update,Built-in
+Windows 365 Administrator,microsoft.directory/devices/registeredOwners/update,Built-in
+Windows 365 Administrator,microsoft.directory/devices/registeredUsers/update,Built-in
+Windows 365 Administrator,microsoft.directory/groups.security/assignedLabels/update,Built-in
+Windows 365 Administrator,microsoft.directory/groups.security/basic/update,Built-in
+Windows 365 Administrator,microsoft.directory/groups.security/classification/update,Built-in
+Windows 365 Administrator,microsoft.directory/groups.security/create,Built-in
+Windows 365 Administrator,microsoft.directory/groups.security/delete,Built-in
+Windows 365 Administrator,microsoft.directory/groups.security/dynamicMembershipRule/update,Built-in
+Windows 365 Administrator,microsoft.directory/groups.security/members/update,Built-in
+Windows 365 Administrator,microsoft.directory/groups.security/owners/update,Built-in
+Windows 365 Administrator,microsoft.directory/groups.security/visibility/update,Built-in
+Windows 365 Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Windows 365 Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+Windows 365 Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Windows Update Deployment Administrator,microsoft.windows.updatesDeployments/allEntities/allProperties/allTasks,Built-in
+Yammer Administrator,microsoft.directory/groups.unified/assignedLabels/update,Built-in
+Yammer Administrator,microsoft.directory/groups.unified/basic/update,Built-in
+Yammer Administrator,microsoft.directory/groups.unified/create,Built-in
+Yammer Administrator,microsoft.directory/groups.unified/delete,Built-in
+Yammer Administrator,microsoft.directory/groups.unified/members/update,Built-in
+Yammer Administrator,microsoft.directory/groups.unified/owners/update,Built-in
+Yammer Administrator,microsoft.directory/groups.unified/restore,Built-in
+Yammer Administrator,microsoft.directory/groups/hiddenMembers/read,Built-in
+Yammer Administrator,microsoft.office365.messageCenter/messages/read,Built-in
+Yammer Administrator,microsoft.office365.network/performance/allProperties/read,Built-in
+Yammer Administrator,microsoft.office365.serviceHealth/allEntities/allTasks,Built-in
+Yammer Administrator,microsoft.office365.supportTickets/allEntities/allTasks,Built-in
+Yammer Administrator,microsoft.office365.usageReports/allEntities/allProperties/read,Built-in
+Yammer Administrator,microsoft.office365.webPortal/allEntities/standard/read,Built-in
+Yammer Administrator,microsoft.office365.yammer/allEntities/allProperties/allTasks,Built-in
