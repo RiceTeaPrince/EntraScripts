@@ -21,11 +21,23 @@
     Query across the whole tenant rather than only subscriptions in the current context.
     Requires tenant-level read access.
 
+.PARAMETER ResolveDisplayNames
+    Look up display names for every principal via Microsoft Graph. Azure Resource
+    Graph role assignments carry only principal IDs, so without this the DisplayName
+    column is populated for managed identities only. Requires an existing Graph
+    session with Directory.Read.All. Names are informational - the workbook joins on
+    PrincipalId, so lookups work either way.
+
 .PARAMETER ManagementGroup
     Restrict the query to a management group.
 
 .EXAMPLE
     .\Build-AzureResourceMap.ps1 -UseTenantScope -Verbose
+
+.EXAMPLE
+    # With readable display names
+    Connect-MgGraph -Scopes 'Directory.Read.All'
+    .\Build-AzureResourceMap.ps1 -UseTenantScope -ResolveDisplayNames -Verbose
 
 .NOTES
     Install-Module Az.Accounts, Az.ResourceGraph -Scope CurrentUser
@@ -41,6 +53,7 @@
 param(
     [string]$OutputPath = ".\Azure-Resource-Map.csv",
     [switch]$UseTenantScope,
+    [switch]$ResolveDisplayNames,
     [string]$ManagementGroup
 )
 
@@ -182,9 +195,38 @@ foreach ($r in $miResources) { if (-not $resourceByPrincipal.ContainsKey($r.prin
 $principalIds = @($assignments.principalId) + @($miResources.principalId) | Where-Object { $_ } | Sort-Object -Unique
 $snapshot = Get-Date -Format 'dd/MM/yyyy'
 
-$rows = foreach ($pid in $principalIds) {
-    $mine = @($assignments | Where-Object { $_.principalId -eq $pid })
-    $res  = $resourceByPrincipal[$pid]
+# --------------------------------------------------------------------------
+# Resolve display names. Resource Graph role assignments carry no names, so
+# without this only managed identities (which have a backing resource) show one.
+# --------------------------------------------------------------------------
+$nameMap = @{}
+if ($ResolveDisplayNames) {
+    if (-not (Get-MgContext)) {
+        Write-Warning "-ResolveDisplayNames needs a Graph session. Run: Connect-MgGraph -Scopes Directory.Read.All"
+    } else {
+        Write-Host "Resolving display names via Graph..." -ForegroundColor Cyan
+        $batch = 900   # getByIds accepts up to 1000 per call
+        for ($i = 0; $i -lt $principalIds.Count; $i += $batch) {
+            $chunk = @($principalIds[$i..([Math]::Min($i + $batch - 1, $principalIds.Count - 1))])
+            try {
+                $resp = Invoke-MgGraphRequest -Method POST `
+                    -Uri 'https://graph.microsoft.com/v1.0/directoryObjects/getByIds' `
+                    -Body @{ ids = $chunk; types = @('user','servicePrincipal','group') }
+                foreach ($o in $resp.value) { if ($o.displayName) { $nameMap[$o.id] = $o.displayName } }
+            } catch {
+                Write-Warning "Name resolution failed for one batch: $($_.Exception.Message)"
+            }
+        }
+        Write-Host "  $($nameMap.Keys.Count) name(s) resolved"
+    }
+}
+
+# NOTE: do NOT name this loop variable $pid - that is a PowerShell automatic
+# variable holding the current process ID, is read-only, and the assignment
+# fails silently, stamping every row with the same number.
+$rows = foreach ($principalId in $principalIds) {
+    $mine = @($assignments | Where-Object { $_.principalId -eq $principalId })
+    $res  = $resourceByPrincipal[$principalId]
 
     $roleStrings = @($mine | ForEach-Object { "$($_.roleName) @ $(Get-ShortScope $_.scope)" } | Sort-Object -Unique)
     $highest = if ($mine.Count -gt 0) {
@@ -199,9 +241,10 @@ $rows = foreach ($pid in $principalIds) {
     $subName = if ($subId -and $subMap.ContainsKey($subId)) { $subMap[$subId] } else { $subId }
 
     [PSCustomObject][ordered]@{
-        PrincipalId          = $pid
+        PrincipalId          = $principalId
         PrincipalType        = $ptype
-        DisplayName          = if ($res) { ($res.resourceId -split '/')[-1] } else { '' }
+        DisplayName          = if ($nameMap.ContainsKey($principalId)) { $nameMap[$principalId] }
+                               elseif ($res) { ($res.resourceId -split '/')[-1] } else { '' }
         AzureRoleAssignments = ($roleStrings -join '; ')
         HighestAzureRole     = $highest
         SubOrMgScoped        = $broad
@@ -215,6 +258,23 @@ $rows = foreach ($pid in $principalIds) {
         CostCentreTag        = if ($res) { Get-Tag $res.tags @('CostCentre','CostCenter','costcentre','BillingCode') } else { '' }
         SnapshotDate         = $snapshot
     }
+}
+
+# --------------------------------------------------------------------------
+# Sanity check the join key before writing. A PrincipalId column that is not
+# GUIDs means nothing will link to the workbook, and that is worth failing loudly.
+# --------------------------------------------------------------------------
+$GuidPattern = '^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$'
+$badIds = @($rows | Where-Object { $_.PrincipalId -notmatch $GuidPattern })
+if ($badIds.Count -gt 0) {
+    Write-Host ""
+    Write-Warning "$($badIds.Count) row(s) have a PrincipalId that is not a GUID - e.g. '$($badIds[0].PrincipalId)'."
+    Write-Warning "These will not join to the workbook. Do not paste this output; investigate first."
+}
+$distinctIds = @($rows.PrincipalId | Sort-Object -Unique).Count
+if ($rows.Count -gt 1 -and $distinctIds -eq 1) {
+    Write-Host ""
+    Write-Warning "Every row shares the same PrincipalId. Something is wrong with the query output - do not paste this."
 }
 
 $rows | Sort-Object { Get-RoleRank $_.HighestAzureRole } -Descending |
