@@ -37,8 +37,8 @@ Columns are zoned. On the User Categorisation tab:
 
 | Columns | Zone | Written by |
 |---|---|---|
-| A–P | Script-managed | The runbook, on the run that first adds the row |
-| Q–X | Human | You, only ever |
+| A–Q | Script-managed | The runbook: on the run that first adds the row, plus name refreshes |
+| R–Y | Human | You, only ever |
 
 The runbook has no code path that writes into the human zone. Even `-RefreshAttributes` explicitly checks the column index against the zone boundary and skips anything at or beyond it.
 
@@ -239,7 +239,8 @@ Each Monday:
 1. Open the workbook. The Dashboard shows **New since last run**.
 2. Go to User Categorisation, filter **Row Status = NEW**.
 3. For each row, read **Suggested Category** and **Confidence**, then set **Confirmed Category**. The red highlight clears as you go.
-4. For anything you mark as a service account, set **Owner Team** while you're there — it's much harder to establish later.
+4. Filter **Row Status = RENAMED**. Those already have a category — you are only checking it still applies after the rename.
+5. For anything you mark as a service account, set **Owner Team** while you're there — it's much harder to establish later.
 
 The runbook sets Row Status to `NEW` only when it adds the row, and never touches it again. If you'd like rows to drop off the NEW filter once handled, add a formula column outside the table, or overwrite Row Status yourself — the runbook won't mind.
 
@@ -266,6 +267,30 @@ Every removed row is copied to the Archive tab with its category, owner and remo
 ### Descending delete order
 
 Deleting a table row shifts every subsequent row up by one. Deleting ascending removes the wrong rows from the second delete onward — silently, with no error. The runbook sorts descending before deleting. Worth knowing if you modify that code.
+
+### Renames
+
+Rows are keyed on **Object ID**, which does not change when an account is renamed. So a rename keeps the row and keeps your categorisation — it is not treated as a departure plus an arrival. That is precisely why the key is the Object ID and not the UPN.
+
+Two things follow:
+
+**Names are refreshed by default**, even without `-RefreshAttributes`. A display name is a new label on the same object rather than new data, and a sheet showing an identifier nobody uses any more is unsearchable. Disable with `-PreserveStaleNames` if you would rather they froze.
+
+**Renames are flagged, not absorbed silently.** The previous values are written to `Previous Identifier` and `Row Status` becomes `RENAMED`. Give those a glance each run, because of this case:
+
+> `svc-oldapp` is repurposed and renamed `svc-newapp`. Same Object ID, so it inherits a categorisation and owner assigned for a completely different workload. The categorisation is now wrong, and nothing else would tell you.
+
+That is the one situation where a rename is more than cosmetic.
+
+### Deleted then restored
+
+Entra soft-deletes accounts for 30 days. If a run happens while an account is soft-deleted the row is archived and removed; if the account is then restored it returns with the **same Object ID**.
+
+Rather than re-adding it blank, the runbook checks the Archive tab when adding rows and restores the prior `Confirmed Category` and `Owner Team`, setting `Row Status` to `RESTORED`. Disable with `-NoRestoreFromArchive`.
+
+### UPN reuse
+
+If `jsmith` leaves and a different `jsmith` joins later, the new account has a **new Object ID**. The old row is archived and removed, the new one is added as `NEW` with an empty human zone. Correct — they are different people, and the new person should not inherit the previous holder's categorisation.
 
 ### `-RefreshAttributes` is off by default
 
@@ -295,6 +320,9 @@ Some conversion paths flatten Excel Tables to plain ranges. Re-upload the origin
 
 **Rows added at the bottom instead of inside the table.**
 The table range no longer covers the data. Click inside the table in Excel, then **Table Design → Resize Table**, and save.
+
+**An account was renamed and now appears twice.**
+Should not happen — matching is on Object ID. Two rows means two distinct objects, so the account was deleted and recreated rather than renamed. The old row's categorisation is in the Archive tab.
 
 **Categorisation disappeared after a run.**
 Should not happen — the runbook has no write path into the human zone. Check Run Log for a large `Removed` count, then Archive for the rows. Recover the file through **SharePoint version history** if needed.

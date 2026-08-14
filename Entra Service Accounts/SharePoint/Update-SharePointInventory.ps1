@@ -13,6 +13,12 @@
     Existing rows are never rewritten, so categorisation and ownership entered by a
     human survive every subsequent run. That is the whole point: categorise once.
 
+    Rows are keyed on Object ID, which survives a rename - so a renamed account keeps
+    its row and its categorisation rather than being treated as a departure plus an
+    arrival. Display Name and UPN are refreshed so the sheet stays searchable, the
+    old values are recorded in Previous Identifier, and Row Status is set to RENAMED
+    so a repurposed account does not inherit an old categorisation unnoticed.
+
     Each tab has two column zones. The script-managed zone (left) is written on the
     run that first adds a row. The human zone (right) is never written by this
     script under any circumstance.
@@ -33,6 +39,23 @@
     dates, MFA registration). Off by default, which matches "no changes to existing
     accounts" - but it does mean those columns show the values as at the day the row
     was added, and they age. The human zone is never touched either way.
+
+.PARAMETER PreserveStaleNames
+    Do NOT refresh Display Name and User Principal Name on existing rows.
+
+    By default these two ARE refreshed every run, even without -RefreshAttributes,
+    because a rename is a new label on the same object rather than new data - and a
+    sheet showing an identifier nobody uses any more is unsearchable and quietly
+    erodes trust in the whole exercise. The human zone is never touched either way.
+
+    When a rename is detected the previous values are written to Previous Identifier
+    and Row Status is set to RENAMED, so it is visible rather than silent.
+
+.PARAMETER NoRestoreFromArchive
+    Do not look in the Archive tab when adding a row. By default, if an Object ID
+    being added is found in the Archive, its previous categorisation and owner are
+    restored - which covers an account soft-deleted and then reinstated inside the
+    30-day window, where a naive add would discard work already done.
 
 .PARAMETER MaxDeletePercent
     Safety guard. If a run would delete more than this share of existing rows it
@@ -73,6 +96,8 @@ param(
     [Parameter(Mandatory)][string]$SiteUrl,
     [Parameter(Mandatory)][string]$FilePath,
     [switch]$RefreshAttributes,
+    [switch]$PreserveStaleNames,
+    [switch]$NoRestoreFromArchive,
     [int]$MaxDeletePercent = 20,
     [switch]$Force,
     [switch]$UseManagedIdentity
@@ -293,13 +318,90 @@ function Sync-InventoryTable {
 
     # ---- Add new --------------------------------------------------------
     if ($toAdd.Count -gt 0) {
+
+        # An account soft-deleted and then reinstated inside the 30-day window
+        # returns with the SAME Object ID. Without this it would be re-added blank
+        # and the categorisation already done would be discarded.
+        $archived = @{}
+        if (-not $NoRestoreFromArchive) {
+            try {
+                $archCols = Get-TableColumnNames -TableName 'tblArchive'
+                $aKey = [array]::IndexOf($archCols, 'Object ID')
+                $aCat = [array]::IndexOf($archCols, 'Confirmed Category')
+                $aOwn = [array]::IndexOf($archCols, 'Owner Team')
+                foreach ($ar in (Get-TableRows -TableName 'tblArchive')) {
+                    $ak = [string]$ar.values[0][$aKey]
+                    if ($ak) {
+                        $archived[$ak] = @{
+                            Category = [string]$ar.values[0][$aCat]
+                            OwnerTeam = [string]$ar.values[0][$aOwn]
+                        }
+                    }
+                }
+            } catch { Write-Verbose "Archive not readable, skipping restore: $($_.Exception.Message)" }
+        }
+
+        $restored = 0
         $newRows = foreach ($item in $toAdd) {
+            $key = [string]$item[$KeyColumn]
+            $prior = $archived[$key]
+            if ($prior -and ($prior.Category -or $prior.OwnerTeam)) { $restored++ }
             ,@($columns | ForEach-Object {
-                if ($item.Contains($_)) { $item[$_] } else { '' }   # human columns stay blank
+                switch ($_) {
+                    'Confirmed Category' { if ($prior) { $prior.Category }  else { '' } }
+                    'Owner Team'         { if ($prior) { $prior.OwnerTeam } else { '' } }
+                    'Row Status'         { if ($prior -and $prior.Category) { 'RESTORED' } else { 'NEW' } }
+                    default              { if ($item.Contains($_)) { $item[$_] } else { '' } }
+                }
             })
         }
         Add-TableRows -TableName $TableName -Values $newRows
         Write-Host "  added $($toAdd.Count) row(s)"
+        if ($restored) {
+            Write-Host "  restored prior categorisation for $restored row(s) from the Archive" -ForegroundColor Yellow
+        }
+    }
+
+    # ---- Rename detection and name refresh ------------------------------
+    #
+    # Rows are keyed on Object ID, which survives a rename. So a renamed account
+    # keeps its row and keeps its categorisation - correct, and the reason the key
+    # is not the UPN. But the name columns would otherwise show a value nobody uses
+    # any more, so they are refreshed by default and the change is recorded.
+    $renamed = 0
+    if (-not $PreserveStaleNames) {
+        $nameCols = @('Display Name','User Principal Name') |
+                    Where-Object { [array]::IndexOf($columns, $_) -ge 0 }
+        $prevIdx  = [array]::IndexOf($columns, 'Previous Identifier')
+        $statIdx  = [array]::IndexOf($columns, 'Row Status')
+
+        $rowsNow = Get-TableRows -TableName $TableName
+        for ($i = 0; $i -lt $rowsNow.Count; $i++) {
+            $k = [string]$rowsNow[$i].values[0][$keyIndex]
+            if (-not $currentKeys.ContainsKey($k)) { continue }
+            $src = $currentKeys[$k]
+
+            $changes = @()
+            foreach ($colName in $nameCols) {
+                $ci  = [array]::IndexOf($columns, $colName)
+                $old = [string]$rowsNow[$i].values[0][$ci]
+                $new = [string]$src[$colName]
+                if ($old -and $new -and $old -ne $new) {
+                    $changes += "$colName was '$old'"
+                    Update-TableCell -TableName $TableName -RowIndex $i -ColumnIndex $ci -Value $new
+                }
+            }
+            if ($changes.Count -eq 0) { continue }
+
+            $renamed++
+            $note = "$($changes -join '; ') (detected $(Get-Date -Format 'dd/MM/yyyy'))"
+            if ($prevIdx -ge 0) { Update-TableCell -TableName $TableName -RowIndex $i -ColumnIndex $prevIdx -Value $note }
+            if ($statIdx -ge 0) { Update-TableCell -TableName $TableName -RowIndex $i -ColumnIndex $statIdx -Value 'RENAMED' }
+            Write-Verbose "  renamed: $k - $note"
+        }
+        if ($renamed) {
+            Write-Host "  renamed $renamed row(s) - flagged RENAMED for review" -ForegroundColor Yellow
+        }
     }
 
     # ---- Optionally refresh the script zone on existing rows ------------
@@ -335,7 +437,8 @@ function Sync-InventoryTable {
     }
 
     $after = $before - $toRemove.Count + $toAdd.Count
-    $detail = "added $($toAdd.Count), removed $($toRemove.Count)" + $(if ($RefreshAttributes) { ", refreshed $refreshed cell(s)" } else { '' })
+    $detail = "added $($toAdd.Count), removed $($toRemove.Count), renamed $renamed" +
+              $(if ($RefreshAttributes) { ", refreshed $refreshed cell(s)" } else { '' })
     Write-RunLog -Tab $TabLabel -Before $before -Added $toAdd.Count -Removed $toRemove.Count -After $after -Outcome 'OK' -Detail $detail
 }
 
