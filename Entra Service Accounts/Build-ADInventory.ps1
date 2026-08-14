@@ -149,11 +149,12 @@ $props = @('SamAccountName','DisplayName','DistinguishedName','SID','ObjectGUID'
            'MemberOf','UserAccountControl','msDS-SupportedEncryptionTypes')
 
 Write-Host "`nCollecting accounts..." -ForegroundColor Cyan
+# Each entry is a small wrapper: the untouched AD object plus the kind we inferred
+# from which cmdlet returned it. Nothing is added to the AD objects themselves.
 $accounts = [System.Collections.Generic.List[object]]::new()
 
 Get-ADUser -Filter * -Properties $props @common | ForEach-Object {
-    $_ | Add-Member -NotePropertyName _Kind -NotePropertyValue 'User' -PassThru | Out-Null
-    $accounts.Add($_)
+    $accounts.Add([PSCustomObject]@{ Kind = 'User'; Obj = $_ })
 }
 Write-Host "  $($accounts.Count) user account(s)"
 
@@ -162,8 +163,7 @@ $msaCount = 0
 try {
     Get-ADServiceAccount -Filter * -Properties $props @common | ForEach-Object {
         $kind = if ($_.ObjectClass -eq 'msDS-GroupManagedServiceAccount') { 'gMSA' } else { 'sMSA' }
-        $_ | Add-Member -NotePropertyName _Kind -NotePropertyValue $kind -PassThru | Out-Null
-        $accounts.Add($_); $msaCount++
+        $accounts.Add([PSCustomObject]@{ Kind = $kind; Obj = $_ }); $msaCount++
     }
 } catch { Write-Verbose "No managed service accounts found or not readable: $($_.Exception.Message)" }
 Write-Host "  $msaCount managed service account(s)"
@@ -171,13 +171,21 @@ Write-Host "  $msaCount managed service account(s)"
 if ($IncludeComputers) {
     $before = $accounts.Count
     Get-ADComputer -Filter * -Properties $props @common | ForEach-Object {
-        $_ | Add-Member -NotePropertyName _Kind -NotePropertyValue 'Computer' -PassThru | Out-Null
-        $accounts.Add($_)
+        $accounts.Add([PSCustomObject]@{ Kind = 'Computer'; Obj = $_ })
     }
     Write-Host "  $($accounts.Count - $before) computer account(s)"
 }
 
-if ($ExcludeDisabled) { $accounts = @($accounts | Where-Object { $_.Enabled }) }
+if ($ExcludeDisabled) { $accounts = @($accounts | Where-Object { $_.Obj.Enabled }) }
+
+# Guard against the same object arriving twice - can happen when -Server points at a
+# global catalog, or when collection scopes overlap. Keyed on GUID, which is unique
+# and immutable.
+$dupes = ($accounts | Group-Object { $_.Obj.ObjectGUID } | Where-Object Count -gt 1)
+if ($dupes) {
+    Write-Warning "$($dupes.Count) account(s) returned more than once - de-duplicating on ObjectGUID."
+    $accounts = @($accounts | Group-Object { $_.Obj.ObjectGUID } | ForEach-Object { $_.Group[0] })
+}
 
 # --------------------------------------------------------------------------
 # Shape
@@ -198,7 +206,8 @@ function Get-OU($dn) {
     return ''
 }
 
-$rows = foreach ($a in $accounts) {
+$rows = foreach ($entry in $accounts) {
+    $a       = $entry.Obj
     $spns    = @($a.ServicePrincipalName)
     $privOf  = if ($privMembers.ContainsKey($a.SID.Value)) { ($privMembers[$a.SID.Value] | Sort-Object -Unique) -join '; ' } else { '' }
     $pwAge   = if ($a.PasswordLastSet) { [int]($now - $a.PasswordLastSet).TotalDays } else { $null }
@@ -209,7 +218,7 @@ $rows = foreach ($a in $accounts) {
         'Distinguished Name'    = $a.DistinguishedName
         'SID'                   = $a.SID.Value
         'Object GUID'           = $a.ObjectGUID
-        'Account Type'          = $a._Kind
+        'Account Type'          = $entry.Kind
         'Enabled'               = if ($a.Enabled) { 'Yes' } else { 'No' }
         'Created'               = if ($a.whenCreated) { $a.whenCreated.ToString('dd/MM/yyyy') } else { '' }
         'Last Logon'            = if ($a.LastLogonDate) { $a.LastLogonDate.ToString('dd/MM/yyyy') } else { '' }
