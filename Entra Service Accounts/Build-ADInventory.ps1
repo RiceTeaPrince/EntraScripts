@@ -38,8 +38,9 @@
     service account inventory, though computer accounts with SPNs matter for
     delegation review.
 
-.PARAMETER IncludeDisabled
-    Include disabled accounts. On by default: disabled-but-present is itself a finding.
+.PARAMETER ExcludeDisabled
+    Omit disabled accounts. Disabled accounts are included by default: a disabled
+    but still-present service account is itself a finding.
 
 .EXAMPLE
     .\Build-ADInventory.ps1 -Verbose
@@ -81,8 +82,11 @@ $common = @{}
 if ($Server)     { $common.Server = $Server }
 if ($SearchBase) { $common.SearchBase = $SearchBase }
 
-$domain = Get-ADDomain @($common.GetEnumerator() | Where-Object Key -eq 'Server' | ForEach-Object { @{$_.Key=$_.Value} } | ForEach-Object { $_ })
-if (-not $domain) { $domain = Get-ADDomain }
+# Server only - for cmdlets/parameter sets that reject -SearchBase (anything using -Identity)
+$serverOnly = @{}
+if ($Server) { $serverOnly.Server = $Server }
+
+$domain = Get-ADDomain @serverOnly
 $domainSid = $domain.DomainSID.Value
 Write-Host "Domain: $($domain.DNSRoot)" -ForegroundColor Cyan
 if ($SearchBase) { Write-Host "  scoped to $SearchBase" }
@@ -97,7 +101,7 @@ $PrivilegedRids = @{
 }
 $BuiltinRids = @{
     544 = 'Administrators'; 548 = 'Account Operators'; 549 = 'Server Operators'
-    550 = 'Print Operators'; 551 = 'Backup Operators'; - 1 = $null
+    550 = 'Print Operators'; 551 = 'Backup Operators'
 }
 
 Write-Host "`nResolving privileged group membership..." -ForegroundColor Cyan
@@ -108,22 +112,24 @@ function Add-PrivMember($memberSid, $groupName) {
     $privMembers[$memberSid] += $groupName
 }
 
+# Note: privileged group resolution is deliberately domain-wide, never limited by
+# -SearchBase. An account inside the scoped OU can be a member of a group outside it.
 $privGroups = [System.Collections.Generic.List[object]]::new()
 foreach ($rid in $PrivilegedRids.Keys) {
-    try { $privGroups.Add((Get-ADGroup -Identity "$domainSid-$rid" @common -ErrorAction Stop)) } catch { }
+    try { $privGroups.Add((Get-ADGroup -Identity "$domainSid-$rid" @serverOnly -ErrorAction Stop)) } catch { }
 }
 foreach ($rid in ($BuiltinRids.Keys | Where-Object { $_ -gt 0 })) {
-    try { $privGroups.Add((Get-ADGroup -Identity "S-1-5-32-$rid" @common -ErrorAction Stop)) } catch { }
+    try { $privGroups.Add((Get-ADGroup -Identity "S-1-5-32-$rid" @serverOnly -ErrorAction Stop)) } catch { }
 }
 # Name-based, since these have no fixed RID
 foreach ($n in @('DnsAdmins','DHCP Administrators','Exchange Organization Management')) {
-    try { $g = Get-ADGroup -Filter "Name -eq '$n'" @common -ErrorAction Stop; if ($g) { $privGroups.Add($g) } } catch { }
+    try { $g = Get-ADGroup -Filter "Name -eq '$n'" @serverOnly -ErrorAction Stop; if ($g) { $privGroups.Add($g) } } catch { }
 }
 
 foreach ($g in $privGroups) {
     try {
         # -Recursive resolves nested groups, which is where surprise privilege lives
-        foreach ($m in (Get-ADGroupMember -Identity $g.DistinguishedName -Recursive -ErrorAction Stop)) {
+        foreach ($m in (Get-ADGroupMember -Identity $g.DistinguishedName -Recursive @serverOnly -ErrorAction Stop)) {
             Add-PrivMember $m.SID.Value $g.Name
         }
         Write-Verbose "  $($g.Name)"
