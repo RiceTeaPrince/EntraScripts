@@ -25,6 +25,15 @@
     person's standard account, so a leaver whose standard account is disabled but
     whose admin account is still live becomes visible.
 
+    Also writes a second CSV - the "normal user accounts" comparison set. This is
+    the exact list of non-admin-pattern Entra user accounts (respecting
+    -StandardAccountDomain, if given) used internally to resolve each admin
+    account's standard account and decide orphan status; previously it existed
+    only as an in-memory lookup table with no output of its own. Exporting it lets
+    a reviewer see and sanity-check the baseline the orphan check is run against,
+    rather than trusting it silently - the same reasoning Build-OnPremAdminReview
+    applies to its own Normal-Users.csv export.
+
     Roles are tiered. Tier 0 means control-plane: the holder can grant themselves
     anything else. The tiering is defined in the $RoleTiers table below and is
     intended to be edited to match your own model.
@@ -41,6 +50,10 @@
 .PARAMETER StandardAccountDomain
     UPN suffix of everyday accounts, e.g. 'corp.com.au'. Used to locate the person's
     standard account. If omitted the script matches on UPN prefix across all domains.
+
+.PARAMETER NormalUsersOutputPath
+    CSV path for the normal (non-admin) user account export - the comparison
+    baseline used to determine orphaned admin accounts.
 
 .PARAMETER SkipAzureRbac
     Skip Azure RBAC collection. Use if you only want the Entra directory role picture,
@@ -68,6 +81,7 @@ param(
     [string]$AdminPattern = '\.azr@',
     [string]$BaseUsernameCapture = '^(.+?)\.azr@',
     [string]$StandardAccountDomain,
+    [string]$NormalUsersOutputPath = ".\Normal-CloudUsers.csv",
     [switch]$SkipAzureRbac,
     [switch]$UseTenantScope
 )
@@ -160,6 +174,15 @@ foreach ($u in $allUsers) {
     $prefix = ($u.UserPrincipalName -split '@')[0].ToLower()
     if ($StandardAccountDomain -and $u.UserPrincipalName -notlike "*@$StandardAccountDomain") { continue }
     if (-not $standardByPrefix.ContainsKey($prefix)) { $standardByPrefix[$prefix] = $u }
+}
+
+# Reverse of $standardByPrefix - which admin account(s), if any, belong to a given
+# standard account prefix. Used to build the Normal-CloudUsers.csv comparison export.
+$adminByPrefix = @{}
+foreach ($a in $admins) {
+    $b = if ($a.UserPrincipalName -match $BaseUsernameCapture) { $Matches[1].ToLower() } else { ($a.UserPrincipalName -split '@')[0].ToLower() }
+    if (-not $adminByPrefix.ContainsKey($b)) { $adminByPrefix[$b] = [System.Collections.Generic.List[object]]::new() }
+    $adminByPrefix[$b].Add($a)
 }
 
 # --------------------------------------------------------------------------
@@ -461,6 +484,43 @@ $rows | Sort-Object 'Overall Tier', @{E={$_.'Active Role Count'};Descending=$tru
     Export-Csv -Path $OutputPath -NoTypeInformation -Encoding UTF8
 
 # --------------------------------------------------------------------------
+# Normal user accounts - the comparison baseline the orphan check above runs
+# against. This is the same set as $standardByPrefix, exported so it can be
+# reviewed on its own rather than trusted as an invisible lookup table.
+# --------------------------------------------------------------------------
+Write-Host "Building normal user account list..." -ForegroundColor Cyan
+$normalUsers = @($allUsers | Where-Object {
+    $_.UserPrincipalName -notmatch $AdminPattern -and
+    (-not $StandardAccountDomain -or $_.UserPrincipalName -like "*@$StandardAccountDomain")
+})
+
+$normalRows = foreach ($u in $normalUsers) {
+    $prefix = ($u.UserPrincipalName -split '@')[0].ToLower()
+    $linkedAdmins = @(if ($adminByPrefix.ContainsKey($prefix)) { $adminByPrefix[$prefix] })
+    $sa = $u.SignInActivity
+    $li = if ($sa -and $sa.LastSignInDateTime) { [datetime]$sa.LastSignInDateTime } else { $null }
+
+    [PSCustomObject][ordered]@{
+        'UPN'                       = $u.UserPrincipalName
+        'Display Name'              = $u.DisplayName
+        'Object ID'                 = $u.Id
+        'Enabled'                   = if ($u.AccountEnabled) { 'Yes' } else { 'No' }
+        'User Type'                 = $u.UserType
+        'On-Prem Synced'            = if ($u.OnPremisesSyncEnabled) { 'Yes' } else { 'No' }
+        'Created'                   = if ($u.CreatedDateTime) { ([datetime]$u.CreatedDateTime).ToString('dd/MM/yyyy') } else { '' }
+        'Last Sign-In'              = if ($li) { $li.ToString('dd/MM/yyyy') } else { '' }
+        'Department'                = $u.Department
+        'Job Title'                 = $u.JobTitle
+        'Has Admin Account'         = if ($linkedAdmins.Count) { 'Yes' } else { 'No' }
+        'Admin Accounts'            = ($linkedAdmins.UserPrincipalName -join '; ')
+        'Any Admin Account Enabled' = if (@($linkedAdmins | Where-Object AccountEnabled).Count) { 'Yes' } elseif ($linkedAdmins.Count) { 'No' } else { '' }
+    }
+}
+
+$normalRows | Sort-Object @{E={$_.Enabled};Descending=$true}, 'UPN' |
+    Export-Csv -Path $NormalUsersOutputPath -NoTypeInformation -Encoding UTF8
+
+# --------------------------------------------------------------------------
 # Summary
 # --------------------------------------------------------------------------
 $t0        = @($rows | Where-Object { $_.'Overall Tier' -eq 0 })
@@ -493,4 +553,17 @@ if ($scoped.Count) {
     Write-Host "  Roles scoped to an Administrative Unit : $($scoped.Count)"
     Write-Host "    Narrower than tenant-wide. Do not read these as full-tenant privilege."
 }
-Write-Host "`nNext: paste into the 'Cloud Admins' tab at cell A2 (columns A-AD)." -ForegroundColor Cyan
+
+$normalDisabled = @($normalRows | Where-Object { $_.Enabled -eq 'No' })
+$normalDisabledLiveAdmin = @($normalRows | Where-Object { $_.Enabled -eq 'No' -and $_.'Any Admin Account Enabled' -eq 'Yes' })
+
+Write-Host "`nWritten to $NormalUsersOutputPath" -ForegroundColor Green
+Write-Host "  Normal (non-admin-pattern) user accounts : $($normalRows.Count)"
+Write-Host "  Disabled                                  : $($normalDisabled.Count)"
+if ($normalDisabledLiveAdmin.Count) {
+    Write-Host "  Disabled standard account, admin account still enabled : $($normalDisabledLiveAdmin.Count)" -ForegroundColor Red
+    Write-Host "    Same leavers as the ORPHANED count above, seen from the standard-account side."
+}
+
+Write-Host "`nNext: paste Cloud Admins into the 'Cloud Admins' tab at cell A2 (columns A-AD)." -ForegroundColor Cyan
+Write-Host "      paste Normal Users into a 'Normal Users' tab at cell A2 (columns A-M), if you want it in the workbook." -ForegroundColor Cyan
