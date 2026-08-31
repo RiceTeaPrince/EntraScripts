@@ -559,7 +559,10 @@ $rows = foreach ($a in $admins) {
     $highest = if ($groupNames.Count) {
         @($groupNames | Sort-Object @{ E = { Get-GroupTier $_ } }, @{ E = { $_ } })[0]
     } else { 'None' }
-    $tier = if ($groupNames.Count) { ($groupNames | ForEach-Object { Get-GroupTier $_ } | Measure-Object -Minimum).Minimum } else { '' }
+    # Cast to string: mixes int (from Get-GroupTier) with '' (accounts with no group
+    # membership) - Sort-Object on a column mixing types throws under $ErrorActionPreference
+    # = 'Stop' (same issue as TargetTier in Get-DangerousAces above).
+    $tier = if ($groupNames.Count) { "$(($groupNames | ForEach-Object { Get-GroupTier $_ } | Measure-Object -Minimum).Minimum)" } else { '' }
     $pwAge = if ($a.PasswordLastSet) { [int]($now - $a.PasswordLastSet).TotalDays } else { $null }
 
     # Render each grant as "Group" or "Group (nested via NestedGroup)" so the route
@@ -611,7 +614,7 @@ $rows = foreach ($a in $admins) {
     }
 }
 
-$rows | Sort-Object 'AD Tier', @{E={$_.'Privileged Group Count'};Descending=$true}, 'SamAccountName' |
+$rows | Sort-Object @{E={if ($_.'AD Tier' -eq '') { [int]::MaxValue } else { [int]$_.'AD Tier' }}}, @{E={$_.'Privileged Group Count'};Descending=$true}, 'SamAccountName' |
     Export-Csv -Path $OutputPath -NoTypeInformation -Encoding UTF8
 
 # --------------------------------------------------------------------------
