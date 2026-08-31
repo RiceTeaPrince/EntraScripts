@@ -379,7 +379,7 @@ function Get-DangerousAces {
     )
     $found = [System.Collections.Generic.List[object]]::new()
     try { $acl = Get-Acl -Path "AD:\$DistinguishedName" -ErrorAction Stop }
-    catch { Write-Warning "Could not read ACL on '$TargetLabel': $($_.Exception.Message)"; return $found }
+    catch { Write-Warning "Could not read ACL on '$TargetLabel': $($_.Exception.Message)"; return ,$found }
 
     foreach ($ace in $acl.Access) {
         if ($ace.AccessControlType -ne 'Allow' -or $ace.IsInherited) { continue }
@@ -409,7 +409,7 @@ function Get-DangerousAces {
         # Sort-Object on a column mixing types can throw under $ErrorActionPreference = 'Stop'.
         $found.Add([PSCustomObject]@{ TargetLabel = $TargetLabel; TargetTier = "$TargetTier"; Right = $right; PrincipalSid = $sid })
     }
-    return $found
+    return ,$found
 }
 
 $aclFindings = [System.Collections.Generic.List[object]]::new()
