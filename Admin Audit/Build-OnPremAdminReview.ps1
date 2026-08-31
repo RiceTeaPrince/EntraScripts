@@ -86,7 +86,25 @@
     Regex with one capture group extracting the base username. Default strips '-a'.
 
 .PARAMETER SearchBase
-    Restrict collection to one OU. Omit to search the whole domain.
+    Restrict collection to one OU. Omit to search the whole domain. Applies to user
+    collection, the -DelegatedGroupPattern scan, and -SafePrincipals resolution alike.
+    -UserSearchBases / -GroupSearchBases below take precedence over this for their
+    respective scans, letting each be scoped independently (or to several OUs).
+
+.PARAMETER UserSearchBases
+    Restrict user collection to one or more OUs, instead of the whole domain (or the
+    single -SearchBase OU). Each listed OU is queried separately and the results
+    merged/de-duplicated, so accounts can be pulled from several unrelated OUs (e.g.
+    an admin-accounts OU plus a service-accounts OU) in one run. Makes repeat runs
+    against a large domain faster by skipping the full Get-ADUser -Filter * sweep.
+
+.PARAMETER GroupSearchBases
+    Restrict the -DelegatedGroupPattern scan to one or more OUs, instead of the whole
+    domain (or the single -SearchBase OU). Each listed OU is queried separately and
+    the results merged/de-duplicated. Has no effect without -DelegatedGroupPattern -
+    the built-in RID groups and the explicit $GroupTiers list are always resolved by
+    name regardless of OU, since Tier 0 groups (Domain Admins, etc.) aren't
+    necessarily under any OU you'd think to scope to.
 
 .PARAMETER DelegatedGroupPattern
     Regex matched against every group's Name to catch custom/delegated privileged
@@ -133,6 +151,9 @@
     .\Build-OnPremAdminReview.ps1 -SearchBase 'OU=Admin Accounts,DC=corp,DC=com,DC=au'
 
 .EXAMPLE
+    .\Build-OnPremAdminReview.ps1 -UserSearchBases 'OU=Admin Accounts,DC=corp,DC=com,DC=au','OU=Service Accounts,DC=corp,DC=com,DC=au' -GroupSearchBases 'OU=Security Groups,DC=corp,DC=com,DC=au'
+
+.EXAMPLE
     .\Build-OnPremAdminReview.ps1 -DelegatedGroupPattern '(?i)admin|-ops$|Tier[12]'
 
 .EXAMPLE
@@ -167,6 +188,8 @@ param(
     [string]$AdminPattern = '-a$',
     [string]$BaseUsernameCapture = '^(.+)-a$',
     [string]$SearchBase,
+    [string[]]$UserSearchBases,
+    [string[]]$GroupSearchBases,
     [string]$Server,
     [string]$DelegatedGroupPattern,
     [switch]$SkipAclCheck,
@@ -184,6 +207,27 @@ Import-Module ActiveDirectory -ErrorAction Stop
 $common = @{}
 if ($Server)     { $common.Server = $Server }
 if ($SearchBase) { $common.SearchBase = $SearchBase }
+
+# Runs $ScriptBlock once per OU in $SearchBases (each with its own -SearchBase, via
+# the $common-style hashtable it's handed), merging and de-duplicating results by
+# DistinguishedName - so -UserSearchBases / -GroupSearchBases can list several
+# unrelated OUs and still come back as one flat, distinct collection.
+function Get-ResultsAcrossOUs([string[]]$SearchBases, [scriptblock]$ScriptBlock) {
+    $seen = @{}
+    $acc = [System.Collections.Generic.List[object]]::new()
+    foreach ($ou in $SearchBases) {
+        $scoped = @{}
+        if ($Server) { $scoped.Server = $Server }
+        $scoped.SearchBase = $ou
+        foreach ($obj in (& $ScriptBlock $scoped)) {
+            if (-not $seen.ContainsKey($obj.DistinguishedName)) {
+                $seen[$obj.DistinguishedName] = $true
+                $acc.Add($obj)
+            }
+        }
+    }
+    return ,$acc
+}
 
 $domain = if ($Server) { Get-ADDomain -Server $Server } else { Get-ADDomain }
 $domainSid = $domain.DomainSID.Value
@@ -228,9 +272,18 @@ foreach ($n in $GroupTiers.Keys) {
         if ($g -and -not ($privGroups | Where-Object { $_.DistinguishedName -eq $g.DistinguishedName })) { $privGroups.Add($g) }
     } catch { }
 }
+if ($GroupSearchBases -and -not $DelegatedGroupPattern) {
+    Write-Warning "-GroupSearchBases has no effect without -DelegatedGroupPattern - the built-in RID groups and `$GroupTiers list are always resolved by name, not by OU."
+}
 if ($DelegatedGroupPattern) {
-    Write-Host "  Scanning all groups for custom/delegated matches of '$DelegatedGroupPattern'..." -ForegroundColor Cyan
-    $custom = @(Get-ADGroup -Filter * @common | Where-Object { $_.Name -match $DelegatedGroupPattern })
+    Write-Host "  Scanning groups for custom/delegated matches of '$DelegatedGroupPattern'$(if ($GroupSearchBases) { " in $($GroupSearchBases.Count) OU(s)" } else { ' (whole search scope)' })..." -ForegroundColor Cyan
+    $custom = if ($GroupSearchBases) {
+        Get-ResultsAcrossOUs -SearchBases $GroupSearchBases -ScriptBlock {
+            param($scoped) Get-ADGroup -Filter * @scoped | Where-Object { $_.Name -match $DelegatedGroupPattern }
+        }
+    } else {
+        @(Get-ADGroup -Filter * @common | Where-Object { $_.Name -match $DelegatedGroupPattern })
+    }
     foreach ($g in $custom) {
         if (-not ($privGroups | Where-Object { $_.DistinguishedName -eq $g.DistinguishedName })) {
             $privGroups.Add($g)
@@ -281,8 +334,14 @@ $props = @('SamAccountName','DisplayName','DistinguishedName','SID','Enabled','w
            'SmartcardLogonRequired','Department','Title','Manager',
            'ServicePrincipalName','DoesNotRequirePreAuth')
 
-Write-Host "Collecting accounts..." -ForegroundColor Cyan
-$all = Get-ADUser -Filter * -Properties $props @common
+Write-Host "Collecting accounts$(if ($UserSearchBases) { " from $($UserSearchBases.Count) OU(s)" })..." -ForegroundColor Cyan
+$all = if ($UserSearchBases) {
+    Get-ResultsAcrossOUs -SearchBases $UserSearchBases -ScriptBlock {
+        param($scoped) Get-ADUser -Filter * -Properties $props @scoped
+    }
+} else {
+    Get-ADUser -Filter * -Properties $props @common
+}
 $admins = @($all | Where-Object { $_.SamAccountName -match $AdminPattern })
 Write-Host "  $($all.Count) account(s), $($admins.Count) matching the on-prem admin convention" -ForegroundColor Cyan
 if ($admins.Count -eq 0) {

@@ -438,7 +438,9 @@ $rows = foreach ($a in $admins) {
                 ForEach-Object { $_.Scope } | Sort-Object -Unique)
 
     $tiers = @(Get-Tier $highestEntra; Get-Tier $highestAz) | Where-Object { $null -ne $_ }
-    $overallTier = if ($tiers) { ($tiers | Measure-Object -Minimum).Minimum } else { '' }
+    # Cast to string: mixes int (a tiered role held) with '' (no tiered role) - Sort-Object
+    # on a column mixing types throws under $ErrorActionPreference = 'Stop'.
+    $overallTier = if ($tiers) { "$(($tiers | Measure-Object -Minimum).Minimum)" } else { '' }
 
     $m  = $mfa[$a.Id]
     $sa = $a.SignInActivity
@@ -480,7 +482,7 @@ $rows = foreach ($a in $admins) {
     }
 }
 
-$rows | Sort-Object 'Overall Tier', @{E={$_.'Active Role Count'};Descending=$true}, 'Admin UPN' |
+$rows | Sort-Object @{E={if ($_.'Overall Tier' -eq '') { [int]::MaxValue } else { [int]$_.'Overall Tier' }}}, @{E={$_.'Active Role Count'};Descending=$true}, 'Admin UPN' |
     Export-Csv -Path $OutputPath -NoTypeInformation -Encoding UTF8
 
 # --------------------------------------------------------------------------

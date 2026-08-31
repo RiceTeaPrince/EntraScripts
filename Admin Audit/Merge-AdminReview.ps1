@@ -55,7 +55,9 @@ $people = @($cloud.'Base Username') + @($onprem.'Base Username') |
 
 function MinTier($values) {
     $nums = @($values | Where-Object { $_ -ne '' -and $null -ne $_ } | ForEach-Object { [int]$_ })
-    if ($nums.Count) { return ($nums | Measure-Object -Minimum).Minimum }
+    # Cast to string: mixes int (a tier resolved) with '' (no tier in either plane) -
+    # Sort-Object on a column mixing types throws under $ErrorActionPreference = 'Stop'.
+    if ($nums.Count) { return "$(($nums | Measure-Object -Minimum).Minimum)" }
     return ''
 }
 
@@ -107,7 +109,7 @@ $rows = foreach ($p in $people) {
     }
 }
 
-$rows | Sort-Object 'Overall Tier', @{E={$_.'Privileged In Both Planes'};Descending=$true}, 'Base Username' |
+$rows | Sort-Object @{E={if ($_.'Overall Tier' -eq '') { [int]::MaxValue } else { [int]$_.'Overall Tier' }}}, @{E={$_.'Privileged In Both Planes'};Descending=$true}, 'Base Username' |
     Export-Csv -Path $OutputPath -NoTypeInformation -Encoding UTF8
 
 # --------------------------------------------------------------------------
