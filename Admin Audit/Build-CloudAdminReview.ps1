@@ -25,7 +25,24 @@
     person's standard account, so a leaver whose standard account is disabled but
     whose admin account is still live becomes visible.
 
-    Also writes a second CSV - the "normal user accounts" comparison set. This is
+    Writes THREE CSVs, not one, so Entra and Azure RBAC remediation can be worked as
+    separate projects by separate owners:
+
+      - Cloud-Admin-Accounts.csv: every account matching the admin pattern, with no
+        filtering by privilege. This is the inventory - it is what catches an admin
+        account that currently holds NO role in either plane (privilege was removed
+        and the account wasn't, or the standard account behind it was disabled and
+        nobody noticed). Filtering this list by privilege would make that invisible.
+      - Entra-Admins.csv: only accounts holding at least one Entra directory role
+        (active or PIM-eligible), with full role detail and its own review-tracking
+        columns once pasted into the workbook.
+      - Azure-RBAC-Admins.csv: the same, for Azure RBAC role assignments.
+
+    An account holding privilege in both planes appears on both filtered exports;
+    each carries an 'Also Holds ...' flag pointing at the other, so remediating one
+    plane doesn't happen blind to exposure in the other.
+
+    Also writes a fourth CSV - the "normal user accounts" comparison set. This is
     the exact list of non-admin-pattern Entra user accounts (respecting
     -StandardAccountDomain, if given) used internally to resolve each admin
     account's standard account and decide orphan status; previously it existed
@@ -51,13 +68,23 @@
     UPN suffix of everyday accounts, e.g. 'corp.com.au'. Used to locate the person's
     standard account. If omitted the script matches on UPN prefix across all domains.
 
+.PARAMETER CloudAccountsOutputPath
+    CSV path for the unfiltered cloud admin account inventory - every account
+    matching the admin pattern, regardless of current privilege.
+
+.PARAMETER EntraOutputPath
+    CSV path for accounts holding at least one Entra directory role.
+
+.PARAMETER AzureRbacOutputPath
+    CSV path for accounts holding at least one Azure RBAC role assignment.
+
 .PARAMETER NormalUsersOutputPath
     CSV path for the normal (non-admin) user account export - the comparison
     baseline used to determine orphaned admin accounts.
 
 .PARAMETER SkipAzureRbac
     Skip Azure RBAC collection. Use if you only want the Entra directory role picture,
-    or have no Azure access.
+    or have no Azure access. Azure-RBAC-Admins.csv is still written, with headers only.
 
 .EXAMPLE
     Connect-MgGraph -Scopes 'User.Read.All','Directory.Read.All','RoleManagement.Read.Directory','AuditLog.Read.All','Group.Read.All'
@@ -77,7 +104,9 @@
 
 [CmdletBinding()]
 param(
-    [string]$OutputPath = ".\Cloud-Admins.csv",
+    [string]$CloudAccountsOutputPath = ".\Cloud-Admin-Accounts.csv",
+    [string]$EntraOutputPath = ".\Entra-Admins.csv",
+    [string]$AzureRbacOutputPath = ".\Azure-RBAC-Admins.csv",
     [string]$AdminPattern = '\.azr@',
     [string]$BaseUsernameCapture = '^(.+?)\.azr@',
     [string]$StandardAccountDomain,
@@ -391,9 +420,26 @@ function Get-ShortScope([string]$scope) {
 
 # --------------------------------------------------------------------------
 # Shape
+#
+# Three parallel row-sets from one pass over $admins: the unfiltered account
+# inventory (every admin account, so a zero-privilege one is never invisible),
+# and the two plane-specific worklists (only accounts actually holding a role
+# in that plane). No extra Graph/ARG calls - same data collected above, just
+# projected three ways.
 # --------------------------------------------------------------------------
+function Get-TierString($role) {
+    $t = Get-Tier $role
+    # Cast to string: mixes int (a tiered role held) with '' (no tiered role) - Sort-Object
+    # on a column mixing types throws under $ErrorActionPreference = 'Stop'.
+    if ($null -eq $t) { '' } else { "$t" }
+}
+
 $now = Get-Date
-$rows = foreach ($a in $admins) {
+$accountRows = [System.Collections.Generic.List[object]]::new()
+$entraRows   = [System.Collections.Generic.List[object]]::new()
+$rbacRows    = [System.Collections.Generic.List[object]]::new()
+
+foreach ($a in $admins) {
 
     $base = if ($a.UserPrincipalName -match $BaseUsernameCapture) { $Matches[1].ToLower() }
             else { ($a.UserPrincipalName -split '@')[0].ToLower() }
@@ -413,6 +459,20 @@ $rows = foreach ($a in $admins) {
     $act  = @($actGrants  | ForEach-Object { Format-Grant $_ } | Sort-Object -Unique)
     $elig = @($eligGrants | ForEach-Object { Format-Grant $_ } | Sort-Object -Unique)
     $highestEntra = Get-HighestRole @(($actGrants + $eligGrants).Role)
+    $entraTier = Get-TierString $highestEntra
+
+    $entraGroupGrants = @($actGrants + $eligGrants | Where-Object { $_.ViaGroupId })
+    $entraGroupNames  = @($entraGroupGrants | ForEach-Object { $_.ViaGroup } | Sort-Object -Unique)
+    $entraGroupIds    = @($entraGroupGrants | ForEach-Object { $_.ViaGroupId } | Sort-Object -Unique)
+    $entraDirectCount = @($actGrants + $eligGrants | Where-Object { -not $_.ViaGroupId }).Count
+    $entraGroupCount  = $entraGroupGrants.Count
+    $entraRoute = if ($entraGroupCount -gt 0 -and $entraDirectCount -gt 0) { 'Direct + Group' }
+                  elseif ($entraGroupCount -gt 0) { 'Group only' }
+                  elseif ($entraDirectCount -gt 0) { 'Direct only' } else { '' }
+
+    # Non-tenant-wide directory scopes, e.g. a role limited to one Administrative Unit
+    $scopes = @($actGrants + $eligGrants | Where-Object { $_.Scope -and $_.Scope -ne 'Tenant-wide' } |
+                ForEach-Object { $_.Scope } | Sort-Object -Unique)
 
     $az = @(if ($azByPrincipal.ContainsKey($a.Id)) { $azByPrincipal[$a.Id] })
     $azStrings = @($az | ForEach-Object {
@@ -421,69 +481,97 @@ $rows = foreach ($a in $admins) {
         $t
     } | Sort-Object -Unique)
     $highestAz = Get-HighestRole @($az.roleName)
+    $azTier = Get-TierString $highestAz
     $broad = if ($az | Where-Object { (Get-ScopeKind $_.scope) -in @('Subscription','ManagementGroup') }) { 'Yes' } else { 'No' }
 
-    # Every distinct group granting this account any role, in either plane
-    $allGroupGrants = @($actGrants + $eligGrants | Where-Object { $_.ViaGroupId }) +
-                      @($az | Where-Object { $_.ViaGroupId })
-    $groupNames = @($allGroupGrants | ForEach-Object { $_.ViaGroup } | Sort-Object -Unique)
-    $groupIds   = @($allGroupGrants | ForEach-Object { $_.ViaGroupId } | Sort-Object -Unique)
-
-    $directCount = @($actGrants + $eligGrants | Where-Object { -not $_.ViaGroupId }).Count +
-                   @($az | Where-Object { -not $_.ViaGroupId }).Count
-    $groupCount  = $allGroupGrants.Count
-
-    # Non-tenant-wide directory scopes, e.g. a role limited to one Administrative Unit
-    $scopes = @($actGrants + $eligGrants | Where-Object { $_.Scope -and $_.Scope -ne 'Tenant-wide' } |
-                ForEach-Object { $_.Scope } | Sort-Object -Unique)
+    $azGroupGrants = @($az | Where-Object { $_.ViaGroupId })
+    $azGroupNames  = @($azGroupGrants | ForEach-Object { $_.ViaGroup } | Sort-Object -Unique)
+    $azGroupIds    = @($azGroupGrants | ForEach-Object { $_.ViaGroupId } | Sort-Object -Unique)
+    $azDirectCount = @($az | Where-Object { -not $_.ViaGroupId }).Count
+    $azGroupCount  = $azGroupGrants.Count
+    $azRoute = if ($azGroupCount -gt 0 -and $azDirectCount -gt 0) { 'Direct + Group' }
+               elseif ($azGroupCount -gt 0) { 'Group only' }
+               elseif ($azDirectCount -gt 0) { 'Direct only' } else { '' }
 
     $tiers = @(Get-Tier $highestEntra; Get-Tier $highestAz) | Where-Object { $null -ne $_ }
-    # Cast to string: mixes int (a tiered role held) with '' (no tiered role) - Sort-Object
-    # on a column mixing types throws under $ErrorActionPreference = 'Stop'.
     $overallTier = if ($tiers) { "$(($tiers | Measure-Object -Minimum).Minimum)" } else { '' }
+
+    $hasEntra = ($act.Count -gt 0 -or $elig.Count -gt 0)
+    $hasRbac  = ($azStrings.Count -gt 0)
 
     $m  = $mfa[$a.Id]
     $sa = $a.SignInActivity
     $li = if ($sa -and $sa.LastSignInDateTime) { [datetime]$sa.LastSignInDateTime } else { $null }
 
-    [PSCustomObject][ordered]@{
-        'Admin UPN'              = $a.UserPrincipalName
-        'Display Name'          = $a.DisplayName
-        'Object ID'             = $a.Id
-        'Base Username'         = $base
-        'Enabled'               = if ($a.AccountEnabled) { 'Yes' } else { 'No' }
-        'Created'               = if ($a.CreatedDateTime) { ([datetime]$a.CreatedDateTime).ToString('dd/MM/yyyy') } else { '' }
-        'Last Sign-In'          = if ($li) { $li.ToString('dd/MM/yyyy') } else { '' }
-        'MFA Registered'        = if ($m) { if ($m.Registered) { 'Yes' } else { 'No' } } else { 'Unknown' }
-        'Phishing Resistant'    = if ($m) { if ($m.PhishResistant) { 'Yes' } else { 'No' } } else { 'Unknown' }
-        'Auth Methods'          = if ($m) { $m.Methods } else { '' }
-        'Entra Roles (Active)'  = if ($act.Count)  { $act -join '; ' }  else { 'None' }
-        'Entra Roles (Eligible)'= if ($elig.Count) { $elig -join '; ' } else { 'None' }
-        'Active Role Count'     = $act.Count
-        'Eligible Role Count'   = $elig.Count
-        'Highest Entra Role'    = $highestEntra
-        'Azure RBAC Roles'      = if ($azStrings.Count) { $azStrings -join '; ' } else { 'None' }
-        'Highest Azure Role'    = $highestAz
-        'Sub or MG Scoped'      = $broad
-        'Assignment Route'      = if ($groupCount -gt 0 -and $directCount -gt 0) { 'Direct + Group' }
-                                  elseif ($groupCount -gt 0) { 'Group only' }
-                                  elseif ($directCount -gt 0) { 'Direct only' } else { '' }
-        'Granting Groups'       = if ($groupNames.Count) { $groupNames -join '; ' } else { '' }
-        'Granting Group IDs'    = if ($groupIds.Count)   { $groupIds   -join '; ' } else { '' }
-        'Direct Assignments'    = $directCount
-        'Group Assignments'     = $groupCount
-        'Directory Scopes'      = if ($scopes.Count) { $scopes -join '; ' } else { 'Tenant-wide' }
-        'Overall Tier'          = $overallTier
+    # Identity/credential columns are common to all three rows, built once
+    $identity = [ordered]@{
+        'Admin UPN'           = $a.UserPrincipalName
+        'Display Name'        = $a.DisplayName
+        'Object ID'           = $a.Id
+        'Base Username'       = $base
+        'Enabled'             = if ($a.AccountEnabled) { 'Yes' } else { 'No' }
+        'Created'             = if ($a.CreatedDateTime) { ([datetime]$a.CreatedDateTime).ToString('dd/MM/yyyy') } else { '' }
+        'Last Sign-In'        = if ($li) { $li.ToString('dd/MM/yyyy') } else { '' }
+        'MFA Registered'      = if ($m) { if ($m.Registered) { 'Yes' } else { 'No' } } else { 'Unknown' }
+        'Phishing Resistant'  = if ($m) { if ($m.PhishResistant) { 'Yes' } else { 'No' } } else { 'Unknown' }
+        'Auth Methods'        = if ($m) { $m.Methods } else { '' }
+    }
+    $standard = [ordered]@{
         'Standard Account UPN'  = if ($std) { $std.UserPrincipalName } else { '' }
         'Standard Acct Enabled' = if ($std) { if ($std.AccountEnabled) { 'Yes' } else { 'No' } } else { 'NOT FOUND' }
         'Person Display Name'   = if ($std) { $std.DisplayName } else { '' }
         'Department'            = if ($std) { $std.Department } else { $a.Department }
         'Job Title'             = if ($std) { $std.JobTitle } else { $a.JobTitle }
     }
+
+    $accountRows.Add([PSCustomObject]([ordered]@{} + $identity + [ordered]@{
+        'Highest Entra Role' = $highestEntra
+        'Highest Azure Role' = $highestAz
+        'Overall Tier'       = $overallTier
+    } + $standard))
+
+    if ($hasEntra) {
+        $entraRows.Add([PSCustomObject]([ordered]@{} + $identity + [ordered]@{
+            'Entra Roles (Active)'   = if ($act.Count)  { $act -join '; ' }  else { 'None' }
+            'Entra Roles (Eligible)' = if ($elig.Count) { $elig -join '; ' } else { 'None' }
+            'Active Role Count'      = $act.Count
+            'Eligible Role Count'    = $elig.Count
+            'Highest Entra Role'     = $highestEntra
+            'Entra Tier'             = $entraTier
+            'Assignment Route'       = $entraRoute
+            'Granting Groups'        = if ($entraGroupNames.Count) { $entraGroupNames -join '; ' } else { '' }
+            'Granting Group IDs'     = if ($entraGroupIds.Count)   { $entraGroupIds   -join '; ' } else { '' }
+            'Direct Assignments'     = $entraDirectCount
+            'Group Assignments'      = $entraGroupCount
+            'Directory Scopes'       = if ($scopes.Count) { $scopes -join '; ' } else { 'Tenant-wide' }
+            'Also Holds Azure RBAC'  = if ($hasRbac) { 'Yes' } else { 'No' }
+        } + $standard))
+    }
+
+    if ($hasRbac) {
+        $rbacRows.Add([PSCustomObject]([ordered]@{} + $identity + [ordered]@{
+            'Azure RBAC Roles'     = $azStrings -join '; '
+            'Highest Azure Role'   = $highestAz
+            'Azure Tier'           = $azTier
+            'Sub or MG Scoped'     = $broad
+            'Assignment Route'     = $azRoute
+            'Granting Groups'      = if ($azGroupNames.Count) { $azGroupNames -join '; ' } else { '' }
+            'Granting Group IDs'   = if ($azGroupIds.Count)   { $azGroupIds   -join '; ' } else { '' }
+            'Direct Assignments'   = $azDirectCount
+            'Group Assignments'    = $azGroupCount
+            'Also Holds Entra Role'= if ($hasEntra) { 'Yes' } else { 'No' }
+        } + $standard))
+    }
 }
 
-$rows | Sort-Object @{E={if ($_.'Overall Tier' -eq '') { [int]::MaxValue } else { [int]$_.'Overall Tier' }}}, @{E={$_.'Active Role Count'};Descending=$true}, 'Admin UPN' |
-    Export-Csv -Path $OutputPath -NoTypeInformation -Encoding UTF8
+$accountRows | Sort-Object @{E={if ($_.'Overall Tier' -eq '') { [int]::MaxValue } else { [int]$_.'Overall Tier' }}}, 'Admin UPN' |
+    Export-Csv -Path $CloudAccountsOutputPath -NoTypeInformation -Encoding UTF8
+
+$entraRows | Sort-Object @{E={if ($_.'Entra Tier' -eq '') { [int]::MaxValue } else { [int]$_.'Entra Tier' }}}, @{E={$_.'Active Role Count'};Descending=$true}, 'Admin UPN' |
+    Export-Csv -Path $EntraOutputPath -NoTypeInformation -Encoding UTF8
+
+$rbacRows | Sort-Object @{E={if ($_.'Azure Tier' -eq '') { [int]::MaxValue } else { [int]$_.'Azure Tier' }}}, @{E={$_.'Direct Assignments'+$_.'Group Assignments'};Descending=$true}, 'Admin UPN' |
+    Export-Csv -Path $AzureRbacOutputPath -NoTypeInformation -Encoding UTF8
 
 # --------------------------------------------------------------------------
 # Normal user accounts - the comparison baseline the orphan check above runs
@@ -525,35 +613,74 @@ $normalRows | Sort-Object @{E={$_.Enabled};Descending=$true}, 'UPN' |
 # --------------------------------------------------------------------------
 # Summary
 # --------------------------------------------------------------------------
-$t0        = @($rows | Where-Object { $_.'Overall Tier' -eq 0 })
-$standing  = @($rows | Where-Object { [int]$_.'Active Role Count' -gt 0 })
-$noPhish   = @($rows | Where-Object { $_.'Phishing Resistant' -ne 'Yes' -and $_.Enabled -eq 'Yes' })
-$noMfa     = @($rows | Where-Object { $_.'MFA Registered' -eq 'No' -and $_.Enabled -eq 'Yes' })
-$orphaned  = @($rows | Where-Object { $_.Enabled -eq 'Yes' -and $_.'Standard Acct Enabled' -in @('No','NOT FOUND') })
-$dormant   = @($rows | Where-Object { -not $_.'Last Sign-In' -and $_.Enabled -eq 'Yes' })
+$noPrivEither = @($accountRows | Where-Object { $_.'Highest Entra Role' -eq 'None' -and $_.'Highest Azure Role' -eq 'None' })
+$orphaned     = @($accountRows | Where-Object { $_.Enabled -eq 'Yes' -and $_.'Standard Acct Enabled' -in @('No','NOT FOUND') })
+$dormant      = @($accountRows | Where-Object { -not $_.'Last Sign-In' -and $_.Enabled -eq 'Yes' })
+$noMfa        = @($accountRows | Where-Object { $_.'MFA Registered' -eq 'No' -and $_.Enabled -eq 'Yes' })
 
-Write-Host "`nWritten to $OutputPath" -ForegroundColor Green
-Write-Host "  Cloud admin accounts                 : $($rows.Count)"
-Write-Host "  Tier 0 (control plane)               : $($t0.Count)" -ForegroundColor Yellow
-Write-Host "  Holding standing (permanent) roles   : $($standing.Count)" -ForegroundColor Yellow
-Write-Host "  Enabled without phishing-resistant MFA : $($noPhish.Count)" -ForegroundColor Yellow
-if ($noMfa.Count)    { Write-Host "  Enabled with NO MFA registered       : $($noMfa.Count)" -ForegroundColor Red }
+Write-Host "`nWritten to $CloudAccountsOutputPath" -ForegroundColor Green
+Write-Host "  Cloud admin accounts                 : $($accountRows.Count)"
 if ($orphaned.Count) {
     Write-Host "  ORPHANED - admin enabled, standard account disabled or missing : $($orphaned.Count)" -ForegroundColor Red
     Write-Host "    Likely leavers. Admin accounts are separate objects and are routinely missed at offboarding."
 }
-if ($dormant.Count)  { Write-Host "  Enabled but never signed in          : $($dormant.Count)" }
-$viaGroupOnly = @($rows | Where-Object { $_.'Assignment Route' -eq 'Group only' })
-$anyGroup     = @($rows | Where-Object { [int]$_.'Group Assignments' -gt 0 })
-$scoped       = @($rows | Where-Object { $_.'Directory Scopes' -ne 'Tenant-wide' })
-if ($anyGroup.Count) {
-    Write-Host "  Holding roles via group membership   : $($anyGroup.Count)" -ForegroundColor Yellow
-    Write-Host "    $($viaGroupOnly.Count) of these hold NO direct assignment at all - they would have been"
+if ($noPrivEither.Count) {
+    Write-Host "  Holding NO privilege in either plane  : $($noPrivEither.Count)" -ForegroundColor Yellow
+    Write-Host "    Privilege was removed and the account wasn't, or it never held any. Not on the Entra or"
+    Write-Host "    Azure RBAC worklists below - this account inventory is the only place it's visible."
+}
+if ($noMfa.Count)   { Write-Host "  Enabled with NO MFA registered        : $($noMfa.Count)" -ForegroundColor Red }
+if ($dormant.Count) { Write-Host "  Enabled but never signed in            : $($dormant.Count)" }
+
+$entraT0       = @($entraRows | Where-Object { $_.'Entra Tier' -eq 0 })
+$entraStanding = @($entraRows | Where-Object { [int]$_.'Active Role Count' -gt 0 })
+$entraNoPhish  = @($entraRows | Where-Object { $_.'Phishing Resistant' -ne 'Yes' -and $_.Enabled -eq 'Yes' })
+$entraViaGroupOnly = @($entraRows | Where-Object { $_.'Assignment Route' -eq 'Group only' })
+$entraAnyGroup     = @($entraRows | Where-Object { [int]$_.'Group Assignments' -gt 0 })
+$entraScoped       = @($entraRows | Where-Object { $_.'Directory Scopes' -ne 'Tenant-wide' })
+$entraAlsoRbac     = @($entraRows | Where-Object { $_.'Also Holds Azure RBAC' -eq 'Yes' })
+
+Write-Host "`nWritten to $EntraOutputPath" -ForegroundColor Green
+Write-Host "  Accounts holding an Entra role        : $($entraRows.Count)"
+Write-Host "  Tier 0 (control plane)                : $($entraT0.Count)" -ForegroundColor Yellow
+Write-Host "  Holding STANDING (permanent) roles    : $($entraStanding.Count)" -ForegroundColor Yellow
+Write-Host "  Enabled without phishing-resistant MFA : $($entraNoPhish.Count)" -ForegroundColor Yellow
+if ($entraAnyGroup.Count) {
+    Write-Host "  Holding roles via group membership     : $($entraAnyGroup.Count)" -ForegroundColor Yellow
+    Write-Host "    $($entraViaGroupOnly.Count) of these hold NO direct assignment at all - they would have been"
     Write-Host "    invisible to a report that matched only on the user's own object ID."
 }
-if ($scoped.Count) {
-    Write-Host "  Roles scoped to an Administrative Unit : $($scoped.Count)"
+if ($entraScoped.Count) {
+    Write-Host "  Roles scoped to an Administrative Unit : $($entraScoped.Count)"
     Write-Host "    Narrower than tenant-wide. Do not read these as full-tenant privilege."
+}
+if ($entraAlsoRbac.Count) {
+    Write-Host "  Also holds an Azure RBAC role          : $($entraAlsoRbac.Count)"
+    Write-Host "    Coordinate with whoever owns Azure-RBAC-Admins.csv before closing out remediation here."
+}
+
+$rbacT0           = @($rbacRows | Where-Object { $_.'Azure Tier' -eq 0 })
+$rbacNoPhish      = @($rbacRows | Where-Object { $_.'Phishing Resistant' -ne 'Yes' -and $_.Enabled -eq 'Yes' })
+$rbacViaGroupOnly = @($rbacRows | Where-Object { $_.'Assignment Route' -eq 'Group only' })
+$rbacAnyGroup     = @($rbacRows | Where-Object { [int]$_.'Group Assignments' -gt 0 })
+$rbacBroad        = @($rbacRows | Where-Object { $_.'Sub or MG Scoped' -eq 'Yes' })
+$rbacAlsoEntra    = @($rbacRows | Where-Object { $_.'Also Holds Entra Role' -eq 'Yes' })
+
+Write-Host "`nWritten to $AzureRbacOutputPath" -ForegroundColor Green
+Write-Host "  Accounts holding an Azure RBAC role   : $($rbacRows.Count)"
+Write-Host "  Tier 0 (control plane)                : $($rbacT0.Count)" -ForegroundColor Yellow
+Write-Host "  Enabled without phishing-resistant MFA : $($rbacNoPhish.Count)" -ForegroundColor Yellow
+if ($rbacAnyGroup.Count) {
+    Write-Host "  Holding roles via group membership     : $($rbacAnyGroup.Count)" -ForegroundColor Yellow
+    Write-Host "    $($rbacViaGroupOnly.Count) of these hold NO direct assignment at all."
+}
+if ($rbacBroad.Count) {
+    Write-Host "  Sub or MG scoped                       : $($rbacBroad.Count)"
+    Write-Host "    Covers every resource in the scope, including ones created next year."
+}
+if ($rbacAlsoEntra.Count) {
+    Write-Host "  Also holds an Entra role                : $($rbacAlsoEntra.Count)"
+    Write-Host "    Coordinate with whoever owns Entra-Admins.csv before closing out remediation here."
 }
 
 $normalDisabled = @($normalRows | Where-Object { $_.Enabled -eq 'No' })
@@ -567,5 +694,7 @@ if ($normalDisabledLiveAdmin.Count) {
     Write-Host "    Same leavers as the ORPHANED count above, seen from the standard-account side."
 }
 
-Write-Host "`nNext: paste Cloud Admins into the 'Cloud Admins' tab at cell A2 (columns A-AD)." -ForegroundColor Cyan
+Write-Host "`nNext: paste Cloud Admin Accounts into the 'Cloud Admin Accounts' tab at cell A2 (columns A-R)." -ForegroundColor Cyan
+Write-Host "      paste Entra Admins into the 'Entra Admins' tab at cell A2 (columns A-AB)." -ForegroundColor Cyan
+Write-Host "      paste Azure RBAC Admins into the 'Azure RBAC Admins' tab at cell A2 (columns A-Y)." -ForegroundColor Cyan
 Write-Host "      paste Normal Users into a 'Normal Users' tab at cell A2 (columns A-M), if you want it in the workbook." -ForegroundColor Cyan
