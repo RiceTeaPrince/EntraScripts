@@ -56,8 +56,8 @@
     The cloud side of this check is tried against on-prem SamAccountName
     (Normal-CloudUsers.csv's 'OnPrem SAM' column) before falling back to UPN
     prefix - a base username here can be a SamAccountName-shaped value (e.g.
-    'wredmo') when cloud admin accounts are named after the on-prem account
-    rather than the person's own cloud UPN (which might be 'wesley.redmond@...',
+    'jsmith') when cloud admin accounts are named after the on-prem account
+    rather than the person's own cloud UPN (which might be 'jane.smith@...',
     an unrelated string). See Build-CloudAdminReview.ps1's own notes on the same
     matching order.
 
@@ -145,8 +145,8 @@ foreach ($u in $normalOnPrem) { $normalOnPremBySam[$u.SamAccountName.ToLower()] 
 # Two keys for the cloud side, same reasoning as Build-CloudAdminReview.ps1's own
 # standard-account matching: a base username here can be an on-prem-style
 # SamAccountName (when cloud admin accounts are named after it, e.g.
-# 'wredmo.azr@...') rather than a cloud UPN prefix (the same person's real UPN
-# might be 'wesley.redmond@...', completely unrelated to 'wredmo' as a string).
+# 'jsmith.azr@...') rather than a cloud UPN prefix (the same person's real UPN
+# might be 'jane.smith@...', completely unrelated to 'jsmith' as a string).
 # 'OnPrem SAM' on Normal-CloudUsers.csv is blank for accounts that were never
 # synced from on-prem, so this index is naturally empty in pure-cloud tenants.
 $normalCloudBySam = @{}

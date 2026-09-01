@@ -29,9 +29,9 @@
     admin's base username against onPremisesSamAccountName (the on-prem
     SamAccountName, synced into Entra by Entra Connect for hybrid accounts), then
     by UPN prefix. The SAM path exists because some orgs name cloud admin accounts
-    after the on-prem SamAccountName (e.g. 'wredmo.azr@...') while real people's
+    after the on-prem SamAccountName (e.g. 'jsmith.azr@...') while real people's
     own cloud UPN follows an entirely different convention (e.g.
-    'wesley.redmond@...') - UPN-prefix matching alone then fails for every single
+    'jane.smith@...') - UPN-prefix matching alone then fails for every single
     admin, with no partial successes to hint at why. Without -StandardAccountDomain,
     the UPN-prefix path (only) also crosses every domain in the tenant. If a key
     - SAM or UPN prefix - belongs to more than one candidate account, that's
@@ -217,10 +217,10 @@ if ($admins.Count -eq 0) {
 # admin account can be linked to a person either way.
 #
 # This matters because an org can name cloud ADMIN accounts after the on-prem
-# SamAccountName (e.g. 'wredmo.azr@corp.onmicrosoft.com' for on-prem account
-# 'wredmo') while the same person's real cloud UPN follows Entra's own convention
-# instead (e.g. 'wesley.redmond@corp.com.au') - matching by UPN prefix alone then
-# fails for every single admin, 100% of the time, because 'wredmo' never appears
+# SamAccountName (e.g. 'jsmith.azr@corp.onmicrosoft.com' for on-prem account
+# 'jsmith') while the same person's real cloud UPN follows Entra's own convention
+# instead (e.g. 'jane.smith@corp.com.au') - matching by UPN prefix alone then
+# fails for every single admin, 100% of the time, because 'jsmith' never appears
 # as a UPN prefix anywhere in the tenant; it only shows up in
 # onPremisesSamAccountName, synced from AD by Entra Connect. SamAccountName is
 # tried first below - once an org has any admin accounts named this way at all,
@@ -689,7 +689,7 @@ $normalRows = foreach ($u in $normalUsers) {
     # $adminByPrefix is keyed by whatever BaseUsernameCapture extracted from each
     # admin's own UPN - which, in an org that names cloud admins after the on-prem
     # SamAccountName (see the standard-account matching above), is a SAM-shaped
-    # value like 'wredmo', not this user's UPN prefix ('wesley.redmond'). So a
+    # value like 'jsmith', not this user's UPN prefix ('jane.smith'). So a
     # normal user has to be checked against that map under BOTH of their own
     # possible identifiers - UPN prefix and OnPremisesSamAccountName - or an admin
     # account named the SAM way would never show as linked to its person here.

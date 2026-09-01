@@ -27,8 +27,8 @@
     match against "<username>@<StandardAccountDomain>" if given, otherwise a
     UPN-prefix match across all domains in the tenant. The SAM path matters for
     the same reason it does there: an org that names cloud admin accounts after
-    the on-prem SamAccountName (e.g. 'wredmo.azr@...') has a real UPN for that
-    person that can be a completely unrelated string (e.g. 'wesley.redmond@...') -
+    the on-prem SamAccountName (e.g. 'jsmith.azr@...') has a real UPN for that
+    person that can be a completely unrelated string (e.g. 'jane.smith@...') -
     a UPN-only lookup would silently never find them. If more than one Entra user
     matches (SAM collision, or a UPN prefix collision when no -StandardAccountDomain
     is given), that's flagged with a warning and recorded as 'Ambiguous' rather
@@ -131,9 +131,9 @@ foreach ($p in $people) {
         $safeUsername = $username.Replace("'", "''")
 
         # Tried first: on-prem SamAccountName. Some orgs name cloud admin accounts
-        # after the on-prem SamAccountName (e.g. 'wredmo.azr@...') while the same
+        # after the on-prem SamAccountName (e.g. 'jsmith.azr@...') while the same
         # person's real cloud UPN follows an unrelated convention (e.g.
-        # 'wesley.redmond@...') - a UPN-based lookup alone would then never find
+        # 'jane.smith@...') - a UPN-based lookup alone would then never find
         # them. onPremisesSamAccountName only supports Graph's ADVANCED query
         # capabilities, not a plain -Filter - eq/startsWith need ConsistencyLevel:
         # eventual plus a $count parameter (see
