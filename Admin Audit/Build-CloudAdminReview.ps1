@@ -818,4 +818,4 @@ if ($normalDisabledLiveAdmin.Count) {
 Write-Host "`nNext: paste Cloud Admin Accounts into the 'Cloud Admin Accounts' tab at cell A2 (columns A-R)." -ForegroundColor Cyan
 Write-Host "      paste Entra Admins into the 'Entra Admins' tab at cell A2 (columns A-AB)." -ForegroundColor Cyan
 Write-Host "      paste Azure RBAC Admins into the 'Azure RBAC Admins' tab at cell A2 (columns A-Y)." -ForegroundColor Cyan
-Write-Host "      paste Normal Users into a 'Normal Users' tab at cell A2 (columns A-M), if you want it in the workbook." -ForegroundColor Cyan
+Write-Host "      paste Normal Users into a 'Normal Users' tab at cell A2 (columns A-N), if you want it in the workbook." -ForegroundColor Cyan

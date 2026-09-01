@@ -206,6 +206,20 @@ if ($SyncWorkbookPath) {
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 function Script([string]$Name) { Join-Path $root $Name }
 
+# Admin-People.csv's column count depends on which of stages 4/5 actually ran
+# (-SkipAdRefresh forces -SkipEntraReconcile too, so 22/24/26 are the only
+# possible totals) - used below to tell a manual-paste reviewer the right
+# column letter instead of a number that's only correct for a full run.
+function ConvertTo-ColumnLetter([int]$Number) {
+    $letters = ''
+    while ($Number -gt 0) {
+        $rem = ($Number - 1) % 26
+        $letters = [char](65 + $rem) + $letters
+        $Number = [int](($Number - $rem - 1) / 26)
+    }
+    return $letters
+}
+
 New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
 $OutputDirectory = (Resolve-Path $OutputDirectory).Path
 function OutPath([string]$Name) { Join-Path $OutputDirectory $Name }
@@ -397,6 +411,13 @@ $failed = @($stageResults | Where-Object { $_.Status -ne 'OK' })
 if ($failed.Count) {
     Write-Host "`n$($failed.Count) stage(s) failed. Admin-People.csv may be missing, stale, or built on partial data - check the stage output above before pasting into the workbook." -ForegroundColor Red
 } else {
-    Write-Host "`nAll stages completed. Paste $adminPeoplePath into the 'People' tab at cell A2 (columns A-V)." -ForegroundColor Green
-    Write-Host "See each stage's own '`nWritten to ...' output above for the other CSVs and their target tabs." -ForegroundColor Cyan
+    if ($SyncWorkbookPath) {
+        Write-Host "`nAll stages completed. $adminPeoplePath and the other CSVs were already written into $SyncWorkbookPath by stage 6 - no manual paste needed." -ForegroundColor Green
+    } else {
+        $peopleCols = 22
+        if (-not $SkipAdRefresh)      { $peopleCols += 2 }
+        if (-not $SkipEntraReconcile) { $peopleCols += 2 }
+        Write-Host "`nAll stages completed. Paste $adminPeoplePath into the 'People' tab at cell A2 (columns A-$(ConvertTo-ColumnLetter $peopleCols))." -ForegroundColor Green
+        Write-Host "See each stage's own '`nWritten to ...' output above for the other CSVs and their target tabs." -ForegroundColor Cyan
+    }
 }

@@ -702,7 +702,7 @@ function New-IdentityReportHtml {
     $(SectionHeader 'Privileged access')
     <tr><td style="padding:0 12px;"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
       $(MetricRow 'People with Tier 0 access'                    'Tier0People'        'down' 'normal')
-      $(MetricRow 'Privileged in BOTH planes'                    'BothPlanes'         'down' 'medium')
+      $(MetricRow 'Privileged in MULTIPLE planes'                'MultiPlane'         'down' 'medium')
       $(MetricRow 'Tier 0 without phishing-resistant MFA'        'Tier0NoPhish'       'down' 'high')
       $(MetricRow 'Tier 0 AD without smartcard required'         'Tier0NoSmartcard'   'down' 'high')
       $(MetricRow 'Standing (non-PIM) Tier 0 roles'              'StandingTier0'      'down' 'medium')
@@ -790,21 +790,26 @@ $ctx = Get-GovernanceStorageContext -StorageAccountName $StorageAccountName
 #   2. Replace Connect-AzAccount with Connect-AzAccount -Identity
 #   3. Return objects instead of writing CSVs
 
-$exclusions = Get-CAExclusionMap        # from Build-CAExclusionMap.ps1
-$identities = Get-IdentityInventory     # from Build-IdentityInventory.ps1
-$azureRbac  = Get-AzureResourceMap      # from Build-AzureResourceMap.ps1
-$cloudAdmins= Get-CloudAdminReview      # from Build-CloudAdminReview.ps1
+$exclusions   = Get-CAExclusionMap         # from Build-CAExclusionMap.ps1
+$identities   = Get-IdentityInventory      # from Build-IdentityInventory.ps1
+$azureRbacMap = Get-AzureResourceMap       # from Build-AzureResourceMap.ps1 - all Azure RBAC, not just admins
+$cloudAccounts, $entraAdmins, $rbacAdmins = Get-CloudAdminReview   # from Build-CloudAdminReview.ps1 - returns
+                                                                    # three collections now (account inventory,
+                                                                    # Entra-privileged, Azure-RBAC-privileged),
+                                                                    # matching the CSVs the interactive script writes
 
 $snapshot = [PSCustomObject]@{
-    CollectedUtc = (Get-Date).ToUniversalTime().ToString('o')
-    Exclusions   = $exclusions
-    Identities   = $identities
-    AzureRbac    = $azureRbac
-    CloudAdmins  = $cloudAdmins
+    CollectedUtc  = (Get-Date).ToUniversalTime().ToString('o')
+    Exclusions    = $exclusions
+    Identities    = $identities
+    AzureRbacMap  = $azureRbacMap
+    CloudAccounts = $cloudAccounts
+    EntraAdmins   = $entraAdmins
+    RbacAdmins    = $rbacAdmins
 }
 
 Save-GovernanceState -Context $ctx -Name 'cloud' -Data $snapshot
-Write-Output "Cloud collection complete: $($exclusions.Count) exclusions, $($cloudAdmins.Count) cloud admins."
+Write-Output "Cloud collection complete: $($exclusions.Count) exclusions, $($cloudAccounts.Count) cloud admin account(s) ($($entraAdmins.Count) Entra, $($rbacAdmins.Count) Azure RBAC)."
 ```
 
 > **Refactoring note.** Wrap the body of each existing script in a function (`Get-CAExclusionMap` and so on) that returns objects rather than calling `Export-Csv`. Add those functions to the shared module. That way one implementation serves both the interactive workflow and the runbook, and they cannot drift apart.
@@ -876,18 +881,24 @@ $prevAd    = Get-GovernanceState -Context $ctx -Name 'ad-previous'
 
 # ---- Deltas -------------------------------------------------------------
 $exclDelta = Get-GovernanceDelta -Previous $prevCloud.Exclusions -Current $cloud.Exclusions -KeyProperty 'ObjectId'
-$adminDelta= Get-GovernanceDelta -Previous $prevCloud.CloudAdmins -Current $cloud.CloudAdmins -KeyProperty 'Object ID'
+$adminDelta= Get-GovernanceDelta -Previous $prevCloud.EntraAdmins -Current $cloud.EntraAdmins -KeyProperty 'Object ID'
 
 # ---- Metrics ------------------------------------------------------------
+# Entra and Azure RBAC are tracked separately now (Build-CloudAdminReview.ps1 splits
+# its output the same way) - Tier0People/MultiPlane below read People!'Overall Tier'
+# and 'Privileged In Multiple Planes' instead of a single combined cloud tier.
 $metrics = @{
-    Tier0People        = @($cloud.CloudAdmins | Where-Object { $_.'Overall Tier' -eq 0 }).Count
-    BothPlanes         = 0   # computed from the merge, see Merge-AdminReview logic
-    Tier0NoPhish       = @($cloud.CloudAdmins | Where-Object { $_.'Overall Tier' -eq 0 -and $_.'Phishing Resistant' -ne 'Yes' -and $_.Enabled -eq 'Yes' }).Count
-    Tier0NoSmartcard   = @($ad.OnPremAdmins   | Where-Object { $_.'AD Tier' -eq 0 -and $_.'Smartcard Required' -eq 'No' -and $_.Enabled -eq 'Yes' }).Count
-    StandingTier0      = @($cloud.CloudAdmins | Where-Object { $_.'Overall Tier' -eq 0 -and [int]$_.'Active Role Count' -gt 0 }).Count
-    PrivViaGroup       = @($cloud.CloudAdmins | Where-Object { [int]$_.'Group Assignments' -gt 0 }).Count
-    Tier0GroupOnly     = @($cloud.CloudAdmins | Where-Object { $_.'Overall Tier' -eq 0 -and $_.'Assignment Route' -eq 'Group only' }).Count
-    OrphanedAdmins     = @($cloud.CloudAdmins + $ad.OnPremAdmins | Where-Object { $_.Enabled -eq 'Yes' -and $_.'Standard Acct Enabled' -in @('No','NOT FOUND') }).Count
+    Tier0People        = @($cloud.CloudAccounts | Where-Object { $_.'Overall Tier' -eq 0 }).Count
+    MultiPlane         = 0   # computed from the merge, see Merge-AdminReview logic ('Privileged In Multiple Planes')
+    Tier0NoPhish       = @($cloud.CloudAccounts | Where-Object { $_.'Overall Tier' -eq 0 -and $_.'Phishing Resistant' -ne 'Yes' -and $_.Enabled -eq 'Yes' }).Count
+    Tier0NoSmartcard   = @($ad.OnPremAdmins     | Where-Object { $_.'AD Tier' -eq 0 -and $_.'Smartcard Required' -eq 'No' -and $_.Enabled -eq 'Yes' }).Count
+    StandingTier0      = @($cloud.EntraAdmins   | Where-Object { $_.'Entra Tier' -eq 0 -and [int]$_.'Active Role Count' -gt 0 }).Count
+    PrivViaGroup       = @($cloud.EntraAdmins + $cloud.RbacAdmins | Where-Object { [int]$_.'Group Assignments' -gt 0 }).Count
+    Tier0GroupOnly     = @(
+                             @($cloud.EntraAdmins | Where-Object { $_.'Entra Tier' -eq 0 -and $_.'Assignment Route' -eq 'Group only' }) +
+                             @($cloud.RbacAdmins  | Where-Object { $_.'Azure Tier' -eq 0 -and $_.'Assignment Route' -eq 'Group only' })
+                         ).Count
+    OrphanedAdmins     = @($cloud.CloudAccounts + $ad.OnPremAdmins | Where-Object { $_.Enabled -eq 'Yes' -and $_.'Standard Acct Enabled' -in @('No','NOT FOUND') }).Count
     NotAttested        = 0
     Excluded           = @($cloud.Exclusions).Count
     ExclExpired        = 0   # needs the manual expiry data - see note below
@@ -939,7 +950,7 @@ if ($metrics.ExclExpired -gt 0) {
 }
 
 # ---- Build and send -----------------------------------------------------
-$orphanRows = @($cloud.CloudAdmins + $ad.OnPremAdmins |
+$orphanRows = @($cloud.CloudAccounts + $ad.OnPremAdmins |
     Where-Object { $_.Enabled -eq 'Yes' -and $_.'Standard Acct Enabled' -in @('No','NOT FOUND') } |
     ForEach-Object {
         [PSCustomObject]@{
@@ -1121,27 +1132,34 @@ foreach ($e in $delta.Added) {
 # role-assignable group grants privilege immediately, changes no role
 # assignment, and touches no admin account - so nothing else in this pipeline
 # would flag it. It is also the quietest way to escalate in most tenants.
-$currentAdmins = Get-CloudAdminReview
-$prevAdmins    = (Get-GovernanceState -Context $ctx -Name 'cloud').CloudAdmins
+$_, $currentEntra, $currentRbac = Get-CloudAdminReview
+$prevCloudState = Get-GovernanceState -Context $ctx -Name 'cloud'
 
-foreach ($a in $currentAdmins) {
-    $was = $prevAdmins | Where-Object { $_.'Object ID' -eq $a.'Object ID' }
-    if (-not $was) {
-        if ($a.'Overall Tier' -eq 0) {
-            $alerts += "New Tier 0 admin account: $($a.'Admin UPN') holding $($a.'Highest Entra Role')"
+# Same check run twice - once per plane, since Entra-Admins.csv and Azure-RBAC-Admins.csv
+# are now separate collections with their own tier and 'Granting Groups' column.
+function Test-NewGroupOrEscalation {
+    param($Current, $Previous, [string]$TierColumn, [string]$RoleColumn)
+    foreach ($a in $Current) {
+        $was = $Previous | Where-Object { $_.'Object ID' -eq $a.'Object ID' }
+        if (-not $was) {
+            if ($a.$TierColumn -eq 0) {
+                $script:alerts += "New Tier 0 admin account: $($a.'Admin UPN') holding $($a.$RoleColumn)"
+            }
+            continue
         }
-        continue
-    }
-    $nowGroups  = @(($a.'Granting Groups'   -split ';') | ForEach-Object { $_.Trim() } | Where-Object { $_ })
-    $wasGroups  = @(($was.'Granting Groups' -split ';') | ForEach-Object { $_.Trim() } | Where-Object { $_ })
-    $addedGroups = @($nowGroups | Where-Object { $_ -notin $wasGroups })
-    foreach ($g in $addedGroups) {
-        $alerts += "$($a.'Admin UPN') was added to privileged group '$g' (now holds $($a.'Highest Entra Role'))"
-    }
-    if ($a.'Overall Tier' -eq 0 -and $was.'Overall Tier' -ne 0) {
-        $alerts += "$($a.'Admin UPN') escalated to Tier 0: $($a.'Highest Entra Role')"
+        $nowGroups   = @(($a.'Granting Groups'   -split ';') | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+        $wasGroups   = @(($was.'Granting Groups' -split ';') | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+        $addedGroups = @($nowGroups | Where-Object { $_ -notin $wasGroups })
+        foreach ($g in $addedGroups) {
+            $script:alerts += "$($a.'Admin UPN') was added to privileged group '$g' (now holds $($a.$RoleColumn))"
+        }
+        if ($a.$TierColumn -eq 0 -and $was.$TierColumn -ne 0) {
+            $script:alerts += "$($a.'Admin UPN') escalated to Tier 0: $($a.$RoleColumn)"
+        }
     }
 }
+Test-NewGroupOrEscalation -Current $currentEntra -Previous $prevCloudState.EntraAdmins -TierColumn 'Entra Tier' -RoleColumn 'Highest Entra Role'
+Test-NewGroupOrEscalation -Current $currentRbac  -Previous $prevCloudState.RbacAdmins  -TierColumn 'Azure Tier' -RoleColumn 'Highest Azure Role'
 
 if ($alerts.Count -eq 0) {
     Write-Output "No alerts."
