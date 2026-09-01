@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Runs the five Privileged Access Review scripts in the correct order, in one call.
+    Runs the Privileged Access Review scripts in the correct order, in one call.
 
 .DESCRIPTION
     The workbook pipeline has a real dependency order that isn't enforced by
@@ -11,12 +11,19 @@
         3. Merge-AdminReview.ps1         (offline, needs 1+2)-> Admin-People.csv
         4. Update-AdminPeopleAD.ps1      (AD, needs 3)       -> adds 'AD Manager' / 'AD Account Active' to Admin-People.csv
         5. Update-AdminPeopleEntra.ps1   (Graph, needs 4)    -> adds 'Entra Account Active' / 'AD/Entra Active Mismatch'
+        6. Sync-AdminReviewWorkbook.ps1  (opt-in, needs 1-5) -> writes all five CSVs into the workbook tabs, in place
 
     Step 3 will silently produce a stale or incomplete Admin-People.csv if it's
     run before 1 and 2 finish (it reads whatever CSVs happen to be sitting on
     disk, however old). Step 5 throws outright if step 4 hasn't run - it depends
     on the 'AD Account Active' column that script writes. This script exists
     so that ordering is guaranteed by code, not by memory.
+
+    Step 6 is different from the rest: it's the only stage that writes into a
+    file that can carry real reviewer work (once the workbook has been used for
+    an actual review), so unlike stages 1-5 it never runs unless you explicitly
+    pass -SyncWorkbookPath. See Sync-AdminReviewWorkbook.ps1's own docstring for
+    what it does and does not touch in the workbook.
 
     Every script here is READ-ONLY against AD/Graph/Az - the only writes are the
     CSVs in -OutputDirectory. This orchestrator makes no AD, Graph, or Azure
@@ -109,6 +116,17 @@
 .PARAMETER UseTenantScope
     Passed through to Build-CloudAdminReview.ps1 -UseTenantScope.
 
+.PARAMETER SyncWorkbookPath
+    Path to Privileged_Access_Review.xlsx (or wherever your copy lives). When
+    given, runs Sync-AdminReviewWorkbook.ps1 as stage 6 after everything else
+    finishes, writing this run's CSVs into the workbook's tabs. Omit to skip
+    stage 6 entirely (the default) and keep pasting by hand.
+
+.PARAMETER NoWorkbookBackup
+    Passed through to Sync-AdminReviewWorkbook.ps1 -NoBackup. Has no effect
+    unless -SyncWorkbookPath is also given. Not recommended - see that
+    script's own docstring for why.
+
 .PARAMETER ContinueOnError
     Report a failed stage and continue to the next one instead of stopping the
     whole pipeline. Off by default - see .DESCRIPTION for why stopping is the
@@ -158,6 +176,9 @@ param(
     [string[]]$Tier0OUs,
     [switch]$UseTenantScope,
 
+    [string]$SyncWorkbookPath,
+    [switch]$NoWorkbookBackup,
+
     [switch]$ContinueOnError
 )
 
@@ -176,6 +197,10 @@ if ($SkipAdRefresh -and -not $SkipEntraReconcile) {
 }
 if ($SkipOnPremBuild -and $SkipCloudBuild) {
     throw "-SkipOnPremBuild and -SkipCloudBuild together skip both build stages - Merge-AdminReview.ps1 would have nothing to merge. Drop one of these switches, or run the individual scripts yourself if you really want neither."
+}
+if ($SyncWorkbookPath) {
+    if (-not (Test-Path $SyncWorkbookPath)) { throw "-SyncWorkbookPath '$SyncWorkbookPath' not found." }
+    if (-not (Get-Module -ListAvailable -Name ImportExcel)) { throw "ImportExcel module not found, but -SyncWorkbookPath was given. Install-Module ImportExcel -Scope CurrentUser" }
 }
 
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -337,6 +362,25 @@ if (-not $SkipEntraReconcile) {
     Invoke-Stage -Name '5. Update-AdminPeopleEntra' -ScriptPath (Script 'Update-AdminPeopleEntra.ps1') -Arguments $args5
 } else {
     Write-Host "`nSkipping stage 5 (Update-AdminPeopleEntra)." -ForegroundColor Yellow
+}
+
+# --------------------------------------------------------------------------
+# 6. Sync-AdminReviewWorkbook.ps1 - opt-in only. Unlike stages 1-5, this one
+# writes into a file that carries real reviewer work (once the workbook has
+# been used for a real review) - it isn't run unless -SyncWorkbookPath is
+# explicitly given.
+# --------------------------------------------------------------------------
+if ($SyncWorkbookPath) {
+    $args6 = @{
+        WorkbookPath      = $SyncWorkbookPath
+        AdminPeoplePath   = $adminPeoplePath
+        CloudAccountsPath = $cloudAccountsPath
+        EntraPath         = $entraAdminsPath
+        AzureRbacPath     = $azureRbacPath
+        OnPremPath        = $onPremAdminsPath
+    }
+    if ($NoWorkbookBackup) { $args6.NoBackup = $true }
+    Invoke-Stage -Name '6. Sync-AdminReviewWorkbook' -ScriptPath (Script 'Sync-AdminReviewWorkbook.ps1') -Arguments $args6
 }
 
 # --------------------------------------------------------------------------
