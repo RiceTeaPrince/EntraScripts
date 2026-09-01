@@ -21,13 +21,19 @@
     blank: 'Not Checked (AD Active)' or 'Not Checked (No AD Account)', so a blank
     cell is never confused with "checked, nothing found."
 
-    For the rows it does check, the base username is resolved to a UPN the same
-    way Build-CloudAdminReview.ps1 resolves a standard account: exact match against
-    "<username>@<StandardAccountDomain>" if given, otherwise a UPN-prefix match
-    across all domains in the tenant. If more than one Entra user matches the
-    prefix (only possible without -StandardAccountDomain), that's flagged with a
-    warning and recorded as 'Ambiguous' rather than silently picking one - this
-    column feeds a security-relevant flag, so a wrong guess is worse than a gap.
+    For the rows it does check, the base username is resolved to a person the same
+    way Build-CloudAdminReview.ps1 resolves a standard account, in the same order:
+    on-prem SamAccountName (onPremisesSamAccountName) first, then UPN - exact
+    match against "<username>@<StandardAccountDomain>" if given, otherwise a
+    UPN-prefix match across all domains in the tenant. The SAM path matters for
+    the same reason it does there: an org that names cloud admin accounts after
+    the on-prem SamAccountName (e.g. 'wredmo.azr@...') has a real UPN for that
+    person that can be a completely unrelated string (e.g. 'wesley.redmond@...') -
+    a UPN-only lookup would silently never find them. If more than one Entra user
+    matches (SAM collision, or a UPN prefix collision when no -StandardAccountDomain
+    is given), that's flagged with a warning and recorded as 'Ambiguous' rather
+    than silently picking one - this column feeds a security-relevant flag, so a
+    wrong guess is worse than a gap.
 
     Writes 'Entra Account Active' and, only for the rows actually checked,
     'AD/Entra Active Mismatch' = YES when AD is disabled but Entra is still
@@ -115,11 +121,32 @@ foreach ($p in $people) {
     $matches = @()
     if ($username) {
         $safeUsername = $username.Replace("'", "''")
-        if ($StandardAccountDomain) {
-            $upn = "$safeUsername@$StandardAccountDomain"
-            $matches = @(Get-MgUser -Filter "userPrincipalName eq '$upn'" -Property AccountEnabled, UserPrincipalName -ErrorAction Stop)
-        } else {
-            $matches = @(Get-MgUser -Filter "startsWith(userPrincipalName,'$safeUsername@')" -Property AccountEnabled, UserPrincipalName -All -ErrorAction Stop)
+
+        # Tried first: on-prem SamAccountName. Some orgs name cloud admin accounts
+        # after the on-prem SamAccountName (e.g. 'wredmo.azr@...') while the same
+        # person's real cloud UPN follows an unrelated convention (e.g.
+        # 'wesley.redmond@...') - a UPN-based lookup alone would then never find
+        # them. onPremisesSamAccountName only supports Graph's ADVANCED query
+        # capabilities, not a plain -Filter - eq/startsWith need ConsistencyLevel:
+        # eventual plus a $count parameter (see
+        # https://learn.microsoft.com/graph/aad-advanced-queries#user-properties).
+        # Wrapped in try/catch so a tenant/permission quirk with advanced queries
+        # falls back to the UPN path below instead of aborting the whole run.
+        try {
+            $samCountVar = 0
+            $matches = @(Get-MgUser -Filter "onPremisesSamAccountName eq '$safeUsername'" -Property AccountEnabled, UserPrincipalName -ConsistencyLevel eventual -CountVariable samCountVar -ErrorAction Stop)
+        } catch {
+            Write-Verbose "SamAccountName lookup for '$username' failed, falling back to UPN: $($_.Exception.Message)"
+            $matches = @()
+        }
+
+        if ($matches.Count -eq 0) {
+            if ($StandardAccountDomain) {
+                $upn = "$safeUsername@$StandardAccountDomain"
+                $matches = @(Get-MgUser -Filter "userPrincipalName eq '$upn'" -Property AccountEnabled, UserPrincipalName -ErrorAction Stop)
+            } else {
+                $matches = @(Get-MgUser -Filter "startsWith(userPrincipalName,'$safeUsername@')" -Property AccountEnabled, UserPrincipalName -All -ErrorAction Stop)
+            }
         }
     }
 

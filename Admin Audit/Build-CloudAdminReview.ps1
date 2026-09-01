@@ -25,14 +25,21 @@
     person's standard account, so a leaver whose standard account is disabled but
     whose admin account is still live becomes visible.
 
-    Without -StandardAccountDomain, the standard-account link is made by UPN
-    prefix across every domain in the tenant. If the same prefix belongs to
-    different people on two different domains (a contractor domain, a second
-    verified custom domain, an onmicrosoft.com default domain), that's ambiguous,
-    not resolvable - 'Standard Acct Enabled' reads 'Ambiguous' rather than
-    silently picking one, and 'Standard Account UPN' lists every candidate found.
-    Ambiguous accounts are excluded from the ORPHANED count (neither confirmed
-    clean nor confirmed orphaned) and reported as their own summary line instead.
+    The standard-account link is tried two ways, in order: first by matching the
+    admin's base username against onPremisesSamAccountName (the on-prem
+    SamAccountName, synced into Entra by Entra Connect for hybrid accounts), then
+    by UPN prefix. The SAM path exists because some orgs name cloud admin accounts
+    after the on-prem SamAccountName (e.g. 'wredmo.azr@...') while real people's
+    own cloud UPN follows an entirely different convention (e.g.
+    'wesley.redmond@...') - UPN-prefix matching alone then fails for every single
+    admin, with no partial successes to hint at why. Without -StandardAccountDomain,
+    the UPN-prefix path (only) also crosses every domain in the tenant. If a key
+    - SAM or UPN prefix - belongs to more than one candidate account, that's
+    ambiguous, not resolvable: 'Standard Acct Enabled' reads 'Ambiguous' rather
+    than silently picking one, and 'Standard Account UPN' lists every candidate
+    found. Ambiguous accounts are excluded from the ORPHANED count (neither
+    confirmed clean nor confirmed orphaned) and reported as their own summary
+    line instead.
 
     Writes THREE CSVs, not one, so Entra and Azure RBAC remediation can be worked as
     separate projects by separate owners:
@@ -191,7 +198,8 @@ Write-Host "Tenant $($ctx.TenantId)" -ForegroundColor Cyan
 # Users
 # --------------------------------------------------------------------------
 $props = @('Id','DisplayName','UserPrincipalName','AccountEnabled','CreatedDateTime','UserType',
-           'SignInActivity','AssignedLicenses','Department','JobTitle','OnPremisesSyncEnabled')
+           'SignInActivity','AssignedLicenses','Department','JobTitle','OnPremisesSyncEnabled',
+           'OnPremisesSamAccountName')
 Write-Host "Retrieving users..." -ForegroundColor Cyan
 $allUsers = try { Get-MgUser -All -Property $props -PageSize 999 }
             catch {
@@ -205,38 +213,87 @@ if ($admins.Count -eq 0) {
     Write-Warning "No accounts matched '$AdminPattern'. Check the pattern before assuming there are none."
 }
 
-# Index standard accounts by UPN prefix so admin accounts can be linked to a person.
-# Without -StandardAccountDomain, this matches across every domain in the tenant -
-# UPNs are unique tenant-wide as full strings, but not per prefix, so the same
-# prefix can legitimately belong to two different people on two different domains
-# (a contractor domain, a second verified custom domain, an onmicrosoft.com
-# default domain). Silently keeping whichever one enumerates first would feed a
-# coin-flip 'Standard Acct Enabled' into the orphan check with no sign anything
-# was ambiguous - so a prefix seen on more than one domain is tracked and
+# Index standard accounts BOTH by UPN prefix and by on-prem SamAccountName, so an
+# admin account can be linked to a person either way.
+#
+# This matters because an org can name cloud ADMIN accounts after the on-prem
+# SamAccountName (e.g. 'wredmo.azr@corp.onmicrosoft.com' for on-prem account
+# 'wredmo') while the same person's real cloud UPN follows Entra's own convention
+# instead (e.g. 'wesley.redmond@corp.com.au') - matching by UPN prefix alone then
+# fails for every single admin, 100% of the time, because 'wredmo' never appears
+# as a UPN prefix anywhere in the tenant; it only shows up in
+# onPremisesSamAccountName, synced from AD by Entra Connect. SamAccountName is
+# tried first below - once an org has any admin accounts named this way at all,
+# it's the deliberate, authoritative join key - falling back to UPN-prefix
+# matching for tenants (or individual accounts) where OnPremisesSamAccountName
+# isn't populated (pure-cloud accounts never have it).
+#
+# Without -StandardAccountDomain, UPN-prefix matching crosses every domain in the
+# tenant - UPNs are unique tenant-wide as full strings, but not per prefix, so the
+# same prefix can legitimately belong to two different people on two different
+# domains. Silently keeping whichever one enumerates first would feed a coin-flip
+# 'Standard Acct Enabled' into the orphan check with no sign anything was
+# ambiguous - so a prefix (or SamAccountName) seen more than once is tracked and
 # excluded from resolution instead, the same way Update-AdminPeopleEntra.ps1
 # already treats a same-prefix match with no domain given as 'Ambiguous' rather
 # than guessing.
 $standardCandidatesByPrefix = @{}
+$standardCandidatesBySam    = @{}
 foreach ($u in $allUsers) {
     if ($u.UserPrincipalName -match $AdminPattern) { continue }
     if ($StandardAccountDomain -and $u.UserPrincipalName -notlike "*@$StandardAccountDomain") { continue }
+
     $prefix = ($u.UserPrincipalName -split '@')[0].ToLower()
     if (-not $standardCandidatesByPrefix.ContainsKey($prefix)) { $standardCandidatesByPrefix[$prefix] = [System.Collections.Generic.List[object]]::new() }
     $standardCandidatesByPrefix[$prefix].Add($u)
-}
 
-$standardByPrefix = @{}
-$ambiguousStandardPrefixes = [System.Collections.Generic.List[string]]::new()
-foreach ($prefix in $standardCandidatesByPrefix.Keys) {
-    $candidates = $standardCandidatesByPrefix[$prefix]
-    if ($candidates.Count -eq 1) {
-        $standardByPrefix[$prefix] = $candidates[0]
-    } else {
-        $ambiguousStandardPrefixes.Add($prefix)
-        Write-Warning "Ambiguous standard account for '$prefix' - $($candidates.Count) accounts share this UPN prefix across domains ($(($candidates.UserPrincipalName) -join ', ')). Recorded as Ambiguous, not guessed. Pass -StandardAccountDomain to disambiguate if these are different people."
+    if ($u.OnPremisesSamAccountName) {
+        $sam = $u.OnPremisesSamAccountName.ToLower()
+        if (-not $standardCandidatesBySam.ContainsKey($sam)) { $standardCandidatesBySam[$sam] = [System.Collections.Generic.List[object]]::new() }
+        $standardCandidatesBySam[$sam].Add($u)
     }
 }
-$ambiguousStandardSet = [System.Collections.Generic.HashSet[string]]::new([string[]]$ambiguousStandardPrefixes)
+
+# Resolves one candidate map (prefix or SAM) down to a single match per key,
+# tracking keys that resolved to more than one account as ambiguous rather than
+# picking one. Same logic, run twice - once per key type - so both matching
+# paths get the same "don't guess on ambiguity" treatment.
+function Resolve-CandidateMap {
+    param([hashtable]$Candidates, [string]$Label)
+    $resolved = @{}
+    $ambiguous = [System.Collections.Generic.List[string]]::new()
+    foreach ($key in $Candidates.Keys) {
+        $c = $Candidates[$key]
+        if ($c.Count -eq 1) {
+            $resolved[$key] = $c[0]
+        } else {
+            $ambiguous.Add($key)
+            Write-Warning "Ambiguous standard account for '$key' ($Label) - $($c.Count) accounts share this value ($(($c.UserPrincipalName) -join ', ')). Recorded as Ambiguous, not guessed."
+        }
+    }
+    [PSCustomObject]@{
+        Resolved  = $resolved
+        Ambiguous = [System.Collections.Generic.HashSet[string]]::new([string[]]$ambiguous)
+    }
+}
+
+$bySamResolution    = Resolve-CandidateMap -Candidates $standardCandidatesBySam    -Label 'on-prem SAM'
+$byPrefixResolution = Resolve-CandidateMap -Candidates $standardCandidatesByPrefix -Label 'UPN prefix'
+$standardBySam    = $bySamResolution.Resolved
+$standardByPrefix = $byPrefixResolution.Resolved
+
+# Looks up a base username against SAM first, then UPN prefix. Returns which path
+# (if either) produced the match or the ambiguity, so the caller can report a
+# meaningful 'Standard Account UPN' value and know which candidate list to show
+# for an ambiguous case.
+function Resolve-StandardAccount {
+    param([string]$Base)
+    if ($standardBySam.ContainsKey($Base))                    { return [PSCustomObject]@{ User = $standardBySam[$Base];    Ambiguous = $false; MatchedVia = 'SAM' } }
+    if ($bySamResolution.Ambiguous.Contains($Base))            { return [PSCustomObject]@{ User = $null;                    Ambiguous = $true;  MatchedVia = 'SAM' } }
+    if ($standardByPrefix.ContainsKey($Base))                 { return [PSCustomObject]@{ User = $standardByPrefix[$Base]; Ambiguous = $false; MatchedVia = 'UPN prefix' } }
+    if ($byPrefixResolution.Ambiguous.Contains($Base))         { return [PSCustomObject]@{ User = $null;                    Ambiguous = $true;  MatchedVia = 'UPN prefix' } }
+    return [PSCustomObject]@{ User = $null; Ambiguous = $false; MatchedVia = $null }
+}
 
 # Reverse of $standardByPrefix - which admin account(s), if any, belong to a given
 # standard account prefix. Used to build the Normal-CloudUsers.csv comparison export.
@@ -476,8 +533,9 @@ foreach ($a in $admins) {
 
     $base = if ($a.UserPrincipalName -match $BaseUsernameCapture) { $Matches[1].ToLower() }
             else { ($a.UserPrincipalName -split '@')[0].ToLower() }
-    $std = $standardByPrefix[$base]
-    $stdAmbiguous = $ambiguousStandardSet.Contains($base)
+    $stdResolution = Resolve-StandardAccount -Base $base
+    $std = $stdResolution.User
+    $stdAmbiguous = $stdResolution.Ambiguous
 
     $actGrants  = @(if ($activeRoles.ContainsKey($a.Id))   { $activeRoles[$a.Id] })
     $eligGrants = @(if ($eligibleRoles.ContainsKey($a.Id)) { $eligibleRoles[$a.Id] })
@@ -551,12 +609,16 @@ foreach ($a in $admins) {
         'Auth Methods'        = if ($m) { $m.Methods } else { '' }
     }
     # 'Ambiguous' takes priority over both 'Yes'/'No' and 'NOT FOUND': $std is $null
-    # for an ambiguous prefix (it was deliberately excluded from $standardByPrefix
-    # above), so without this check it would read as a plain NOT FOUND - indistinguishable
-    # from a genuine orphan, when what actually happened is "found more than one,
-    # didn't guess."
+    # for an ambiguous key (it was deliberately excluded from resolution above), so
+    # without this check it would read as a plain NOT FOUND - indistinguishable from
+    # a genuine orphan, when what actually happened is "found more than one, didn't
+    # guess." The candidate list shown depends on which path was ambiguous - SAM or
+    # UPN prefix - so the reviewer sees the actual accounts that collided.
+    $ambiguousCandidates = if ($stdAmbiguous -and $stdResolution.MatchedVia -eq 'SAM') { $standardCandidatesBySam[$base] }
+                           elseif ($stdAmbiguous) { $standardCandidatesByPrefix[$base] }
+                           else { $null }
     $standard = [ordered]@{
-        'Standard Account UPN'  = if ($stdAmbiguous) { ($standardCandidatesByPrefix[$base].UserPrincipalName -join '; ') } elseif ($std) { $std.UserPrincipalName } else { '' }
+        'Standard Account UPN'  = if ($stdAmbiguous) { ($ambiguousCandidates.UserPrincipalName -join '; ') } elseif ($std) { $std.UserPrincipalName } else { '' }
         'Standard Acct Enabled' = if ($stdAmbiguous) { 'Ambiguous' } elseif ($std) { if ($std.AccountEnabled) { 'Yes' } else { 'No' } } else { 'NOT FOUND' }
         'Person Display Name'   = if ($std) { $std.DisplayName } else { '' }
         'Department'            = if ($std) { $std.Department } else { $a.Department }
@@ -624,8 +686,21 @@ $normalUsers = @($allUsers | Where-Object {
 })
 
 $normalRows = foreach ($u in $normalUsers) {
+    # $adminByPrefix is keyed by whatever BaseUsernameCapture extracted from each
+    # admin's own UPN - which, in an org that names cloud admins after the on-prem
+    # SamAccountName (see the standard-account matching above), is a SAM-shaped
+    # value like 'wredmo', not this user's UPN prefix ('wesley.redmond'). So a
+    # normal user has to be checked against that map under BOTH of their own
+    # possible identifiers - UPN prefix and OnPremisesSamAccountName - or an admin
+    # account named the SAM way would never show as linked to its person here.
     $prefix = ($u.UserPrincipalName -split '@')[0].ToLower()
     $linkedAdmins = @(if ($adminByPrefix.ContainsKey($prefix)) { $adminByPrefix[$prefix] })
+    if ($u.OnPremisesSamAccountName) {
+        $sam = $u.OnPremisesSamAccountName.ToLower()
+        if ($sam -ne $prefix -and $adminByPrefix.ContainsKey($sam)) {
+            $linkedAdmins = @($linkedAdmins + $adminByPrefix[$sam] | Group-Object Id | ForEach-Object { $_.Group[0] })
+        }
+    }
     $sa = $u.SignInActivity
     $li = if ($sa -and $sa.LastSignInDateTime) { [datetime]$sa.LastSignInDateTime } else { $null }
 
@@ -636,6 +711,7 @@ $normalRows = foreach ($u in $normalUsers) {
         'Enabled'                   = if ($u.AccountEnabled) { 'Yes' } else { 'No' }
         'User Type'                 = $u.UserType
         'On-Prem Synced'            = if ($u.OnPremisesSyncEnabled) { 'Yes' } else { 'No' }
+        'OnPrem SAM'                = $u.OnPremisesSamAccountName
         'Created'                   = if ($u.CreatedDateTime) { ([datetime]$u.CreatedDateTime).ToString('dd/MM/yyyy') } else { '' }
         'Last Sign-In'              = if ($li) { $li.ToString('dd/MM/yyyy') } else { '' }
         'Department'                = $u.Department

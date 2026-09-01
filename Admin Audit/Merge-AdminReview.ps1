@@ -53,6 +53,14 @@
     column reads 'Unknown' rather than 'No' - a missing input is not the same
     finding as a checked-and-absent account.
 
+    The cloud side of this check is tried against on-prem SamAccountName
+    (Normal-CloudUsers.csv's 'OnPrem SAM' column) before falling back to UPN
+    prefix - a base username here can be a SamAccountName-shaped value (e.g.
+    'wredmo') when cloud admin accounts are named after the on-prem account
+    rather than the person's own cloud UPN (which might be 'wesley.redmond@...',
+    an unrelated string). See Build-CloudAdminReview.ps1's own notes on the same
+    matching order.
+
 .PARAMETER CloudAccountsPath
     Cloud-Admin-Accounts.csv from Build-CloudAdminReview.ps1.
 
@@ -134,6 +142,16 @@ $onpremBy        = $onprem        | Group-Object 'Base Username' -AsHashTable -A
 $normalOnPremBySam = @{}
 foreach ($u in $normalOnPrem) { $normalOnPremBySam[$u.SamAccountName.ToLower()] = $u }
 
+# Two keys for the cloud side, same reasoning as Build-CloudAdminReview.ps1's own
+# standard-account matching: a base username here can be an on-prem-style
+# SamAccountName (when cloud admin accounts are named after it, e.g.
+# 'wredmo.azr@...') rather than a cloud UPN prefix (the same person's real UPN
+# might be 'wesley.redmond@...', completely unrelated to 'wredmo' as a string).
+# 'OnPrem SAM' on Normal-CloudUsers.csv is blank for accounts that were never
+# synced from on-prem, so this index is naturally empty in pure-cloud tenants.
+$normalCloudBySam = @{}
+foreach ($u in $normalCloud) { if ($u.'OnPrem SAM') { $normalCloudBySam[$u.'OnPrem SAM'.ToLower()] = $u } }
+
 $normalCloudByPrefix = @{}
 foreach ($u in $normalCloud) { $normalCloudByPrefix[(($u.UPN -split '@')[0]).ToLower()] = $u }
 
@@ -180,7 +198,11 @@ $rows = foreach ($p in $people) {
     $multiPlane = $planesHeld.Count -ge 2
 
     $onpremIdentity = if ($normalOnPremBySam.ContainsKey($p))   { $normalOnPremBySam[$p] }   else { $null }
-    $cloudIdentity  = if ($normalCloudByPrefix.ContainsKey($p)) { $normalCloudByPrefix[$p] } else { $null }
+    # SAM tried first - see the index build above for why a base username here can
+    # be an on-prem SamAccountName rather than a cloud UPN prefix.
+    $cloudIdentity  = if ($normalCloudBySam.ContainsKey($p))     { $normalCloudBySam[$p] }
+                      elseif ($normalCloudByPrefix.ContainsKey($p)) { $normalCloudByPrefix[$p] }
+                      else { $null }
 
     [PSCustomObject][ordered]@{
         'Base Username'                 = $p
