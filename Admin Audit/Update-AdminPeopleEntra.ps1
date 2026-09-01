@@ -93,7 +93,15 @@ $outRows = [System.Collections.Generic.List[object]]::new()
 # Update-AdminPeopleAD.ps1 for why: -Force on an existing property relocates it
 # to the end on a re-run instead of updating in place, which would reshuffle
 # column order every time this script runs again.
-function Set-Row($Person, [string]$EntraActive, [string]$Mismatch) {
+#
+# Named Set-PersonRow, not Set-Row: the ImportExcel module (used elsewhere in
+# this pipeline by Sync-AdminReviewWorkbook.ps1) exports a built-in alias
+# literally named 'Set-Row' -> Set-ExcelRow. An alias always wins over a
+# same-named function in PowerShell, regardless of scope - so if ImportExcel
+# has been imported anywhere earlier in the same console session, a function
+# called Set-Row here would silently be shadowed by ImportExcel's cmdlet
+# (wrong parameter set entirely), not this one.
+function Set-PersonRow($Person, [string]$EntraActive, [string]$Mismatch) {
     $propNames = @($Person.PSObject.Properties.Name)
     $hasCols = $propNames -contains 'Entra Account Active'
     $row = [ordered]@{}
@@ -112,7 +120,7 @@ function Set-Row($Person, [string]$EntraActive, [string]$Mismatch) {
 foreach ($p in $people) {
     if ($p.'AD Account Active' -ne 'No') {
         $reason = if ($p.'AD Account Active' -eq 'Not Found') { 'Not Checked (No AD Account)' } else { 'Not Checked (AD Active)' }
-        $outRows.Add((Set-Row $p $reason ''))
+        $outRows.Add((Set-PersonRow $p $reason ''))
         continue
     }
 
@@ -162,7 +170,7 @@ foreach ($p in $people) {
 
     $mismatch = if ($entraActive -eq 'Yes') { $mismatches++; 'YES' } else { 'No' }
 
-    $outRows.Add((Set-Row $p $entraActive $mismatch))
+    $outRows.Add((Set-PersonRow $p $entraActive $mismatch))
 }
 
 $outRows | Export-Csv -Path $AdminPeoplePath -NoTypeInformation -Encoding UTF8
