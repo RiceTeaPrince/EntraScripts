@@ -25,6 +25,15 @@
     person's standard account, so a leaver whose standard account is disabled but
     whose admin account is still live becomes visible.
 
+    Without -StandardAccountDomain, the standard-account link is made by UPN
+    prefix across every domain in the tenant. If the same prefix belongs to
+    different people on two different domains (a contractor domain, a second
+    verified custom domain, an onmicrosoft.com default domain), that's ambiguous,
+    not resolvable - 'Standard Acct Enabled' reads 'Ambiguous' rather than
+    silently picking one, and 'Standard Account UPN' lists every candidate found.
+    Ambiguous accounts are excluded from the ORPHANED count (neither confirmed
+    clean nor confirmed orphaned) and reported as their own summary line instead.
+
     Writes THREE CSVs, not one, so Entra and Azure RBAC remediation can be worked as
     separate projects by separate owners:
 
@@ -196,14 +205,38 @@ if ($admins.Count -eq 0) {
     Write-Warning "No accounts matched '$AdminPattern'. Check the pattern before assuming there are none."
 }
 
-# Index standard accounts by UPN prefix so admin accounts can be linked to a person
-$standardByPrefix = @{}
+# Index standard accounts by UPN prefix so admin accounts can be linked to a person.
+# Without -StandardAccountDomain, this matches across every domain in the tenant -
+# UPNs are unique tenant-wide as full strings, but not per prefix, so the same
+# prefix can legitimately belong to two different people on two different domains
+# (a contractor domain, a second verified custom domain, an onmicrosoft.com
+# default domain). Silently keeping whichever one enumerates first would feed a
+# coin-flip 'Standard Acct Enabled' into the orphan check with no sign anything
+# was ambiguous - so a prefix seen on more than one domain is tracked and
+# excluded from resolution instead, the same way Update-AdminPeopleEntra.ps1
+# already treats a same-prefix match with no domain given as 'Ambiguous' rather
+# than guessing.
+$standardCandidatesByPrefix = @{}
 foreach ($u in $allUsers) {
     if ($u.UserPrincipalName -match $AdminPattern) { continue }
-    $prefix = ($u.UserPrincipalName -split '@')[0].ToLower()
     if ($StandardAccountDomain -and $u.UserPrincipalName -notlike "*@$StandardAccountDomain") { continue }
-    if (-not $standardByPrefix.ContainsKey($prefix)) { $standardByPrefix[$prefix] = $u }
+    $prefix = ($u.UserPrincipalName -split '@')[0].ToLower()
+    if (-not $standardCandidatesByPrefix.ContainsKey($prefix)) { $standardCandidatesByPrefix[$prefix] = [System.Collections.Generic.List[object]]::new() }
+    $standardCandidatesByPrefix[$prefix].Add($u)
 }
+
+$standardByPrefix = @{}
+$ambiguousStandardPrefixes = [System.Collections.Generic.List[string]]::new()
+foreach ($prefix in $standardCandidatesByPrefix.Keys) {
+    $candidates = $standardCandidatesByPrefix[$prefix]
+    if ($candidates.Count -eq 1) {
+        $standardByPrefix[$prefix] = $candidates[0]
+    } else {
+        $ambiguousStandardPrefixes.Add($prefix)
+        Write-Warning "Ambiguous standard account for '$prefix' - $($candidates.Count) accounts share this UPN prefix across domains ($(($candidates.UserPrincipalName) -join ', ')). Recorded as Ambiguous, not guessed. Pass -StandardAccountDomain to disambiguate if these are different people."
+    }
+}
+$ambiguousStandardSet = [System.Collections.Generic.HashSet[string]]::new([string[]]$ambiguousStandardPrefixes)
 
 # Reverse of $standardByPrefix - which admin account(s), if any, belong to a given
 # standard account prefix. Used to build the Normal-CloudUsers.csv comparison export.
@@ -444,6 +477,7 @@ foreach ($a in $admins) {
     $base = if ($a.UserPrincipalName -match $BaseUsernameCapture) { $Matches[1].ToLower() }
             else { ($a.UserPrincipalName -split '@')[0].ToLower() }
     $std = $standardByPrefix[$base]
+    $stdAmbiguous = $ambiguousStandardSet.Contains($base)
 
     $actGrants  = @(if ($activeRoles.ContainsKey($a.Id))   { $activeRoles[$a.Id] })
     $eligGrants = @(if ($eligibleRoles.ContainsKey($a.Id)) { $eligibleRoles[$a.Id] })
@@ -516,9 +550,14 @@ foreach ($a in $admins) {
         'Phishing Resistant'  = if ($m) { if ($m.PhishResistant) { 'Yes' } else { 'No' } } else { 'Unknown' }
         'Auth Methods'        = if ($m) { $m.Methods } else { '' }
     }
+    # 'Ambiguous' takes priority over both 'Yes'/'No' and 'NOT FOUND': $std is $null
+    # for an ambiguous prefix (it was deliberately excluded from $standardByPrefix
+    # above), so without this check it would read as a plain NOT FOUND - indistinguishable
+    # from a genuine orphan, when what actually happened is "found more than one,
+    # didn't guess."
     $standard = [ordered]@{
-        'Standard Account UPN'  = if ($std) { $std.UserPrincipalName } else { '' }
-        'Standard Acct Enabled' = if ($std) { if ($std.AccountEnabled) { 'Yes' } else { 'No' } } else { 'NOT FOUND' }
+        'Standard Account UPN'  = if ($stdAmbiguous) { ($standardCandidatesByPrefix[$base].UserPrincipalName -join '; ') } elseif ($std) { $std.UserPrincipalName } else { '' }
+        'Standard Acct Enabled' = if ($stdAmbiguous) { 'Ambiguous' } elseif ($std) { if ($std.AccountEnabled) { 'Yes' } else { 'No' } } else { 'NOT FOUND' }
         'Person Display Name'   = if ($std) { $std.DisplayName } else { '' }
         'Department'            = if ($std) { $std.Department } else { $a.Department }
         'Job Title'             = if ($std) { $std.JobTitle } else { $a.JobTitle }
@@ -615,6 +654,7 @@ $normalRows | Sort-Object @{E={$_.Enabled};Descending=$true}, 'UPN' |
 # --------------------------------------------------------------------------
 $noPrivEither = @($accountRows | Where-Object { $_.'Highest Entra Role' -eq 'None' -and $_.'Highest Azure Role' -eq 'None' })
 $orphaned     = @($accountRows | Where-Object { $_.Enabled -eq 'Yes' -and $_.'Standard Acct Enabled' -in @('No','NOT FOUND') })
+$ambiguous    = @($accountRows | Where-Object { $_.Enabled -eq 'Yes' -and $_.'Standard Acct Enabled' -eq 'Ambiguous' })
 $dormant      = @($accountRows | Where-Object { -not $_.'Last Sign-In' -and $_.Enabled -eq 'Yes' })
 $noMfa        = @($accountRows | Where-Object { $_.'MFA Registered' -eq 'No' -and $_.Enabled -eq 'Yes' })
 
@@ -623,6 +663,11 @@ Write-Host "  Cloud admin accounts                 : $($accountRows.Count)"
 if ($orphaned.Count) {
     Write-Host "  ORPHANED - admin enabled, standard account disabled or missing : $($orphaned.Count)" -ForegroundColor Red
     Write-Host "    Likely leavers. Admin accounts are separate objects and are routinely missed at offboarding."
+}
+if ($ambiguous.Count) {
+    Write-Host "  AMBIGUOUS standard account (same prefix, multiple domains) : $($ambiguous.Count)" -ForegroundColor Yellow
+    Write-Host "    Not counted as orphaned or clean either way - see 'Standard Account UPN' on these rows for"
+    Write-Host "    the candidates found, and pass -StandardAccountDomain if these are genuinely different people."
 }
 if ($noPrivEither.Count) {
     Write-Host "  Holding NO privilege in either plane  : $($noPrivEither.Count)" -ForegroundColor Yellow

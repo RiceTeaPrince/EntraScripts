@@ -354,6 +354,26 @@ foreach ($u in $all) {
     $standardBySam[$u.SamAccountName.ToLower()] = $u
 }
 
+# Sanity check for -SearchBase/-UserSearchBases scoping: 'Standard Acct Enabled' below
+# is looked up against $standardBySam, which is built ONLY from accounts inside
+# whatever scope was passed in. Scope to an admin-only OU (the -UserSearchBases
+# .EXAMPLE above does exactly this) and $standardBySam ends up empty - every admin
+# then reads 'NOT FOUND' and gets flagged orphaned, even though their real standard
+# account exists and is enabled elsewhere in the domain. This would silently produce
+# a false-positive orphan for the entire run, so it's checked and warned on loudly
+# rather than left to surface only downstream in Admin-People.csv.
+if (($SearchBase -or $UserSearchBases) -and $admins.Count -gt 0) {
+    $adminBasesInScope = @($admins | ForEach-Object {
+        if ($_.SamAccountName -match $BaseUsernameCapture) { $Matches[1].ToLower() } else { $_.SamAccountName.ToLower() }
+    } | Sort-Object -Unique)
+    $matchedInScope = @($adminBasesInScope | Where-Object { $standardBySam.ContainsKey($_) })
+    if ($standardBySam.Count -eq 0) {
+        Write-Warning "-SearchBase/-UserSearchBases scope contains ZERO non-admin-pattern accounts. Every admin account below will read 'Standard Acct Enabled = NOT FOUND' and be flagged orphaned - almost certainly a scoping issue (the scoped OU(s) hold only admin accounts), not real orphans. Add the OU that holds standard user accounts to -UserSearchBases, or drop scoping to sweep the whole domain."
+    } elseif ($matchedInScope.Count -eq 0) {
+        Write-Warning "None of the $($adminBasesInScope.Count) admin account(s) in scope matched a standard account inside -SearchBase/-UserSearchBases, even though $($standardBySam.Count) standard account(s) were found in scope. Every admin below will read 'Standard Acct Enabled = NOT FOUND'. Check that the OU(s) passed actually contain these people's standard accounts."
+    }
+}
+
 # Reverse of $standardBySam - which admin account(s), if any, belong to a given
 # standard account. Used to build the Normal-Users.csv comparison export.
 $adminByBase = @{}

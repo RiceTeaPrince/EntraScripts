@@ -33,7 +33,13 @@
 
     Rewrites Admin-People.csv in place, adding (or overwriting, on a re-run) the
     'AD Manager' and 'AD Account Active' columns. Every other column is passed
-    through unchanged.
+    through unchanged - in particular, 'Orphaned Admin Account' is NOT
+    recomputed here, so it can still reflect whichever OnPrem-Admins.csv sweep
+    Merge-AdminReview.ps1 last read, even after this script confirms the
+    standard account is live. Rows where that happens (Orphaned Admin Account =
+    YES but this run's AD Account Active = Yes) are listed in the summary output
+    rather than silently reconciled, since the orphan flag can also be driven by
+    the cloud side, which this AD-only script has no visibility into.
 
     READ-ONLY.
 
@@ -97,6 +103,18 @@ $notFound = 0
 $disabled = 0
 $outRows = [System.Collections.Generic.List[object]]::new()
 
+# 'Orphaned Admin Account' on this row was computed once by Merge-AdminReview.ps1,
+# from whichever OnPrem-Admins.csv sweep was current at the time - it is not
+# recomputed here. So a row can end this run with 'AD Account Active' = Yes (this
+# script's fresh, authoritative, per-person check) while 'Orphaned Admin Account'
+# still reads YES (this script never touches that column, by design - see the
+# .DESCRIPTION). That looks like a contradiction in the People tab and is exactly
+# what "shows Orphaned even with an AD account present" looks like. Rather than
+# silently overwrite Orphaned Admin Account here - which could wrongly clear a
+# person whose orphan status is really driven by their CLOUD side, invisible to
+# this AD-only script - flag the mismatch so it's investigated, not hidden.
+$mismatches = [System.Collections.Generic.List[object]]::new()
+
 foreach ($p in $people) {
     $username = $p.'Base Username'
     $adUser = $null
@@ -116,6 +134,13 @@ foreach ($p in $people) {
         $notFound++
         $active = 'Not Found'
         $managerUpn = ''
+    }
+
+    if ($active -eq 'Yes' -and $p.'Orphaned Admin Account' -eq 'YES') {
+        $mismatches.Add([PSCustomObject]@{
+            'Base Username'   = $username
+            'Has Cloud Admin' = $p.'Has Cloud Admin'
+        })
     }
 
     # Rebuild the row as an ordered hashtable rather than Add-Member -Force:
@@ -144,4 +169,16 @@ Write-Host "`nWritten to $AdminPeoplePath" -ForegroundColor Green
 Write-Host "  AD account found          : $found"
 Write-Host "  ...and disabled           : $disabled" -ForegroundColor Yellow
 Write-Host "  No matching AD account    : $notFound"
+
+if ($mismatches.Count) {
+    Write-Host "`n  Shows 'Orphaned Admin Account' = YES but AD Account Active = Yes : $($mismatches.Count)" -ForegroundColor Yellow
+    Write-Host "    'Orphaned Admin Account' was computed by Merge-AdminReview.ps1 from whichever"
+    Write-Host "    OnPrem-Admins.csv sweep was current at the time - this script's fresh per-person"
+    Write-Host "    check does not rewrite it, since it can also be driven by the cloud side (invisible"
+    Write-Host "    to this AD-only script). Re-run Build-OnPremAdminReview.ps1 + Merge-AdminReview.ps1"
+    Write-Host "    to refresh 'Orphaned Admin Account' itself, or check 'Has Cloud Admin' on these rows"
+    Write-Host "    before treating them as false positives:"
+    $mismatches | ForEach-Object { Write-Host "      $($_.'Base Username')  (Has Cloud Admin: $($_.'Has Cloud Admin'))" }
+}
+
 Write-Host "`nNext: Update-AdminPeopleEntra.ps1 (checks Entra only for the '$disabled' disabled here)." -ForegroundColor Cyan
